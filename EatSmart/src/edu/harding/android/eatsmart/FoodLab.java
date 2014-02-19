@@ -17,7 +17,8 @@ public class FoodLab {
         for (int i = 0; i < 100; i++) {
             Food f = new Food();
             f.setTitle("Food #" + i);
-            f.setQuantity(i+1); // every other one
+            f.setQuantity(0); // every other one
+            f.setCalories(i + 100);
             mFoods.add(f);
         }
     }

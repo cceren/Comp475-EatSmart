@@ -1,5 +1,7 @@
 package edu.harding.android.eatsmart;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 
 public class HomeActivity extends SingleFragmentActivity {
@@ -10,5 +12,6 @@ public class HomeActivity extends SingleFragmentActivity {
 		
 		return new ProfileFragment();
 	}
-
+	
+	
 }

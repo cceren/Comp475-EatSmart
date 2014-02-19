@@ -13,7 +13,7 @@ public class Food {
 
     public Food() {
         mId = UUID.randomUUID();
-        mDate = new Date();
+        //mDate = new Date();
     }
 
     @Override
@@ -37,12 +37,19 @@ public class Food {
         return mQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        mQuantity= quantity;
+    public void incrementQuantity() {
+        mQuantity++;
+    }
+    
+    public void setQuantity(int quantity){
+    	mQuantity = quantity;
     }
     
     public int getCalories(){
     	return mCalories;
+    }
+    public void setCalories(int cals){
+    	mCalories = cals;
     }
 
     public Date getDate() {
