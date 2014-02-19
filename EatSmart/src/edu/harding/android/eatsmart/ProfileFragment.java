@@ -21,7 +21,7 @@ public class ProfileFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
-		Button saveButton = (Button)v.findViewById(R.id.profile_save_button);
+		Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
