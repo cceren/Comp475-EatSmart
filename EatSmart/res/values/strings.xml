@@ -15,5 +15,6 @@
 	<string name="quick_pick_label">Quick Pick!</string>
 	<string name="welcome_label">Welcome</string>
 	<string name="organize_quickPick_label">Organize</string>
+	<string name="take">Take</string>
 	
 </resources>
