@@ -1,11 +1,17 @@
 package edu.harding.android.eatsmart;
 
 
+import java.util.Date;
+
+
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +54,33 @@ public class HomeFragment extends Fragment {
 				
 			}
 		});
+		
+		
+		Button organizeButton = (Button)v.findViewById(R.id.organize_button);
+		organizeButton.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), PendingFoodListActivity.class);
+                startActivity(i);
+				
+			}
+		});
 		return v;
 	}
+	
+	 @Override
+	    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        if (resultCode != Activity.RESULT_OK) return;
+	        if (requestCode == REQUEST_PHOTO) {
+		            //Add a pendingFoodItem to foodItemLab
+		        	Food f = new Food();
+		        	f.setTitle("Pending");
+		        	f.setCalories(150);
+		        	f.setQuantity(2);
+		        
+		        	PendingFoodLab.get(getActivity()).addPendingFoodItem(f);
+		        	Log.e("getItem", "Added Item");
+	            }
+	        }
+	    
 }

@@ -25,6 +25,8 @@
             android:screenOrientation="landscape"
             android:label="@string/app_name">
         </activity>
+        <activity android:name=".PendingFoodListActivity">
+        </activity>
     </application>
 
 </manifest>
