@@ -15,36 +15,6 @@ import android.widget.TextView;
 
 public class CalorieCounterFragment extends ListFragment {
 	
-	/*@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-			Bundle savedInstance){
-		
-		View v = inflater.inflate(R.layout.fragment_count, parent, false);
-		
-		
-		
-		ListView lv = (ListView)v.findViewById(R.id.listFood);
-		 
-		
-		
-		FoodAdapter adapter = new FoodAdapter(getActivity(), listFood);
-		lv.setAdapter(adapter);	
-		
-		Button submit = (Button)v.findViewById(R.id.submit);
-		submit.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                HomeFragment homeFragment = new HomeFragment();
-                ft.replace(R.id.fragmentContainer, homeFragment).commit();
-			}
-		});
-		
-		return v;
-	}
-	*/
-
 	private ArrayList<Food> mFoodItems;
 
     @Override
@@ -91,21 +61,17 @@ public class CalorieCounterFragment extends ListFragment {
             }
 
             // configure the view for this Crime
-           try{
+       
             Food f = getItem(position);
-            TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantityTextView);
+            TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantity_text_view);
             quantityTextView.setText(f.getQuantity());
             
-            TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item);
+            TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item_name_text_view);
             foodItemTextView.setText(f.getTitle());
             
-            TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_item);
+            TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_text_view);
             caloriesTextView.setText(f.getCalories());
-           }catch(Exception e){
-        	   Log.e("PUXA", e.toString());
-           }
-            
-            
+             
             return convertView;
         }
     }

@@ -39,13 +39,13 @@ public class PendingFoodListFragment extends ListFragment {
             // configure the view for this Crime
             try{
                 Food f = getItem(position);
-                TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantityTextView);
+                TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantity_text_view);
                 quantityTextView.setText(f.getQuantity());
                 
-                TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item);
+                TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item_name_text_view);
                 foodItemTextView.setText(f.getTitle().toString());
                 
-                TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_item);
+                TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_text_view);
                 caloriesTextView.setText(f.getCalories());
                 Log.e("getItem", "got A foodItem");
                 Log.e("getItem", f.getTitle());

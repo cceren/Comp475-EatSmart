@@ -8,7 +8,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class FoodListFragment extends ListFragment {
@@ -45,21 +44,23 @@ public class FoodListFragment extends ListFragment {
             // if we weren't given a view, inflate one
             if (null == convertView) {
                 convertView = getActivity().getLayoutInflater()
-                    .inflate(R.layout.list_item_food, null);
+                    .inflate(R.layout.food_item_list, null);
             }
 
             // configure the view for this Crime
             Food f = getItem(position);
 
-            TextView titleTextView =
-                (TextView)convertView.findViewById(R.id.food_list_item_titleTextView);
-            titleTextView.setText(f.getTitle());
-            TextView dateTextView =
-                (TextView)convertView.findViewById(R.id.food_list_item_dateTextView);
-            dateTextView.setText(f.getDate().toString());
-            TextView quantityTextView =
-                (TextView)convertView.findViewById(R.id.food_list_item_quantityTextView);
-            quantityTextView.setText(f.getQuantity());
+            TextView foodNameTextView =
+                (TextView)convertView.findViewById(R.id.food_item_name_text_view);
+            foodNameTextView.setText(f.getTitle().toString());
+            
+            TextView foodQuantity =
+                (TextView)convertView.findViewById(R.id.quantity_text_view);
+            foodQuantity.setText(Integer.toString(f.getQuantity()));
+            
+            TextView foodCaloriesTextView =
+                (TextView)convertView.findViewById(R.id.calories_text_view);
+            foodCaloriesTextView.setText(Integer.toString(f.getQuantity()));
 
             return convertView;
         }

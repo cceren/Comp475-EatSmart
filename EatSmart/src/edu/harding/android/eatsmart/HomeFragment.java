@@ -1,10 +1,6 @@
 package edu.harding.android.eatsmart;
 
 
-import java.util.Date;
-
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,14 +28,11 @@ public class HomeFragment extends Fragment {
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				//start an instance of CalorieCounterActivity
-		        //Intent i = new Intent(getActivity(), CalorieCounterActivity.class);
-		        //startActivity(i);
 				
 				FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                CalorieCounterFragment calorieCounterFragment = new CalorieCounterFragment();
-                ft.replace(R.id.fragmentContainer, calorieCounterFragment).addToBackStack("ISa")
+                FoodListFragment foodListFragment = new FoodListFragment();
+                ft.replace(R.id.fragmentContainer, foodListFragment).addToBackStack("ISa")
                 .commit();            
 			}
 		});
