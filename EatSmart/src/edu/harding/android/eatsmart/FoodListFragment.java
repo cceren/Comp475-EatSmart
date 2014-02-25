@@ -2,12 +2,15 @@ package edu.harding.android.eatsmart;
 
 import java.util.ArrayList;
 
+//import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class FoodListFragment extends ListFragment {
@@ -28,6 +31,19 @@ public class FoodListFragment extends ListFragment {
         i.putExtra(FoodFragment.EXTRA_FOOD_ID, c.getId());
         startActivityForResult(i, 0);
     }*/
+    
+    @Override
+	public void onPause() {
+		super.onPause();
+		FoodLab.get(getActivity()).saveFoods();
+	}
+
+	public void onListItemClick(ListView l, View v, int position, long id) {
+        // get the fooItem from the adapter
+        Food f = ((FoodAdapter)getListAdapter()).getItem(position);
+        f.incrementQuantity();
+        ((FoodAdapter)getListAdapter()).notifyDataSetChanged();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -60,7 +76,7 @@ public class FoodListFragment extends ListFragment {
             
             TextView foodCaloriesTextView =
                 (TextView)convertView.findViewById(R.id.calories_text_view);
-            foodCaloriesTextView.setText(Integer.toString(f.getQuantity()));
+            foodCaloriesTextView.setText(Integer.toString(f.getCalories()));
 
             return convertView;
         }

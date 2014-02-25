@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
 				FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 FoodListFragment foodListFragment = new FoodListFragment();
-                ft.replace(R.id.fragmentContainer, foodListFragment).addToBackStack("ISa")
+                ft.replace(R.id.fragmentContainer, foodListFragment).addToBackStack("Back")
                 .commit();            
 			}
 		});

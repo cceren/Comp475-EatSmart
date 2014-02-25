@@ -14,8 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
-
 import android.content.Context;
+import android.util.Log;
 
 public class EatSmartJSONSerializer {
     private Context mContext;
@@ -25,9 +25,9 @@ public class EatSmartJSONSerializer {
         mContext = c;
         mFilename = f;
     }
-/*
-    public ArrayList<Food> loadCrimes() throws IOException, JSONException {
-        ArrayList<Food> crimes = new ArrayList<Food>();
+
+    public ArrayList<Food> loadFoods() throws IOException, JSONException {
+        ArrayList<Food> foods = new ArrayList<Food>();
         BufferedReader reader = null;
         try {
             // open and read the file into a StringBuilder
@@ -41,9 +41,8 @@ public class EatSmartJSONSerializer {
             }
             // parse the JSON using JSONTokener
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-            // build the array of crimes from JSONObjects
             for (int i = 0; i < array.length(); i++) {
-                crimes.add(new Food(array.getJSONObject(i)));
+                foods.add(new Food(array.getJSONObject(i)));
             }
         } catch (FileNotFoundException e) {
             // we will ignore this one, since it happens when we start fresh
@@ -51,16 +50,17 @@ public class EatSmartJSONSerializer {
             if (reader != null)
                 reader.close();
 }
-        return crimes;
+        return foods;
     }
 
-    public void saveCrimes(ArrayList<Food> foods) throws JSONException, IOException {
+    public void saveFoods(ArrayList<Food> foods) throws JSONException, IOException {
         // build an array in JSON
         JSONArray array = new JSONArray();
         for (Food c : foods)
             array.put(c.toJSON());
-
+        
         // write the file to disk
+        Log.d("SavedState", array.toString());
         Writer writer = null;
         try {
             OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
@@ -70,5 +70,5 @@ public class EatSmartJSONSerializer {
             if (writer != null)
                 writer.close();
         }
-    }*/
+    }
 }

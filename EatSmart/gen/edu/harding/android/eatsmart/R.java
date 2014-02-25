@@ -65,6 +65,7 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int age_label=0x7f050006;
         public static final int app_name=0x7f050000;
+        public static final int errorSaving_toast=0x7f05000f;
         public static final int food_button_title=0x7f050002;
         public static final int food_history_title=0x7f050003;
         public static final int foods_title=0x7f05000a;
