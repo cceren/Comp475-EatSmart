@@ -22,7 +22,9 @@ public class FoodLab {
         	mFoods = mSerializer.loadFoods();
         } catch (Exception e){
         	mFoods = new ArrayList<Food>();
-            for (int i = 0; i < 50; i++) {
+        }
+        if(mFoods.size() < 1){
+        	for (int i = 0; i < 50; i++) {
                 Food f = new Food();
                 f.setTitle("Food #" + i);
                 f.setQuantity(0); 
