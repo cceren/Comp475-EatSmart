@@ -34,6 +34,7 @@ public class FoodCameraFragment extends Fragment {
     private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
         public void onShutter() {
             // display the progress indicator
+   
             mProgressContainer.setVisibility(View.VISIBLE);
         }
     };
@@ -81,6 +82,7 @@ public class FoodCameraFragment extends Fragment {
 
         mProgressContainer = v.findViewById(R.id.food_camera_progressContainer);
         mProgressContainer.setVisibility(View.INVISIBLE);
+        
         Button takePictureButton = (Button)v.findViewById(R.id.food_camera_takePictureButton);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

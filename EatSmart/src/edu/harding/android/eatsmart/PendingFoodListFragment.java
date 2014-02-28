@@ -1,13 +1,13 @@
 package edu.harding.android.eatsmart;
 import java.util.ArrayList;
 
-
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PendingFoodListFragment extends ListFragment {
@@ -33,26 +33,26 @@ public class PendingFoodListFragment extends ListFragment {
             // if we weren't given a view, inflate one
             if (null == convertView) {
                 convertView = getActivity().getLayoutInflater()
-                    .inflate(R.layout.food_item_list, null);
+                    .inflate(R.layout.pending_food_item, null);
             }
 
-            // configure the view for this Crime
-            try{
-                Food f = getItem(position);
-                TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantity_text_view);
-                quantityTextView.setText(f.getQuantity());
-                
-                TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item_name_text_view);
-                foodItemTextView.setText(f.getTitle().toString());
-                
-                TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_text_view);
-                caloriesTextView.setText(f.getCalories());
-                Log.e("getItem", "got A foodItem");
-                Log.e("getItem", f.getTitle());
-                
-               }catch(Exception e){
-            	   Log.e("getItem", e.toString());
-               }
+            
+            // configure the view for this Food Item
+            Food f = getItem(position);
+
+            TextView timeTextView =
+                (TextView)convertView.findViewById(R.id.time_textView);
+            timeTextView.setText( "Date: " + f.getDate().toString());
+            
+            ImageView foodView = (ImageView)convertView.findViewById(R.id.pendingFood_imageView);
+            Photo p = f.getPhoto();
+            BitmapDrawable b = null;
+            if(p != null){
+            	String path = getActivity()
+            			.getFileStreamPath(p.getFilename()).getAbsolutePath();
+            	b = PictureUtils.getScaledDrawable(getActivity(), path);
+            }
+            foodView.setImageDrawable(b);
             
             return convertView;
         }

@@ -13,13 +13,15 @@ public class Food {
 	private static final String JSON_DATE = "date";
 	private static final String JSON_QUANTITY = "quantity";
 	private static final String JSON_CALORIES = "calories";
+	private static final String JSON_PHOTO = "photo";
 	
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private int mQuantity;
     private int mCalories;
-
+    private Photo mPhoto;
+    
     public Food() {
         mId = UUID.randomUUID();
         mDate = new Date();
@@ -31,6 +33,8 @@ public class Food {
     	mDate = new Date(json.getLong(JSON_DATE));
     	mQuantity = json.getInt(JSON_QUANTITY);
     	mCalories = json.getInt(JSON_CALORIES);
+    	if (json.has(JSON_PHOTO))
+    		mPhoto = new Photo(json.getJSONObject(JSON_PHOTO));
     }
     
     public JSONObject toJSON() throws JSONException {
@@ -40,6 +44,8 @@ public class Food {
     	json.put(JSON_DATE, mDate.getTime());
     	json.put(JSON_QUANTITY, mQuantity);
     	json.put(JSON_CALORIES, mCalories);
+    	if(mPhoto != null)
+    		json.put(JSON_PHOTO, mPhoto.toJSON());
     	return json;
     }
     
@@ -87,4 +93,11 @@ public class Food {
 	        mDate = date;
 	}
 	
+	public Photo getPhoto(){
+		return mPhoto;
+	}
+	
+	public void setPhoto(Photo p){
+		mPhoto = p;
+	}
 }

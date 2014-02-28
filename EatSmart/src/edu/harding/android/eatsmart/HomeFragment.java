@@ -3,6 +3,7 @@ package edu.harding.android.eatsmart;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		
+		//Starts the activity that takes the picture
 		Button quickPickButton = (Button)v.findViewById(R.id.quick_pick_button);
 		quickPickButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -48,6 +49,12 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
+		 // if camera is not available, disable camera functionality
+        PackageManager pm = getActivity().getPackageManager();
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
+                !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+        	quickPickButton.setEnabled(false);
+        }
 		
 		Button organizeButton = (Button)v.findViewById(R.id.organize_button);
 		organizeButton.setOnClickListener(new View.OnClickListener() {	
@@ -65,14 +72,23 @@ public class HomeFragment extends Fragment {
 	    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	        if (resultCode != Activity.RESULT_OK) return;
 	        if (requestCode == REQUEST_PHOTO) {
-		            //Add a pendingFoodItem to foodItemLab
+		            
+	        	//Create a food Item and add the photo to it 
 		        	Food f = new Food();
 		        	f.setTitle("Pending");
-		        	f.setCalories(150);
-		        	f.setQuantity(2);
-		        
+		        	f.setCalories(0);
+		        	f.setQuantity(1);
+		        	
+		        	String filename = data
+		        			.getStringExtra(FoodCameraFragment.EXTRA_PHOTO_FILENAME);
+		        	
+		        	if(filename != null){
+		        		Photo p = new Photo(filename);
+		        		f.setPhoto(p);	
+		        	}
+		        	//Add the food to the PendingFoodLab
 		        	PendingFoodLab.get(getActivity()).addPendingFoodItem(f);
-		        	Log.e("getItem", "Added Item");
+		        	Log.e("QuickPick", "Added Item");
 	            }
 	        }
 	    
