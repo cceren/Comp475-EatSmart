@@ -28,15 +28,16 @@ public class ProfileFragment extends Fragment {
 		mAppContext = getActivity().getApplicationContext();
 		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
 		try{
+			//If there is a profile saved, load it and go on to the main screen
 			mProfile = mSerializer.loadProfile();
-			Log.e("JSON", "There was a profile saved");
+			Log.e("JSON", "There was a profile saved: " + mProfile.getName());
 			FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             HomeFragment homeFragment = new HomeFragment();
             ft.replace(R.id.fragmentContainer, homeFragment).commit();
 			
 		}catch(Exception e){
-			mProfile = new Profile();
+			mProfile = new Profile(); //If there is no profile saved, create a default one
 			Log.e("ERROR", "Error loading the profile");
 		}
 	}
@@ -46,7 +47,7 @@ public class ProfileFragment extends Fragment {
 			mSerializer.saveProfile(mProfile);
 			return true;
 		}catch(Exception e) {
-			Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+			//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 	}
@@ -60,7 +61,7 @@ public class ProfileFragment extends Fragment {
 		nameEditText.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(
 					CharSequence c, int start, int before, int count){
-				mProfile.setName(c.toString());
+				
 			}
 			public void beforeTextChanged(
 					CharSequence c, int start, int count, int after){
@@ -68,18 +69,19 @@ public class ProfileFragment extends Fragment {
 			}
 			public void afterTextChanged(Editable c){
 				//intentional blank
+				mProfile.setName(c.toString());
 			}
 		});
 		Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//UserProfile.get(getActivity()).setName(nameEditText.getText().toString());
-				saveProfile();
+				saveProfile(); //Save the profile and go on to the main screen
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-	            FragmentTransaction ft = fm.beginTransaction();
-	            HomeFragment homeFragment = new HomeFragment();
-	            ft.replace(R.id.fragmentContainer, homeFragment).commit();
+				FragmentTransaction ft = fm.beginTransaction();
+				HomeFragment homeFragment = new HomeFragment();
+				ft.replace(R.id.fragmentContainer, homeFragment).commit();
+				//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
 			}
 		});
 		return v;

@@ -1,10 +1,12 @@
 package edu.harding.android.eatsmart;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -28,7 +30,7 @@ public class EatSmartJSONSerializer {
         mContext = c;
         mFilename = f;
         mPendingFilename = "pending" + mFilename;
-        mProfileFilename = "userName" + mFilename;
+        mProfileFilename = "myProfile" + mFilename;
     }
 
     public ArrayList<Food> loadFoods(String action) throws IOException, JSONException {
@@ -75,8 +77,9 @@ public class EatSmartJSONSerializer {
                 jsonString.append(line);
             }
             JSONObject json = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
-            profile =  new Profile(json.getJSONObject(""));
-            
+            profile =  new Profile(json);
+            Log.e("LOADING", "This is in profile: " + profile.getName());
+            in.close();
         } catch (FileNotFoundException e) {
             // we will ignore this one, since it happens when we start fresh
         } finally {
@@ -84,6 +87,21 @@ public class EatSmartJSONSerializer {
                 reader.close();
         }
         return profile;
+    	//The commented out section is another way to save an object
+
+        
+    	/*Profile profile = new Profile();
+    	FileInputStream in = null;
+        ObjectInputStream reader = null;
+        try {
+          in = new FileInputStream(mProfileFilename);
+          reader = new ObjectInputStream(in);
+          profile = (Profile) reader.readObject();
+          reader.close();
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        }
+        return profile;*/
     	
     }
     
@@ -116,14 +134,29 @@ public class EatSmartJSONSerializer {
     	JSONObject jsonProfile = new JSONObject();
     	jsonProfile = profile.toJSON();
     	Writer writer = null;
+    	
     	try{
     		OutputStream out = mContext
     				.openFileOutput(mProfileFilename, Context.MODE_PRIVATE);
     		writer = new OutputStreamWriter(out);
     		writer.write(jsonProfile.toString());
+    		Log.e("SAVED", "This was saved: " + jsonProfile.toString());
+    		out.close();
     	}finally{
     		if(writer != null)
     			writer.close();
     	}
+    	
+    	//The commented out section is another way to save an object
+    	/*FileOutputStream out = null;
+        ObjectOutputStream writer = null;
+        try {
+          out = new FileOutputStream(mProfileFilename);
+          writer = new ObjectOutputStream(out);
+          writer.writeObject(profile);
+          writer.close();
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        } */
     }
 }

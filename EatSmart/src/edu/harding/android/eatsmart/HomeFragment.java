@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
 		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
 		try{
 			mProfile = mSerializer.loadProfile();
+			Log.e("LOADING", "This was loaded: " + mProfile.getName());
 		}catch(Exception e){
 			Log.e("ERROR", "No profile saved");
 		}
@@ -43,8 +44,9 @@ public class HomeFragment extends Fragment {
 			Bundle savedInstance){
 		
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
+		//Set the welcomeTextView to be the name of the user (saved in profile)
 		TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
-		welcomeTextView.setText(mProfile.getName());
+		//welcomeTextView.setText(mProfile.getName());
 		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	
