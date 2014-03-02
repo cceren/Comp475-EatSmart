@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,14 +36,19 @@ public class PendingFoodListFragment extends ListFragment {
                 convertView = getActivity().getLayoutInflater()
                     .inflate(R.layout.pending_food_item, null);
             }
-
-            
             // configure the view for this Food Item
             Food f = getItem(position);
 
+            //define formats in order to display the timestamp more clearly
+            CharSequence dateFormat = DateFormat.format("EEEE, MMM dd, yyyy", f.getDate());
+    		CharSequence timeFormat = DateFormat.format("h:mm a", f.getDate());
+    		
+            TextView dateTextView =
+                (TextView)convertView.findViewById(R.id.date_textView);
+            dateTextView.setText( "Date: " + dateFormat.toString());
             TextView timeTextView =
-                (TextView)convertView.findViewById(R.id.time_textView);
-            timeTextView.setText( "Date: " + f.getDate().toString());
+                    (TextView)convertView.findViewById(R.id.time_textView);
+            timeTextView.setText( "Time: " + timeFormat.toString());
             
             ImageView foodView = (ImageView)convertView.findViewById(R.id.pendingFood_imageView);
             Photo p = f.getPhoto();
@@ -57,4 +63,12 @@ public class PendingFoodListFragment extends ListFragment {
             return convertView;
         }
     }
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		PendingFoodLab.get(getActivity()).savePendingFoods();
+	}
+	
+	
 }

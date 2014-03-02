@@ -24,32 +24,34 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int AgeTextView=0x7f080013;
-        public static final int action_settings=0x7f080019;
-        public static final int add_food_button=0x7f08000e;
+        public static final int AgeTextView=0x7f080014;
+        public static final int action_settings=0x7f08001b;
+        public static final int add_food_button=0x7f08000f;
         public static final int calories_text_view=0x7f080003;
-        public static final int editText2=0x7f080014;
-        public static final int editText3=0x7f080015;
-        public static final int editText4=0x7f080017;
+        public static final int date_textView=0x7f080012;
+        public static final int editText2=0x7f080015;
+        public static final int editText3=0x7f080016;
+        public static final int editText4=0x7f080018;
         public static final int food_camera_preview=0x7f080006;
         public static final int food_camera_progressContainer=0x7f080009;
         public static final int food_camera_surfaceView=0x7f080007;
         public static final int food_camera_takePictureButton=0x7f080008;
         public static final int food_item_name_text_view=0x7f080002;
-        public static final int food_record_button=0x7f08000f;
+        public static final int food_record_button=0x7f080010;
         public static final int fragmentContainer=0x7f080000;
         public static final int listFood=0x7f080004;
-        public static final int nameEditText=0x7f080012;
-        public static final int organize_button=0x7f080010;
-        public static final int pendingFood_imageView=0x7f080018;
-        public static final int progressBar1=0x7f08000c;
+        public static final int nameEditText=0x7f080013;
+        public static final int organize_button=0x7f080011;
+        public static final int pendingFood_imageView=0x7f080019;
+        public static final int progressBar1=0x7f08000d;
         public static final int quantity_text_view=0x7f080001;
-        public static final int quick_pick_button=0x7f08000d;
+        public static final int quick_pick_button=0x7f08000e;
         public static final int submit=0x7f080005;
-        public static final int textView2=0x7f08000a;
-        public static final int textView3=0x7f08000b;
-        public static final int textView4=0x7f080016;
-        public static final int time_textView=0x7f080011;
+        public static final int textView2=0x7f08000b;
+        public static final int textView3=0x7f08000c;
+        public static final int textView4=0x7f080017;
+        public static final int time_textView=0x7f08001a;
+        public static final int welcome_textView=0x7f08000a;
     }
     public static final class layout {
         public static final int activity_fragment=0x7f030000;

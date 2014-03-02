@@ -2,6 +2,7 @@ package edu.harding.android.eatsmart;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,17 +14,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
+	private static final String FILENAME = "foods.json";
 	private static final int REQUEST_PHOTO = 1;
+	private Profile mProfile;
+	private Context mAppContext;
+	private EatSmartJSONSerializer mSerializer;
 	
 	
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mAppContext = getActivity().getApplicationContext();
+		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
+		try{
+			mProfile = mSerializer.loadProfile();
+		}catch(Exception e){
+			Log.e("ERROR", "No profile saved");
+		}
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
+		TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
+		welcomeTextView.setText(mProfile.getName());
 		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	

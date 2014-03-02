@@ -19,7 +19,7 @@ public class FoodLab {
         mAppContext = appContext;
         mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
         try{
-        	mFoods = mSerializer.loadFoods();
+        	mFoods = mSerializer.loadFoods("foods");
         } catch (Exception e){
         	mFoods = new ArrayList<Food>();
         }
@@ -55,7 +55,7 @@ public class FoodLab {
     
     public boolean saveFoods(){
     	try{
-    		mSerializer.saveFoods(mFoods);
+    		mSerializer.saveFoods(mFoods, "foods");
     		Log.d("FoodLab", "foods saved to a file");
     		return true;
     	} catch(Exception e){

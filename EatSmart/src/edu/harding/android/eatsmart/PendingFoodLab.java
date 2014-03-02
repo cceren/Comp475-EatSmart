@@ -3,29 +3,30 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 
 public class PendingFoodLab {
 	 private static final String TAG = "PendingFoodLab";
-	   // private static final String FILENAME = "crimes.json";
+	 private static final String FILENAME = "foods.json";
 
 	    private ArrayList<Food> mPendingFoods;
-	    //private CriminalIntentJSONSerializer mSerializer;
+	    private EatSmartJSONSerializer mSerializer;
 
 	    private static PendingFoodLab sPendingFoodLab;
 	    private Context mAppContext;
 
 	    private PendingFoodLab(Context appContext) {
-	        mAppContext = appContext;
-	       /* mSerializer = new CriminalIntentJSONSerializer(mAppContext, FILENAME);
+	       mAppContext = appContext;
+	       mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
 
 	        try {
-	            mCrimes = mSerializer.loadCrimes();
+	            mPendingFoods = mSerializer.loadFoods("pending");
 	        } catch (Exception e) {
-	            mCrimes = new ArrayList<Crime>();
-	            Log.e(TAG, "Error loading crimes: ", e);
-	        }*/
-	        mPendingFoods = new ArrayList<Food>();
+	        	mPendingFoods = new ArrayList<Food>();
+	            Log.e(TAG, "Error loading Foods: ", e);
+	        }
 	    }
 
 	    public static PendingFoodLab get(Context c) {
@@ -57,14 +58,14 @@ public class PendingFoodLab {
 	        //saveCrimes();
 	    }
 
-	    /*public boolean saveCrimes() {
-	        try {
-	            mSerializer.saveCrimes(mCrimes);
-	            Log.d(TAG, "crimes saved to file");
-	            return true;
-	        } catch (Exception e) {
-	            Log.e(TAG, "Error saving crimes: " + e);
-	            return false;
-	        }
-	    }*/
+	    public boolean savePendingFoods(){
+	    	try{
+	    		mSerializer.saveFoods(mPendingFoods, "pending");
+	    		return true;
+	    	} catch(Exception e){
+	    		Log.e("PendingFoodLab", "Error saving: ", e);
+	    		Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+	    		return false;
+	    	}
+	    }
 }
