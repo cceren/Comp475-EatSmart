@@ -17,7 +17,7 @@ public class PendingFoodListFragment extends ListFragment {
 	
 	@Override public void onCreate(Bundle savedInstanceState){
 		 super.onCreate(savedInstanceState);
-		 
+		  getActivity().setTitle(R.string.organize_quick_picks);
 		 mPendingFoodItems = PendingFoodLab.get(getActivity()).getPendingFoodItems();
 		 
 		 PendingFoodAdapter adapter = new PendingFoodAdapter(mPendingFoodItems);

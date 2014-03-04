@@ -29,13 +29,14 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActivity().setTitle(R.string.app_name);
 		mAppContext = getActivity().getApplicationContext();
 		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
 		try{
 			mProfile = mSerializer.loadProfile();
-			Log.e("LOADING", "This was loaded: " + mProfile.getName());
+			Log.e("Saving", "This was loaded: " + mProfile.getName());
 		}catch(Exception e){
-			Log.e("ERROR", "No profile saved");
+			Log.e("Saving", "No profile saved");
 		}
 	}
 
@@ -125,7 +126,8 @@ public class HomeFragment extends Fragment {
 		        	}
 		        	//Add the food to the PendingFoodLab
 		        	PendingFoodLab.get(getActivity()).addPendingFoodItem(f);
-		        	Log.e("QuickPick", "Added Item");
+		        	PendingFoodLab.get(getActivity()).savePendingFoods();
+		        	
 	            }
 	        }
 	    

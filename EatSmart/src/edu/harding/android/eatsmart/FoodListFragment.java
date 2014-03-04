@@ -2,17 +2,17 @@ package edu.harding.android.eatsmart;
 
 import java.util.ArrayList;
 
-//import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+//import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
 
 public class FoodListFragment extends ListFragment {
 	private ArrayList<Food> mFoods;
@@ -26,27 +26,27 @@ public class FoodListFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    /*public void onListItemClick(ListView l, View v, int position, long id) {
-        Food c = ((FoodAdapter)getListAdapter()).getItem(position);
-        Intent i = new Intent(getActivity(), FoodActivity.class);
-        i.putExtra(FoodFragment.EXTRA_FOOD_ID, c.getId());
-        startActivityForResult(i, 0);
-    }*/
-    
-    @Override
+    /*@Override
 	public void onPause() {
 		super.onPause();
 		FoodLab.get(getActivity()).saveFoods();
-	}
+	}*/
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
-        // get the fooItem from the adapter
+        // get the foodItem from the adapter
         Food f = ((FoodAdapter)getListAdapter()).getItem(position);
         ConsumedFoodLab.get(getActivity()).addFoodItem(f);
         
-        Log.e("Consumed", "Size" + ConsumedFoodLab.get(getActivity()).getFoods().size());
         f.incrementQuantity();
         ((FoodAdapter)getListAdapter()).notifyDataSetChanged();
+        
+        //Notify user he has added a food to history
+        Context context = getActivity();
+        CharSequence text = "Added  " + f.getTitle() + " to history";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class FoodListFragment extends ListFragment {
                     .inflate(R.layout.food_item_list, null);
             }
 
-            // configure the view for this Crime
+            // configure the view for this Food Item
             Food f = getItem(position);
 
             TextView foodNameTextView =
@@ -76,11 +76,11 @@ public class FoodListFragment extends ListFragment {
             
             TextView foodQuantity =
                 (TextView)convertView.findViewById(R.id.consumed_quantity_text_view);
-            foodQuantity.setText(Integer.toString(f.getQuantity()));
+            foodQuantity.setText((Integer.toString(f.getQuantity())) + " Servings");
             
             TextView foodCaloriesTextView =
                 (TextView)convertView.findViewById(R.id.consumed_calories_text_view);
-            foodCaloriesTextView.setText(Integer.toString(f.getCalories()));
+            foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " Cals");
 
             return convertView;
         }

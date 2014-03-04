@@ -62,11 +62,11 @@ public class SectionedListAdapter extends ArrayAdapter<Food> {
          
          TextView foodQuantity =
              (TextView)convertView.findViewById(R.id.consumed_quantity_text_view);
-         foodQuantity.setText(Integer.toString(currentFood.getQuantity()));
+         foodQuantity.setText((Integer.toString(currentFood.getQuantity())+ " Servings"));
          
          TextView foodCaloriesTextView =
              (TextView)convertView.findViewById(R.id.consumed_calories_text_view);
-         foodCaloriesTextView.setText(Integer.toString(currentFood.getCalories()));
+         foodCaloriesTextView.setText((Integer.toString(currentFood.getCalories())) + " Cals");
 
          return convertView;
      }

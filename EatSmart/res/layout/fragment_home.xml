@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:text="TextView" />
+                />
 
             <TextView
                 android:id="@+id/textView3"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="4dp"
-                android:text="TextView" />
+                />
 
         </LinearLayout>
 
@@ -74,6 +74,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/organize_quickPick_label" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/profile" />
+
+        <TextView
+            android:id="@+id/height_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/weight_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/update_profile_button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/update_profile" />
 
     </LinearLayout>
 
