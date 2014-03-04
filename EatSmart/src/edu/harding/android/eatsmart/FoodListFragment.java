@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,9 @@ public class FoodListFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the fooItem from the adapter
         Food f = ((FoodAdapter)getListAdapter()).getItem(position);
+        ConsumedFoodLab.get(getActivity()).addFoodItem(f);
+        
+        Log.e("Consumed", "Size" + ConsumedFoodLab.get(getActivity()).getFoods().size());
         f.incrementQuantity();
         ((FoodAdapter)getListAdapter()).notifyDataSetChanged();
     }
@@ -67,15 +71,15 @@ public class FoodListFragment extends ListFragment {
             Food f = getItem(position);
 
             TextView foodNameTextView =
-                (TextView)convertView.findViewById(R.id.food_item_name_text_view);
+                (TextView)convertView.findViewById(R.id.consumed_food_item_name_text_view);
             foodNameTextView.setText(f.getTitle().toString());
             
             TextView foodQuantity =
-                (TextView)convertView.findViewById(R.id.quantity_text_view);
+                (TextView)convertView.findViewById(R.id.consumed_quantity_text_view);
             foodQuantity.setText(Integer.toString(f.getQuantity()));
             
             TextView foodCaloriesTextView =
-                (TextView)convertView.findViewById(R.id.calories_text_view);
+                (TextView)convertView.findViewById(R.id.consumed_calories_text_view);
             foodCaloriesTextView.setText(Integer.toString(f.getCalories()));
 
             return convertView;

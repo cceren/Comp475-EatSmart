@@ -17,5 +17,6 @@
 	<string name="organize_quickPick_label">Organize</string>
 	<string name="take">Take</string>
 	<string name="errorSaving_toast">Error saving foods</string>
+	<string name="consumed_food">Consumed Food</string>
 	
 </resources>

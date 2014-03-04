@@ -63,13 +63,13 @@ public class CalorieCounterFragment extends ListFragment {
             // configure the view for this Crime
        
             Food f = getItem(position);
-            TextView quantityTextView = (TextView)convertView.findViewById(R.id.quantity_text_view);
+            TextView quantityTextView = (TextView)convertView.findViewById(R.id.consumed_quantity_text_view);
             quantityTextView.setText(f.getQuantity());
             
-            TextView foodItemTextView = (TextView)convertView.findViewById(R.id.food_item_name_text_view);
+            TextView foodItemTextView = (TextView)convertView.findViewById(R.id.consumed_food_item_name_text_view);
             foodItemTextView.setText(f.getTitle());
             
-            TextView caloriesTextView = (TextView)convertView.findViewById(R.id.calories_text_view);
+            TextView caloriesTextView = (TextView)convertView.findViewById(R.id.consumed_calories_text_view);
             caloriesTextView.setText(f.getCalories());
              
             return convertView;

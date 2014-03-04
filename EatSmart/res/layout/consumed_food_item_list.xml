@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/separator"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,16 +28,15 @@
             android:id="@+id/consumed_food_item_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-             />
+            android:layout_weight="2" />
 
         <TextView
             android:id="@+id/consumed_calories_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="right"
-            />
+            android:gravity="right" />
+
     </LinearLayout>
 
 </LinearLayout>

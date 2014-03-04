@@ -61,6 +61,20 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
+		//Launches the ConsumedFoodListFragment
+		Button historyButton = (Button)v.findViewById(R.id.history_button);
+		historyButton.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ConsumedFoodListFragment consumedFoodListFragment = new ConsumedFoodListFragment();
+                ft.replace(R.id.fragmentContainer, consumedFoodListFragment).addToBackStack("Back")
+                .commit();            
+			}
+		});
+		
 		//Starts the activity that takes the picture
 		Button quickPickButton = (Button)v.findViewById(R.id.quick_pick_button);
 		quickPickButton.setOnClickListener(new View.OnClickListener() {	
