@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment {
         	quickPickButton.setEnabled(false);
         }
 		
+        //Launches PendingFoodListFragment
 		Button organizeButton = (Button)v.findViewById(R.id.organize_button);
 		organizeButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -103,6 +104,21 @@ public class HomeFragment extends Fragment {
 				Intent i = new Intent(getActivity(), PendingFoodListActivity.class);
                 startActivity(i);
 				
+			}
+		});
+		
+		
+		//Launches ProfileFragment
+		Button updateProfileButton = (Button)v.findViewById(R.id.update_profile_button);
+		updateProfileButton.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ProfileFragment profileFragment = new ProfileFragment();
+                ft.replace(R.id.fragmentContainer, profileFragment).addToBackStack("Back")
+                .commit(); 
 			}
 		});
 		return v;

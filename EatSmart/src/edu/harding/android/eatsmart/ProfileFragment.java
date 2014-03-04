@@ -23,19 +23,7 @@ public class ProfileFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		try{
-			SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
-	        String userName = sharedPreferences.getString("name", "");
-	        if(userName != ""){
-			FragmentManager fm = getActivity().getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            HomeFragment homeFragment = new HomeFragment();
-            ft.replace(R.id.fragmentContainer, homeFragment).commit();
-	        }
-			
-		}catch(Exception e){
-			Log.e("ERROR", "Error loading the profile");
-		}
+		
 	}
 	
 	public boolean saveProfile(){
@@ -59,21 +47,21 @@ public class ProfileFragment extends Fragment {
 				//saveProfile(); //Save the profile and go on to the main screen
 				SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
 			    try{    
-		        Editor editor = preference.edit();  
-		        editor.putString("name", nameEditText.getText().toString());  
-		        editor.putString("age", age.getText().toString());  
-		        editor.putString("height", height.getText().toString());  
-		        editor.putString("weight", weight.getText().toString());  
-		        editor.commit(); 
-		        preference.contains("name");
+			        Editor editor = preference.edit();  
+			        editor.putString("name", nameEditText.getText().toString());  
+			        editor.putString("age", age.getText().toString());  
+			        editor.putString("height", height.getText().toString());  
+			        editor.putString("weight", weight.getText().toString());  
+			        editor.commit(); 
+			        preference.contains("name");
 		        }catch(Exception e){  
 		            Log.e("user information", "failed");
 		        }
-				FragmentManager fm = getActivity().getSupportFragmentManager();
-				FragmentTransaction ft = fm.beginTransaction();
-				HomeFragment homeFragment = new HomeFragment();
-				ft.replace(R.id.fragmentContainer, homeFragment).commit();
-				//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+					FragmentManager fm = getActivity().getSupportFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					HomeFragment homeFragment = new HomeFragment();
+					ft.replace(R.id.fragmentContainer, homeFragment).commit();
+					//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
 			}
 		});
 		return v;

@@ -79,20 +79,27 @@
             android:id="@+id/profileName_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="5dp"
             android:text="@string/profile" />
 
         <TextView
             android:id="@+id/height_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp" />
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/weight_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp" />
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/update_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="@string/update_profile" />
 
     </LinearLayout>
 
