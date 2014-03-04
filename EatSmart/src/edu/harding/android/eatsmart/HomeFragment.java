@@ -4,6 +4,7 @@ package edu.harding.android.eatsmart;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,8 @@ import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
-	private static final String FILENAME = "foods.json";
 	private static final int REQUEST_PHOTO = 1;
-	private Profile mProfile;
-	private Context mAppContext;
-	private EatSmartJSONSerializer mSerializer;
+	private final String USERINFO = "userInfo";
 	
 	
 	
@@ -30,14 +28,6 @@ public class HomeFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActivity().setTitle(R.string.app_name);
-		mAppContext = getActivity().getApplicationContext();
-		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
-		try{
-			mProfile = mSerializer.loadProfile();
-			Log.e("Saving", "This was loaded: " + mProfile.getName());
-		}catch(Exception e){
-			Log.e("Saving", "No profile saved");
-		}
 	}
 
 	@Override
@@ -46,9 +36,21 @@ public class HomeFragment extends Fragment {
 		
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
 		//Set the welcomeTextView to be the name of the user (saved in profile)
-		TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
+		//TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
 		//welcomeTextView.setText(mProfile.getName());
-		
+		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
+        String userName = sharedPreferences.getString("name", "");
+        String userWeight = sharedPreferences.getString("weight", "");
+        String userHeight = sharedPreferences.getString("height", "");
+        
+        TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
+        TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
+        TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
+        
+        profileNameTextView.setText("User Name: " + userName);
+        heightTextView.setText("Height: " + userHeight);
+        weightTextView.setText("Weight: " + userWeight);
+        
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	
 			@Override

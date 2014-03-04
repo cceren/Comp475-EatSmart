@@ -1,6 +1,8 @@
 package edu.harding.android.eatsmart;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,70 +15,60 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class ProfileFragment extends Fragment {
 
-	private static final String FILENAME = "foods.json";
-	private EatSmartJSONSerializer mSerializer;
-	private Profile mProfile;
-	private Context mAppContext;
+	private final String USERINFO = "userInfo"; 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		mAppContext = getActivity().getApplicationContext();
-		mSerializer = new EatSmartJSONSerializer(mAppContext, FILENAME);
 		try{
-			//If there is a profile saved, load it and go on to the main screen
-			mProfile = mSerializer.loadProfile();
-			Log.e("JSON", "There was a profile saved: " + mProfile.getName());
+			SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
+	        String userName = sharedPreferences.getString("name", "");
+	        if(userName != ""){
 			FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             HomeFragment homeFragment = new HomeFragment();
             ft.replace(R.id.fragmentContainer, homeFragment).commit();
+	        }
 			
 		}catch(Exception e){
-			mProfile = new Profile(); //If there is no profile saved, create a default one
 			Log.e("ERROR", "Error loading the profile");
 		}
 	}
 	
 	public boolean saveProfile(){
-		try{
-			mSerializer.saveProfile(mProfile);
-			return true;
-		}catch(Exception e) {
-			//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
-			return false;
-		}
+		return true;
 	}
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 		
-		EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
-		nameEditText.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(
-					CharSequence c, int start, int before, int count){
-				
-			}
-			public void beforeTextChanged(
-					CharSequence c, int start, int count, int after){
-				//intentional blank
-			}
-			public void afterTextChanged(Editable c){
-				//intentional blank
-				mProfile.setName(c.toString());
-			}
-		});
+		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
+		final EditText age = (EditText)v.findViewById(R.id.age_editText);
+		final EditText height = (EditText)v.findViewById(R.id.height_editText);
+		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
 		Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				saveProfile(); //Save the profile and go on to the main screen
+				//saveProfile(); //Save the profile and go on to the main screen
+				SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
+			    try{    
+		        Editor editor = preference.edit();  
+		        editor.putString("name", nameEditText.getText().toString());  
+		        editor.putString("age", age.getText().toString());  
+		        editor.putString("height", height.getText().toString());  
+		        editor.putString("weight", weight.getText().toString());  
+		        editor.commit(); 
+		        preference.contains("name");
+		        }catch(Exception e){  
+		            Log.e("user information", "failed");
+		        }
 				FragmentManager fm = getActivity().getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 				HomeFragment homeFragment = new HomeFragment();

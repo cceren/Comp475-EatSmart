@@ -76,7 +76,7 @@
             android:text="@string/organize_quickPick_label" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/profileName_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -93,13 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp" />
-
-        <Button
-            android:id="@+id/update_profile_button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/update_profile" />
 
     </LinearLayout>
 
