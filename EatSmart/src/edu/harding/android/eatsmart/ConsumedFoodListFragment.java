@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
-
+/*Added comment*/
 public class ConsumedFoodListFragment extends ListFragment {
 	private ArrayList<Food> mConsumedFoodItems;
 
