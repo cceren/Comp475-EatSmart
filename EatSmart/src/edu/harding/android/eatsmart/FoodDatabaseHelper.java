@@ -49,12 +49,32 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * A convenience
+	 * A convenience class to wrap a cursor that returns rows from the "foods" table.
+	 * The{@link getFood()} method will give you a Food instance representing
+	 * the current row.
 	 */
 	
 	public static class FoodCursor extends CursorWrapper{
 		public FoodCursor(Cursor c){
 			super(c);
+		}
+		
+	/**
+	 * Return a food object configured for the current row,
+	 * or null if the current row is invalid.
+	 */
+		public Food getFood(){
+			if(isBeforeFirst() || isAfterLast())
+				return null;
+			Food food = new Food();
+			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
+			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
+			
+			food.setCalories(foodCalories);
+			food.setTitle(foodName);
+			
+			return food;
+			
 		}
 	}
 }
