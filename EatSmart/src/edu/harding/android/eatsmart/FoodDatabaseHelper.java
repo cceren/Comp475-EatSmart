@@ -26,7 +26,15 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("create table food(" +
 				"_id integer primary key autoincrement, COLUMN_FOOD_NAME varchar(100)," +
 				"COLUMN_FOOD_CALORIES integer)");
-
+		
+		//Will insert generic foods into db
+		for (int i = 0; i < 50; i++) {
+            Food f = new Food();
+            f.setTitle("Food #" + i);
+            f.setQuantity(0); 
+            f.setCalories(100);
+            insertFood(f);
+        }
 	}
 
 	@Override

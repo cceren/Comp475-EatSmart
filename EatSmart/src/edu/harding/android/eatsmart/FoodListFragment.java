@@ -1,11 +1,18 @@
+/**
+ * This class is in charge of displaying the available foods
+ * that the user can pick from
+ */
 package edu.harding.android.eatsmart;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,23 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 //import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
 
-public class FoodListFragment extends ListFragment {
+public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>{
+	
 	private ArrayList<Food> mFoods;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-        mFoods = FoodLab.get(getActivity()).getFoods();
-        FoodAdapter adapter = new FoodAdapter(mFoods);
-        setListAdapter(adapter);
+       //Initialize the loader to load the list of foods
+        getLoaderManager().initLoader(0, null, this);
+        
     }
 
-    /*@Override
-	public void onPause() {
-		super.onPause();
-		FoodLab.get(getActivity()).saveFoods();
-	}*/
+    
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
@@ -85,5 +89,35 @@ public class FoodListFragment extends ListFragment {
             return convertView;
         }
         
+    }
+    
+    //This class is implemented in order to query the db Asynchronously
+    private static class FoodListCursorLoader extends SQLiteCursorLoader{
+    	public FoodListCursorLoader(Context context){
+    		super(context);
+    	}
+    	
+    	@Override
+    	protected Cursor loadCursor(){
+    		//Query the list of foods
+    		return FoodManager.get(getContext()).queryFoods();
+    	}
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args){
+    	//You only ever load the foods, so assume this is the case
+    	return new FoodListCursorLoader(getActivity());
+    }
+    
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor){
+    	//Create an adapter to point at this cursor
+    }
+    
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader){
+    	//Stop using the cursor (via the adapter)
+    	setListAdapter(null);
     }
 }

@@ -1,6 +1,7 @@
 package edu.harding.android.eatsmart;
 
 import android.content.Context;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 
 public class FoodManager {
 	private static final String TAG = "FoodManager";
@@ -27,5 +28,9 @@ public class FoodManager {
 		//Insert a food into the db
 		mHelper.insertFood(food);
 		return food;
+	}
+	
+	public FoodCursor queryFoods(){
+		return mHelper.queryFoods();
 	}
 }
