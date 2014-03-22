@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,18 +24,15 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//Create the "food" table
-		db.execSQL("create table food(" +
+		try{
+		db.execSQL("create table " + TABLE_FOOD +" (" +
 				"_id integer primary key autoincrement, COLUMN_FOOD_NAME varchar(100)," +
-				"COLUMN_FOOD_CALORIES integer)");
+				" COLUMN_FOOD_CALORIES integer)");
 		
-		//Will insert generic foods into db
-		for (int i = 0; i < 50; i++) {
-            Food f = new Food();
-            f.setTitle("Food #" + i);
-            f.setQuantity(0); 
-            f.setCalories(100);
-            insertFood(f);
-        }
+		}
+		catch(Exception e){
+			Log.d("DB", e.toString());
+		}
 	}
 
 	@Override
@@ -51,9 +49,16 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	
 	public FoodCursor queryFoods(){
 		//Equivalent to "select * from food order by name asc"
-		Cursor wrapped = getReadableDatabase().query(TABLE_FOOD,
-				null, null, null, null, null, COLUMN_FOOD_NAME + " asc");
-		return new FoodCursor(wrapped);
+		try{
+			Cursor wrapped = getReadableDatabase().query(TABLE_FOOD,
+					null, null, null, null, null, null);
+			return new FoodCursor(wrapped);
+
+		}
+		catch(Exception e){
+			Log.d("DB", e.toString());
+		}
+		return null;
 	}
 	
 	/**

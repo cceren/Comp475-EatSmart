@@ -1,7 +1,7 @@
 package edu.harding.android.eatsmart;
 
-import android.content.Context;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
+import android.content.Context;
 
 public class FoodManager {
 	private static final String TAG = "FoodManager";

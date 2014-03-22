@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 //import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
 
 public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>{
@@ -38,7 +40,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
-        Food f = ((FoodAdapter)getListAdapter()).getItem(position);
+       /* Food f = ((FoodAdapter)getListAdapter()).getItem(position);
         ConsumedFoodLab.get(getActivity()).addFoodItem(f);
         
         f.incrementQuantity();
@@ -51,43 +53,49 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+        */
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ((FoodAdapter)getListAdapter()).notifyDataSetChanged();
+        //((FoodAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
-    private class FoodAdapter extends ArrayAdapter<Food> {
-        public FoodAdapter(ArrayList<Food> foods) {
-            super(getActivity(), android.R.layout.simple_list_item_1, foods);
+    private class FoodCursorAdapter extends CursorAdapter {
+    	private FoodCursor mFoodCursor;
+        public FoodCursorAdapter(Context context, FoodCursor cursor) {
+            super(context, cursor, 0);
+            mFoodCursor = cursor;
         }
         
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // if we weren't given a view, inflate one
-            if (null == convertView) {
-                convertView = getActivity().getLayoutInflater()
-                    .inflate(R.layout.food_item_list, null);
-            }
-
-            // configure the view for this Food Item
-            Food f = getItem(position);
+        public View newView(Context context, Cursor cursor, ViewGroup parent){
+        	//Use a layout inflater to get a row view
+        	LayoutInflater inflater = (LayoutInflater)context
+        			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        	return inflater
+        			.inflate(R.layout.food_item_list, parent, false);
+        }
+        
+        @Override
+        public void bindView(View view, Context context, Cursor cursor){
+        	//Get the food for the current row
+        	 // configure the view for this Food Item
+            Food f = mFoodCursor.getFood();
 
             TextView foodNameTextView =
-                (TextView)convertView.findViewById(R.id.consumed_food_item_name_text_view);
+                (TextView)view.findViewById(R.id.consumed_food_item_name_text_view);
             foodNameTextView.setText(f.getTitle().toString());
             
             TextView foodQuantity =
-                (TextView)convertView.findViewById(R.id.consumed_quantity_text_view);
+                (TextView)view.findViewById(R.id.consumed_quantity_text_view);
             foodQuantity.setText((Integer.toString(f.getQuantity())) + " Servings");
             
             TextView foodCaloriesTextView =
-                (TextView)convertView.findViewById(R.id.consumed_calories_text_view);
+                (TextView)view.findViewById(R.id.consumed_calories_text_view);
             foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " Cals");
-
-            return convertView;
         }
+        
         
     }
     
@@ -113,6 +121,9 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor){
     	//Create an adapter to point at this cursor
+    	FoodCursorAdapter adapter = 
+    			new FoodCursorAdapter(getActivity(), (FoodCursor)cursor);
+    	setListAdapter(adapter);
     }
     
     @Override
