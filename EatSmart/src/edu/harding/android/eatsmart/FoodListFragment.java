@@ -14,6 +14,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,23 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 	
 	private ArrayList<Food> mFoods;
 
+	private static final String TAG = "FoodListFragment";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-       //Initialize the loader to load the list of foods
+      //Add generic foods
+        for(int i = 0; i < 50; i++){
+			Food f = new Food();
+			f.setTitle("Coconut Rice");
+			f.setCalories(150);
+			f.setQuantity(0);
+			FoodManager.get(getActivity()).addFood(f);
+			
+		}
+        //Initialize the loader to load the list of foods
         getLoaderManager().initLoader(0, null, this);
+        Log.d(TAG, "Initialized loader");
         
     }
 
@@ -109,6 +121,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     	protected Cursor loadCursor(){
     		//Query the list of foods
     		return FoodManager.get(getContext()).queryFoods();
+    		
     	}
     }
 

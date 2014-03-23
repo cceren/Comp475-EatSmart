@@ -10,12 +10,15 @@ import android.util.Log;
 
 public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
+	private static final String TAG = "FoodDatabaseHelper";
 	private static final String DB_NAME = "foods.sqlite";
+	
 	private static final int Version  = 1;
 	
 	private static final String TABLE_FOOD = "food";
 	private static final String COLUMN_FOOD_CALORIES = "calories";
 	private static final String COLUMN_FOOD_NAME = "name";
+	private static final String COLUMN_FOOD_ID = "_id";
 	
 	public FoodDatabaseHelper(Context context){
 		super(context, DB_NAME, null, Version);
@@ -23,15 +26,18 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//Create the "food" table
+		// SQL statement to create food table
+        String CREATE_FOOD_TABLE = "CREATE TABLE food ( " +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "name TEXT, "+
+                "calories INTEGER )";
 		try{
-		db.execSQL("create table " + TABLE_FOOD +" (" +
-				"_id integer primary key autoincrement, COLUMN_FOOD_NAME varchar(100)," +
-				" COLUMN_FOOD_CALORIES integer)");
-		
+	        // create food table
+	        db.execSQL(CREATE_FOOD_TABLE);
+			Log.d(TAG, "Database created");
 		}
 		catch(Exception e){
-			Log.d("DB", e.toString());
+			Log.d(TAG, e.toString());
 		}
 	}
 
@@ -41,10 +47,18 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public long insertFood(Food food){
-		ContentValues cv = new ContentValues();
-		cv.put(COLUMN_FOOD_NAME, food.getTitle());
-		cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
-		return getWritableDatabase().insert(TABLE_FOOD, null, cv);
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_FOOD_NAME, food.getTitle());
+			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
+			Log.d(TAG, "Adding item to database");
+			return getWritableDatabase().insert(TABLE_FOOD, null, cv);
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return 0;
 	}
 	
 	public FoodCursor queryFoods(){
@@ -52,11 +66,12 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		try{
 			Cursor wrapped = getReadableDatabase().query(TABLE_FOOD,
 					null, null, null, null, null, null);
+			Log.d(TAG, "queryFoods");
 			return new FoodCursor(wrapped);
 
 		}
 		catch(Exception e){
-			Log.d("DB", e.toString());
+			Log.d(TAG, e.toString());
 		}
 		return null;
 	}
