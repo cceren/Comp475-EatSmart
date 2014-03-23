@@ -25,22 +25,20 @@ import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 //import edu.harding.android.eatsmart.CalorieCounterFragment.FoodAdapter;
 
 public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>{
-	
-	private ArrayList<Food> mFoods;
 
 	private static final String TAG = "FoodListFragment";
-    @Override
+    
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-      //Add generic foods
+        //Add generic foods
         for(int i = 0; i < 50; i++){
 			Food f = new Food();
 			f.setTitle("Coconut Rice");
 			f.setCalories(150);
 			f.setQuantity(0);
 			FoodManager.get(getActivity()).addFood(f);
-			
 		}
         //Initialize the loader to load the list of foods
         getLoaderManager().initLoader(0, null, this);

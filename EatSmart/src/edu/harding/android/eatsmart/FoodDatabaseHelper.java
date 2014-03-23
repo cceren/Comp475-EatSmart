@@ -31,10 +31,28 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
                 "name TEXT, "+
                 "calories INTEGER )";
+        
+        String CREATE_DAYS_TABLE = "CREATE TABLE days ( " +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "date INTEGER )";
+                
+               
+        
+        String CREATE_CONSUMED_FOOD_TABLE = "CREATE TABLE consumedFood ( " +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "name TEXT, " +
+                "servings INTEGER, " +
+                "calories INTEGER, " +
+                "day_id INTEGER references days(_id))";
 		try{
 	        // create food table
 	        db.execSQL(CREATE_FOOD_TABLE);
-			Log.d(TAG, "Database created");
+	        // create days table
+	        db.execSQL(CREATE_DAYS_TABLE);
+	        // create consumedFood table
+	        db.execSQL(CREATE_CONSUMED_FOOD_TABLE);
+			
+	        Log.d(TAG, "Databases created");
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());
