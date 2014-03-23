@@ -4,7 +4,8 @@
  */
 package edu.harding.android.eatsmart;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,13 +55,27 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
        
        //Add food to Days table
        //See if today's day is in the database
+       Day currentDay = null;
+       Date currentDate = new Date();
+       String finalDate = new SimpleDateFormat("yyyy-MM-dd").format(currentDate);
      
-       //OR
+       currentDay = FoodManager.get(getActivity()).getDay(finalDate);
+       if(currentDay == null){//current day is not in database so we need to add it
+    	   //add current day to database
+    	   FoodManager.get(getActivity()).addDay(currentDay);
+       }
        
-       //If it is already in increase the serving size
-        
+       //If the food is not in the current day 
+       if(FoodManager.get(getActivity()).getConsumedFood(currentDay.getId(), id) == null){ 
+    	   // Add food to consumedFoods table
+    	   FoodManager.get(getActivity()).addConsumedFood(f, currentDay.getId());
+       }
+       else{
+    	   //If it is already in increase the serving size
+    	   //increment serving of food in the day
+       }
        
-        
+       
         //Notify user he has added a food to history
         Context context = getActivity();
         CharSequence text = "Added  " + f.getTitle() + " to history";

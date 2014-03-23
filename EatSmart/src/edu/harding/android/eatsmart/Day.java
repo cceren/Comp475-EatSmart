@@ -2,10 +2,16 @@ package edu.harding.android.eatsmart;
 
 import java.sql.Date;
 
+
 public class Day {
 
 	private long mId;
-	private Date date;
+	private Date mDate;
+	
+	public Day(){
+		mId = -1;
+		mDate = null;
+	}
 	public long getId() {
 		return mId;
 	}
@@ -13,9 +19,9 @@ public class Day {
 		mId = id;
 	}
 	public Date getDate() {
-		return date;
+		return mDate;
 	}
 	public void setDate(Date date) {
-		this.date = date;
+		this.mDate = date;
 	}
 }

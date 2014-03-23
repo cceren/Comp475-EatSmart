@@ -19,8 +19,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String TABLE_FOOD = "food";
 	private static final String TABLE_DAYS = "days";
+	private static final String TABLE_CONSUMED_FOOD = "consumedFood";
 	private static final String COLUMN_DATE = "date";
-	
+	private static final String COLUMN_FOOD_DAY_ID = "day_id";
 	private static final String COLUMN_FOOD_CALORIES = "calories";
 	private static final String COLUMN_FOOD_NAME = "name";
 	private static final String COLUMN_FOOD_ID = "_id";
@@ -75,6 +76,37 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			
 			cv.put(COLUMN_FOOD_NAME, food.getTitle());
 			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
+			Log.d(TAG, "Adding item to database");
+			return getWritableDatabase().insert(TABLE_FOOD, null, cv);
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return 0;
+	}
+	
+	public long insertConsumedFood(Food food, long dayId){
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_FOOD_NAME, food.getTitle());
+			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
+			cv.put(COLUMN_FOOD_DAY_ID, dayId);
+			Log.d(TAG, "Adding item to database");
+			return getWritableDatabase().insert(TABLE_CONSUMED_FOOD, null, cv);
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return 0;
+	}
+	
+	public long insertDay(Day day){
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_DATE, day.getDate().toString());
+			
 			Log.d(TAG, "Adding item to database");
 			return getWritableDatabase().insert(TABLE_FOOD, null, cv);
 		}
@@ -142,6 +174,19 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return new FoodCursor(wrapped);
 	}
 	
+	public FoodCursor queryConsumedFood(long dayId, long foodId){
+		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
+				null, //All columns
+				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_ID + " = ?", //limit to a particular day 
+				new String []{new String[]{String.valueOf(dayId)} + " " + new String[]{String.valueOf(foodId)}}, // with this value
+				null, // group by
+				null, //having
+				null, //order by
+				"1"); //limit 1 row
+		
+		return new FoodCursor(wrapped);
+	}
+	
 	
 	public DayCursor queryDay(String date){
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
@@ -161,7 +206,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			super(c);
 		}
 		
-		public Day getDay(String date){
+		public Day getDay(){
 			if(isBeforeFirst() || isAfterLast())
 				return null;
 			
