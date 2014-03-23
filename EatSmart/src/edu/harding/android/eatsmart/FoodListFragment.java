@@ -50,11 +50,16 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
-       /* Food f = ((FoodAdapter)getListAdapter()).getItem(position);
-        ConsumedFoodLab.get(getActivity()).addFoodItem(f);
+       Food f = FoodManager.get(getActivity()).getFood(id);
+       
+       //Add food to Days table
+       //See if today's day is in the database
+     
+       //OR
+       
+       //If it is already in increase the serving size
         
-        f.incrementQuantity();
-        ((FoodAdapter)getListAdapter()).notifyDataSetChanged();
+       
         
         //Notify user he has added a food to history
         Context context = getActivity();
@@ -63,12 +68,12 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-        */
+        
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //((FoodAdapter)getListAdapter()).notifyDataSetChanged();
+        
     }
 
     private class FoodCursorAdapter extends CursorAdapter {

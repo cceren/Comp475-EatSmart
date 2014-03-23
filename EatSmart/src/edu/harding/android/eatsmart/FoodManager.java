@@ -33,4 +33,15 @@ public class FoodManager {
 	public FoodCursor queryFoods(){
 		return mHelper.queryFoods();
 	}
+	
+	public Food getFood(long id){
+		Food food = null;
+		FoodCursor cursor = mHelper.queryFood(id);
+		cursor.moveToFirst();
+		// If you got a row, get a run
+		if(!cursor.isAfterLast())
+			food = cursor.getFood();
+		cursor.close();
+		return food;
+	}
 }

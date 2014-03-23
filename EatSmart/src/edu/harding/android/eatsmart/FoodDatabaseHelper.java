@@ -1,5 +1,7 @@
 package edu.harding.android.eatsmart;
 
+import java.sql.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,6 +18,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	private static final int Version  = 1;
 	
 	private static final String TABLE_FOOD = "food";
+	private static final String TABLE_DAYS = "days";
+	private static final String COLUMN_DATE = "date";
+	
 	private static final String COLUMN_FOOD_CALORIES = "calories";
 	private static final String COLUMN_FOOD_NAME = "name";
 	private static final String COLUMN_FOOD_ID = "_id";
@@ -34,7 +39,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         
         String CREATE_DAYS_TABLE = "CREATE TABLE days ( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-                "date INTEGER )";
+                "date TEXT )";
                 
                
         
@@ -123,4 +128,49 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			
 		}
 	}
+	
+	public FoodCursor queryFood(long id){
+		Cursor wrapped = getReadableDatabase().query(TABLE_FOOD,
+				null, //All columns
+				COLUMN_FOOD_ID + " = ?", //Look for a food ID 
+				new String[]{String.valueOf(id)}, // with this value
+				null, // group by
+				null, //order by
+				null, //having
+				"1"); //limit 1 row
+		
+		return new FoodCursor(wrapped);
+	}
+	
+	
+	public DayCursor queryDay(String date){
+		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
+				null, // All columns
+				COLUMN_DATE + " = ?", //limit to given day
+				new String[]{String.valueOf(date)},
+				null, // group by
+				null, // having
+				null,
+				"1"); // limit 1
+		return new DayCursor(wrapped);
+				
+	}
+	
+	public static class DayCursor extends CursorWrapper{
+		public DayCursor(Cursor c){
+			super(c);
+		}
+		
+		public Day getDay(String date){
+			if(isBeforeFirst() || isAfterLast())
+				return null;
+			
+			Day day = new Day();
+			Date dayDate = Date.valueOf(getString(getColumnIndex(COLUMN_DATE)));
+			day.setDate(dayDate);
+			return day;
+		}
+	}
+	
+	
 }
