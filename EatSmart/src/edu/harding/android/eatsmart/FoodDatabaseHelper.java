@@ -102,16 +102,17 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public long insertDay(Day day){
+		Log.d(TAG, "Adding: " + day.getDate().toString() +"  to daysTable");
 		try{
 			ContentValues cv = new ContentValues();
 			
 			cv.put(COLUMN_DATE, day.getDate().toString());
 			
-			Log.d(TAG, "Adding item to database");
+			Log.d(TAG, "Adding day to daysTable");
 			return getWritableDatabase().insert(TABLE_FOOD, null, cv);
 		}
 		catch(Exception e){
-			Log.d(TAG, e.toString());
+			Log.d(TAG,"insertDay() " + e.toString());
 		}
 		return 0;
 	}
@@ -187,7 +188,6 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return new FoodCursor(wrapped);
 	}
 	
-	
 	public DayCursor queryDay(String date){
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
 				null, // All columns
@@ -211,9 +211,54 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 				return null;
 			
 			Day day = new Day();
-			Date dayDate = Date.valueOf(getString(getColumnIndex(COLUMN_DATE)));
+			String dayDate = getString(getColumnIndex(COLUMN_DATE));
 			day.setDate(dayDate);
 			return day;
+		}
+	}
+	
+	public ConsumedFoodCursor queryConsumedFoods(){
+		//Equivalent to "select * from food order by name asc"
+		try{
+			Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
+					null, null, null, null, null, null);
+			Log.d(TAG, "queryConsumedFoods");
+			return new ConsumedFoodCursor(wrapped);
+
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	/**
+	 * A convenience class to wrap a cursor that returns rows from the "consumedFoods" table.
+	 * The{@link getFood()} method will give you a Food instance representing
+	 * the current row.
+	 */
+	
+	public static class ConsumedFoodCursor extends CursorWrapper{
+		public ConsumedFoodCursor(Cursor c){
+			super(c);
+		}
+		
+	/**
+	 * Return a food object configured for the current row,
+	 * or null if the current row is invalid.
+	 */
+		public Food getFood(){
+			if(isBeforeFirst() || isAfterLast())
+				return null;
+			Food food = new Food();
+			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
+			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
+			
+			food.setCalories(foodCalories);
+			food.setTitle(foodName);
+			
+			return food;
+			
 		}
 	}
 	

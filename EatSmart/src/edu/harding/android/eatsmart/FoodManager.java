@@ -1,6 +1,7 @@
 package edu.harding.android.eatsmart;
 
 import android.content.Context;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.DayCursor;
 
@@ -70,6 +71,7 @@ public class FoodManager {
 	}
 	
 	public Day getDay(String date){
+
 		Day day = null;
 		DayCursor cursor = mHelper.queryDay(date);
 		cursor.moveToFirst();
@@ -78,5 +80,9 @@ public class FoodManager {
 			day = cursor.getDay();
 		cursor.close();
 		return day;
+	}
+	
+	public ConsumedFoodCursor queryConsumedFoods(){
+		return mHelper.queryConsumedFoods();
 	}
 }

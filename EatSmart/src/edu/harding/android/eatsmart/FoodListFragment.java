@@ -47,8 +47,6 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
         
     }
 
-    
-
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
        Food f = FoodManager.get(getActivity()).getFood(id);
@@ -59,9 +57,11 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
        Date currentDate = new Date();
        String finalDate = new SimpleDateFormat("yyyy-MM-dd").format(currentDate);
      
+       if(finalDate != null){
        currentDay = FoodManager.get(getActivity()).getDay(finalDate);
        if(currentDay == null){//current day is not in database so we need to add it
     	   //add current day to database
+    	   currentDay = new Day(finalDate);
     	   FoodManager.get(getActivity()).addDay(currentDay);
        }
        
@@ -74,7 +74,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     	   //If it is already in increase the serving size
     	   //increment serving of food in the day
        }
-       
+       }
        
         //Notify user he has added a food to history
         Context context = getActivity();
