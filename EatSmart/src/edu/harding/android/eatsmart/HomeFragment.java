@@ -1,6 +1,9 @@
 package edu.harding.android.eatsmart;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -66,7 +69,7 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		//Launches the ConsumedFoodListFragment
+		//***Launches the ConsumedFoodListFragment***
 		Button historyButton = (Button)v.findViewById(R.id.history_button);
 		historyButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -80,7 +83,7 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		//Starts the activity that takes the picture
+		//***Starts the activity that takes the picture***
 		Button quickPickButton = (Button)v.findViewById(R.id.quick_pick_button);
 		quickPickButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -98,7 +101,7 @@ public class HomeFragment extends Fragment {
         	quickPickButton.setEnabled(false);
         }
 		
-        //Launches PendingFoodListFragment
+        //***Launches PendingFoodListFragment***
 		Button organizeButton = (Button)v.findViewById(R.id.organize_button);
 		organizeButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -127,28 +130,37 @@ public class HomeFragment extends Fragment {
 	}
 	
 	 @Override
-	    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	 public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	        if (resultCode != Activity.RESULT_OK) return;
 	        if (requestCode == REQUEST_PHOTO) {
-		            
-	        	//Create a food Item and add the photo to it 
-		        	Food f = new Food();
-		        	f.setTitle("Pending");
-		        	f.setCalories(0);
-		        	f.setQuantity(1);
+	        	
+	        	String filename = data
+	        		.getStringExtra(FoodCameraFragment.EXTRA_PHOTO_FILENAME);
+	        	
+	        	
+	        	if(filename != null){
+	        		//Create a food Item and add the photo to it 
+	        		Food pendingFood = new Food();
+		        	pendingFood.setTitle("Pending");
+		        	pendingFood.setCalories(0);
+		        	pendingFood.setQuantity(1);
+		        	pendingFood.setPhotoDate(CurrentDate());
+		        	pendingFood.setPhotoFilename(filename);
 		        	
-		        	String filename = data
-		        			.getStringExtra(FoodCameraFragment.EXTRA_PHOTO_FILENAME);
-		        	
-		        	if(filename != null){
-		        		Photo p = new Photo(filename);
-		        		f.setPhoto(p);	
-		        	}
-		        	//Add the food to the PendingFoodLab
-		        	PendingFoodLab.get(getActivity()).addPendingFoodItem(f);
-		        	PendingFoodLab.get(getActivity()).savePendingFoods();
-		        	
-	            }
+		        	//Add the food to the PendingFood table
+		        	FoodManager.get(getActivity()).addPendingFood(pendingFood);
+		        } 
 	        }
-	    
+	   }
+	 
+	 /***
+	  * Returns a string with today's current date in "yyyy-MM-dd" format
+	  * @return currentDate
+	  */
+	 String CurrentDate(){
+	 
+		 Date date = new Date();
+	     String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+	     return currentDate;
+	 }
 }

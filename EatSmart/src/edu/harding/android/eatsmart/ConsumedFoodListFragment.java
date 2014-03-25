@@ -1,5 +1,5 @@
 package edu.harding.android.eatsmart;
-/* This fragment displays the foods the user has consumed
+/***This fragment displays the foods the user has consumed
  * 
  */
 import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-/*Added comment*/
 public class ConsumedFoodListFragment extends ListFragment implements LoaderCallbacks<Cursor> {
 	
 

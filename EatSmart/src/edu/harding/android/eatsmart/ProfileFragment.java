@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
-		final EditText age = (EditText)v.findViewById(R.id.age_editText);
+		
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
 		final EditText height = (EditText)v.findViewById(R.id.height_editText);
 		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
@@ -62,7 +62,7 @@ public class ProfileFragment extends Fragment {
 			    try{    
 			        Editor editor = preference.edit();  
 			        editor.putString("name", nameEditText.getText().toString());  
-			        editor.putString("age", age.getText().toString());
+			        
 			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
 			        editor.putString("height", height.getText().toString());  
 			        editor.putString("weight", weight.getText().toString());  

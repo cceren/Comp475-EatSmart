@@ -5,6 +5,7 @@ import android.util.Log;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.DayCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.PendingFoodCursor;
 
 public class FoodManager {
 	private static final String TAG = "FoodManager";
@@ -49,6 +50,11 @@ public class FoodManager {
 	public Food addConsumedFood(Food food, long dayId){
 		//Insert an entry for a food in the consumedFood table. Last value indicates the serving, if new it is going to be one
 		mHelper.insertConsumedFood(food, dayId, 1);
+		return food;
+	}
+	
+	public Food addPendingFood(Food food){
+		mHelper.insertPendingFood(food);
 		return food;
 	}
 	
@@ -100,4 +106,9 @@ public class FoodManager {
 	public ConsumedFoodCursor queryConsumedFoods(){
 		return mHelper.queryConsumedFoods();
 	}
+	
+	public PendingFoodCursor queryPendingFoods(){
+		return mHelper.queryPendingFoods();
+	}
+	
 }

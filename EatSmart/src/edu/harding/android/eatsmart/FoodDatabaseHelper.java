@@ -20,12 +20,16 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_FOOD = "food";
 	private static final String TABLE_DAYS = "days";
 	private static final String TABLE_CONSUMED_FOOD = "consumedFood";
+	private static final String TABLE_PENDING_FOOD = "pendingFood";
+	
+	
 	private static final String COLUMN_DATE = "date";
 	private static final String COLUMN_FOOD_DAY_ID = "day_id";
 	private static final String COLUMN_FOOD_CALORIES = "calories";
 	private static final String COLUMN_FOOD_NAME = "name";
 	private static final String COLUMN_FOOD_ID = "_id";
 	private static final String COLUMN_FOOD_SERVINGS = "servings";
+	private static final String COLUMN_PENDING_FOOD_PHOTO_FILENAME = "photoFilename";
 	
 	public FoodDatabaseHelper(Context context){
 		super(context, DB_NAME, null, Version);
@@ -51,6 +55,12 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "servings INTEGER, " +
                 "calories INTEGER, " +
                 "day_id INTEGER references days(_id))";
+        
+        String CREATE_PENDING_FOOD_TABLE = "CREATE TABLE pendingFood ( " +
+        "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        "date TEXT, " +
+        "photoFilename TEXT)";
+        
 		try{
 	        // create food table
 	        db.execSQL(CREATE_FOOD_TABLE);
@@ -58,8 +68,10 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	        db.execSQL(CREATE_DAYS_TABLE);
 	        // create consumedFood table
 	        db.execSQL(CREATE_CONSUMED_FOOD_TABLE);
-			
-	        Log.d(TAG, "Databases created");
+			// create pendingFood table
+	        db.execSQL(CREATE_PENDING_FOOD_TABLE);
+	       
+	        Log.d(TAG, "Database tables created");
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());
@@ -120,6 +132,20 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return 0;
 	}
 	
+	public long insertPendingFood(Food food){
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_DATE, food.getPhotoDate());
+			cv.put(COLUMN_PENDING_FOOD_PHOTO_FILENAME, food.getPhotoFilename());
+			Log.d(TAG, "Adding: pending food to pendingFood table");
+			return getWritableDatabase().insert(TABLE_PENDING_FOOD, null, cv);
+		}
+		catch(Exception e){
+			Log.d(TAG,"insertPendingFood() " + e.toString());
+		}
+		return 0;
+	}
 	public long insertDay(Day day){
 		
 		try{
@@ -269,7 +295,25 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		catch(Exception e){
 			Log.d(TAG, e.toString());
 		}
+		
+	
 		return null;
+	}
+	
+
+	public PendingFoodCursor queryPendingFoods(){
+		try{
+			Cursor wrapped = getReadableDatabase().query(TABLE_PENDING_FOOD,
+					null, null, null, null, null, null);
+			Log.d(TAG, "queryingPendingFoods()");
+			return new PendingFoodCursor(wrapped);
+
+		}
+		catch(Exception e){
+			Log.d(TAG, "queryPendingFoods() " + e.toString());
+		}
+		return null;
+		
 	}
 	
 	/**
@@ -277,7 +321,6 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	 * The{@link getFood()} method will give you a Food instance representing
 	 * the current row.
 	 */
-	
 	public static class ConsumedFoodCursor extends CursorWrapper{
 		public ConsumedFoodCursor(Cursor c){
 			super(c);
@@ -300,6 +343,33 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			food.setQuantity(foodQuantity);
 			
 			
+			return food;
+			
+		}
+	}
+	
+	public static class PendingFoodCursor extends CursorWrapper{
+		public PendingFoodCursor(Cursor c){
+			super(c);
+		}
+		
+	/**
+	 * Return a food object configured for the current row,
+	 * or null if the current row is invalid.
+	 */
+		public Food getFood(){
+			if(isBeforeFirst() || isAfterLast())
+				return null;
+			Food food = new Food();
+			String photoFilename = getString(getColumnIndex(COLUMN_PENDING_FOOD_PHOTO_FILENAME));
+			String photoDate = getString(getColumnIndex(COLUMN_DATE));
+			
+			
+			food.setPhotoFilename(photoFilename);
+			food.setPhotoDate(photoDate);
+			Photo photo = new Photo(photoFilename);
+			food.setPhoto(photo);
+
 			return food;
 			
 		}

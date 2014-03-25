@@ -19,10 +19,27 @@ public class Food {
     private int mfoodId;
     private String mTitle;
     private Date mDate;
-    private int mQuantity;
+    private String mPhotoDate;
+    private String mPhotoFilename;
+	private int mQuantity;
     private int mCalories;
     private Photo mPhoto;
     
+    public String getPhotoFilename() {
+		return mPhotoFilename;
+	}
+
+	public void setPhotoFilename(String photoFilename) {
+		mPhotoFilename = photoFilename;
+	}
+	
+     public String getPhotoDate() {
+		return mPhotoDate;
+	}
+
+	public void setPhotoDate(String photoDate) {
+		mPhotoDate = photoDate;
+	}
     public Food() {
         //mId = UUID.randomUUID();
         mDate = new Date();
