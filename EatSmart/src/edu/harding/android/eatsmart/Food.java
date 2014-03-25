@@ -16,6 +16,7 @@ public class Food {
 	private static final String JSON_PHOTO = "photo";
 	
     private UUID mId;
+    private int mfoodId;
     private String mTitle;
     private Date mDate;
     private int mQuantity;
@@ -23,7 +24,7 @@ public class Food {
     private Photo mPhoto;
     
     public Food() {
-        mId = UUID.randomUUID();
+        //mId = UUID.randomUUID();
         mDate = new Date();
     }
     
@@ -100,4 +101,14 @@ public class Food {
 	public void setPhoto(Photo p){
 		mPhoto = p;
 	}
+
+	public int getFoodId() {
+		return mfoodId;
+	}
+
+	public void setFoodId(int foodId) {
+		mfoodId = foodId;
+	}
+	
+	
 }

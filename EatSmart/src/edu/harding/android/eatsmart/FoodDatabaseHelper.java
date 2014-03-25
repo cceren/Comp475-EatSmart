@@ -25,6 +25,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	private static final String COLUMN_FOOD_CALORIES = "calories";
 	private static final String COLUMN_FOOD_NAME = "name";
 	private static final String COLUMN_FOOD_ID = "_id";
+	private static final String COLUMN_FOOD_SERVINGS = "servings";
 	
 	public FoodDatabaseHelper(Context context){
 		super(context, DB_NAME, null, Version);
@@ -85,15 +86,33 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return 0;
 	}
 	
-	public long insertConsumedFood(Food food, long dayId){
+	public long insertConsumedFood(Food food, long dayId, int servingSize){
 		try{
 			ContentValues cv = new ContentValues();
 			
 			cv.put(COLUMN_FOOD_NAME, food.getTitle());
 			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
 			cv.put(COLUMN_FOOD_DAY_ID, dayId);
+			cv.put(COLUMN_FOOD_SERVINGS, servingSize);
 			Log.d(TAG, "Adding food to consumedFood table");
 			return getWritableDatabase().insert(TABLE_CONSUMED_FOOD, null, cv);
+			
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return 0;
+	}
+	
+	public long updateConsumedFood(long dayId, int servingSize, String foodName){
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_FOOD_SERVINGS, servingSize);
+			Log.d(TAG, "Updating food from consumedFood table");
+			return getWritableDatabase().update(TABLE_CONSUMED_FOOD, cv, 
+					COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", new String []{String.valueOf(dayId), foodName});
+			
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());
@@ -152,9 +171,11 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			Food food = new Food();
 			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
 			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
+			int foodId = getInt(getColumnIndex(COLUMN_FOOD_ID));
 			
 			food.setCalories(foodCalories);
 			food.setTitle(foodName);
+			food.setFoodId(foodId);
 			
 			return food;
 			
@@ -178,15 +199,32 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
 				null, //All columns
 				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", //limit to a particular day 
-				new String []{new String[]{String.valueOf(dayId)} + " " + new String[]{foodName}}, // with this value
+				new String []{String.valueOf(dayId), foodName}, // with this value
 				null, // group by
 				null, //having
 				null, //order by
 				"1"); //limit 1 row
 		
-		Log.e(TAG, "FOOD day ID is: " + String.valueOf(dayId));
-		
 		return new FoodCursor(wrapped);
+		
+		
+	}
+	
+	public int queryFoodServing(long dayId, String foodName){
+		int servingSize = 0;
+		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
+				null, // All columns
+				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", //limit to a particular day 
+				new String []{String.valueOf(dayId), foodName}, // with this value
+				null,
+				null, //having
+				null, //order by
+				"1"); //limit 1 row
+		
+		if (wrapped.moveToFirst()) // data?
+			servingSize = wrapped.getInt(wrapped.getColumnIndex(COLUMN_FOOD_SERVINGS)); 
+		
+		return servingSize;
 		
 	}
 	
@@ -194,7 +232,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
 				null, // All columns
 				COLUMN_DATE + " = ?", //limit to given day
-				new String[]{String.valueOf(date)},
+				new String[]{date},
 				null, // group by
 				null, // having
 				null,
@@ -255,9 +293,12 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			Food food = new Food();
 			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
 			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
+			int foodQuantity = getInt(getColumnIndex(COLUMN_FOOD_SERVINGS));
 			
 			food.setCalories(foodCalories);
 			food.setTitle(foodName);
+			food.setQuantity(foodQuantity);
+			
 			
 			return food;
 			

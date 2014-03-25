@@ -33,6 +33,13 @@ public class FoodManager {
 		return food;
 	}
 	
+	public boolean incrementServing(long dayId, String foodName){
+		int servingSize = mHelper.queryFoodServing(dayId, foodName);
+		mHelper.updateConsumedFood(dayId, ++servingSize, foodName);
+		
+		return true;
+	}
+	
 	public Day addDay(Day day){
 		//Insert a day into the days table
 		day.setId(mHelper.insertDay(day));
@@ -40,8 +47,8 @@ public class FoodManager {
 	}
 	
 	public Food addConsumedFood(Food food, long dayId){
-		//Insert a day into the days table
-		mHelper.insertConsumedFood(food, dayId);
+		//Insert an entry for a food in the consumedFood table. Last value indicates the serving, if new it is going to be one
+		mHelper.insertConsumedFood(food, dayId, 1);
 		return food;
 	}
 	
@@ -57,6 +64,7 @@ public class FoodManager {
 		if(!cursor.isAfterLast())
 			food = cursor.getFood();
 		cursor.close();
+		
 		return food;
 	}
 	
@@ -68,7 +76,6 @@ public class FoodManager {
 		if(!cursor.isAfterLast())
 			food = cursor.getFood();
 		
-
 		//Log.d(TAG, "Content of food: " + cursor.getString(1));
 		cursor.close();
 		//if(food == null)
@@ -76,16 +83,18 @@ public class FoodManager {
 		return food;
 	}
 	
-	public Day getDay(String date){
+	public int getDay(String date){
 
 		Day day = null;
+		int dayId = -1;
 		DayCursor cursor = mHelper.queryDay(date);
 		cursor.moveToFirst();
 		//If you got a row, get a day
 		if(!cursor.isAfterLast())
-			day = cursor.getDay();
+			//day = cursor.getDay();
+			dayId = cursor.getInt(0);
 		cursor.close();
-		return day;
+		return dayId;
 	}
 	
 	public ConsumedFoodCursor queryConsumedFoods(){

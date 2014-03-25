@@ -28,22 +28,33 @@ import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>{
 
 	private static final String TAG = "FoodListFragment";
+	private static final String[] Foods = {"Eggs", "Bacon", "Coconut Rice", "Apples", "Glass of Milk", "Yellow Rice", "Chicken",
+											"King cake", "Lane cake", "Peach shortcake", "Pound cake", "Red velvet cake", "Modjeska", 
+											"Moon pie", "Peanut brittle", "Pecan brittle", "Pecan Divinity", "Pralines", 
+											"Blackberry cobbler", "Dewberry cobbler", "Peach cobbler", "Bread pudding", 
+											"Corn pudding", "Lemon pudding", "Trifle", "Chicken and dumplings", "Chicken fried steak", 
+											"Crab cake", "Fried pork chops", "Fried turkey"};
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-        //Add generic foods
-        /*for(int i = 0; i < 30; i++){
+        
+        //Check to see if first item is in the database, else add generic foods
+        
+        for(int i = 0; i < 30; i++){
 			Food f = new Food();
-			f.setTitle("Coconut Rice");
+			f.setTitle(Foods[i]);
 			f.setCalories(150 + i);
 			f.setQuantity(0);
 			FoodManager.get(getActivity()).addFood(f);
-		}*/
+		}
+        Log.d(TAG, "Added Generic Foods");
+    
         //Initialize the loader to load the list of foods
+        Log.d(TAG, "No foods added");
         getLoaderManager().initLoader(0, null, this);
-        Log.d(TAG, "Initialized loader");
+        
         
     }
 
@@ -152,26 +163,28 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
       
         if(currentDate != null){
         	  
-	        Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
-	        //Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
-	        if(currentDay == null){//current day is not in database so we need to add it
+	        //Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
+        	int currentDayId = FoodManager.get(getActivity()).getDay(currentDate);
+	        Log.e("CURRENT DAY", "Current day is: " + currentDayId);
+	        if(currentDayId == -1){//current day is not in database so we need to add it
 	     	   //add current day to database
-	     	   currentDay = new Day(currentDate);
+	     	   Day currentDay = new Day(currentDate);
 	     	   
 	     	   FoodManager.get(getActivity()).addDay(currentDay);
-	     	   Log.e("CURRENT DAY", "Added a currentDay: " + currentDay.getId());
+	     	   currentDayId = FoodManager.get(getActivity()).getDay(currentDate);
+	     	   Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
+	     	   
 	        }
-	        
 	        //If the food is not in the current day 
-	        if(FoodManager.get(getActivity()).getConsumedFood(-1, food.getTitle()) == null){ 
-	     	   // Add food to consumedFoods table
-	        	
-	        	FoodManager.get(getActivity()).addConsumedFood(food, currentDay.getId());
+	        if(FoodManager.get(getActivity()).getConsumedFood(currentDayId, food.getTitle()) == null){ 
+	     	   // Add food to consumedFoods table 	
+	        	FoodManager.get(getActivity()).addConsumedFood(food, currentDayId);
 	        }
 	        else{
-	        	Log.e("Food Retrieved", "Food found is: " + FoodManager.get(getActivity()).getConsumedFood(currentDay.getId(), food.getTitle()).getTitle());
+	        	Log.e("Food Retrieved", "Food found is: " + FoodManager.get(getActivity()).getConsumedFood(currentDayId, food.getTitle()).getTitle());
 	     	   //If it is already in increase the serving size
 	     	   //increment serving of food in the day
+	        	FoodManager.get(getActivity()).incrementServing(currentDayId, food.getTitle());
 	        }
         }
         
