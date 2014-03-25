@@ -14,11 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 
 public class ProfileFragment extends Fragment {
 
 	private final String USERINFO = "userInfo"; 
+	private int monthOfYear=1;
+	private int dayOfMonth=1 ;
+	private int year=1992;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -38,8 +43,16 @@ public class ProfileFragment extends Fragment {
 		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		final EditText age = (EditText)v.findViewById(R.id.age_editText);
+		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
 		final EditText height = (EditText)v.findViewById(R.id.height_editText);
 		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
+	    datePicker.init(1992, 0, 1, new OnDateChangedListener(){
+	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
+	           ProfileFragment.this.monthOfYear = monthOfYear+1;
+	           ProfileFragment.this.dayOfMonth = dayOfMonth;
+	           ProfileFragment.this.year = year;
+	            }            
+	        });
 		Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -49,7 +62,8 @@ public class ProfileFragment extends Fragment {
 			    try{    
 			        Editor editor = preference.edit();  
 			        editor.putString("name", nameEditText.getText().toString());  
-			        editor.putString("age", age.getText().toString());  
+			        editor.putString("age", age.getText().toString());
+			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
 			        editor.putString("height", height.getText().toString());  
 			        editor.putString("weight", weight.getText().toString());  
 			        editor.commit(); 

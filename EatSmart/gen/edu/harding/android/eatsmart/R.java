@@ -24,26 +24,28 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int AgeTextView=0x7f080019;
-        public static final int action_settings=0x7f08001f;
+        public static final int AgeTextView=0x7f08001a;
+        public static final int action_settings=0x7f080021;
         public static final int add_food_button=0x7f080010;
-        public static final int age_editText=0x7f08001a;
+        public static final int age_editText=0x7f08001b;
+        public static final int birthday_textView=0x7f080014;
         public static final int consumed_calories_text_view=0x7f080004;
         public static final int consumed_food_item_name_text_view=0x7f080003;
         public static final int consumed_quantity_text_view=0x7f080002;
-        public static final int date_textView=0x7f080017;
+        public static final int datePicker=0x7f08001c;
+        public static final int date_textView=0x7f080018;
         public static final int food_camera_preview=0x7f080007;
         public static final int food_camera_progressContainer=0x7f08000a;
         public static final int food_camera_surfaceView=0x7f080008;
         public static final int food_camera_takePictureButton=0x7f080009;
         public static final int fragmentContainer=0x7f080000;
-        public static final int height_editText=0x7f08001b;
-        public static final int height_textView=0x7f080014;
+        public static final int height_editText=0x7f08001d;
+        public static final int height_textView=0x7f080015;
         public static final int history_button=0x7f080011;
         public static final int listFood=0x7f080005;
-        public static final int nameEditText=0x7f080018;
+        public static final int nameEditText=0x7f080019;
         public static final int organize_button=0x7f080012;
-        public static final int pendingFood_imageView=0x7f08001d;
+        public static final int pendingFood_imageView=0x7f08001f;
         public static final int profileName_textView=0x7f080013;
         public static final int progressBar1=0x7f08000e;
         public static final int quick_pick_button=0x7f08000f;
@@ -51,10 +53,10 @@ public final class R {
         public static final int submit=0x7f080006;
         public static final int textView2=0x7f08000c;
         public static final int textView3=0x7f08000d;
-        public static final int time_textView=0x7f08001e;
-        public static final int update_profile_button=0x7f080016;
-        public static final int weight_editText=0x7f08001c;
-        public static final int weight_textView=0x7f080015;
+        public static final int time_textView=0x7f080020;
+        public static final int update_profile_button=0x7f080017;
+        public static final int weight_editText=0x7f08001e;
+        public static final int weight_textView=0x7f080016;
         public static final int welcome_textView=0x7f08000b;
     }
     public static final class layout {
@@ -74,24 +76,25 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int age_label=0x7f050006;
         public static final int app_name=0x7f050000;
-        public static final int consumed_food=0x7f050010;
-        public static final int errorSaving_toast=0x7f05000f;
+        public static final int birthday=0x7f050007;
+        public static final int consumed_food=0x7f050011;
+        public static final int errorSaving_toast=0x7f050010;
         public static final int food_button_title=0x7f050002;
         public static final int food_history_title=0x7f050003;
-        public static final int food_menu=0x7f050011;
-        public static final int foods_title=0x7f05000a;
-        public static final int height_label=0x7f050008;
+        public static final int food_menu=0x7f050012;
+        public static final int foods_title=0x7f05000b;
+        public static final int height_label=0x7f050009;
         public static final int name_example=0x7f050005;
         public static final int name_label=0x7f050004;
-        public static final int organize_quickPick_label=0x7f05000d;
-        public static final int organize_quick_picks=0x7f050012;
-        public static final int profile=0x7f050013;
-        public static final int quick_pick_label=0x7f05000b;
-        public static final int save_button=0x7f050009;
-        public static final int take=0x7f05000e;
-        public static final int update_profile=0x7f050014;
-        public static final int weight_label=0x7f050007;
-        public static final int welcome_label=0x7f05000c;
+        public static final int organize_quickPick_label=0x7f05000e;
+        public static final int organize_quick_picks=0x7f050013;
+        public static final int profile=0x7f050014;
+        public static final int quick_pick_label=0x7f05000c;
+        public static final int save_button=0x7f05000a;
+        public static final int take=0x7f05000f;
+        public static final int update_profile=0x7f050015;
+        public static final int weight_label=0x7f050008;
+        public static final int welcome_label=0x7f05000d;
     }
     public static final class style {
         /** 

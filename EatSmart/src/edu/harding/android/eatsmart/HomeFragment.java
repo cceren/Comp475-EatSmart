@@ -40,17 +40,19 @@ public class HomeFragment extends Fragment {
 		//welcomeTextView.setText(mProfile.getName());
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "");
+        String birthday = sharedPreferences.getString("birthday", "");
         String userWeight = sharedPreferences.getString("weight", "");
         String userHeight = sharedPreferences.getString("height", "");
         
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
+        TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
         
         profileNameTextView.setText("User Name: " + userName);
+        birthdayTextView.setText("Birthday:"+ birthday);
         heightTextView.setText("Height: " + userHeight);
         weightTextView.setText("Weight: " + userWeight);
-        
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	
 			@Override

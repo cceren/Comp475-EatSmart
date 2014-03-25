@@ -8,6 +8,7 @@
 	<string name="name_label">Name: </string>
 	<string name="name_example">John Doe</string>
 	<string name="age_label">Age: </string>
+	<string name="birthday">Birthday: </string>
 	<string name="weight_label">Weight (lb): </string>
 	<string name="height_label">Height (cm): </string>
 	<string name="save_button">Save</string>
