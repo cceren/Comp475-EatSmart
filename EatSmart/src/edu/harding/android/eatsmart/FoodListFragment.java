@@ -34,13 +34,13 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
         //Add generic foods
-        for(int i = 0; i < 50; i++){
+        /*for(int i = 0; i < 30; i++){
 			Food f = new Food();
 			f.setTitle("Coconut Rice");
-			f.setCalories(150);
+			f.setCalories(150 + i);
 			f.setQuantity(0);
 			FoodManager.get(getActivity()).addFood(f);
-		}
+		}*/
         //Initialize the loader to load the list of foods
         getLoaderManager().initLoader(0, null, this);
         Log.d(TAG, "Initialized loader");
@@ -50,31 +50,8 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
        Food f = FoodManager.get(getActivity()).getFood(id);
+       boolean foodAdded = addFoodToDatabase(f, id);
        
-       //Add food to Days table
-       //See if today's day is in the database
-       Day currentDay = null;
-       Date currentDate = new Date();
-       String finalDate = new SimpleDateFormat("yyyy-MM-dd").format(currentDate);
-     
-       if(finalDate != null){
-       currentDay = FoodManager.get(getActivity()).getDay(finalDate);
-       if(currentDay == null){//current day is not in database so we need to add it
-    	   //add current day to database
-    	   currentDay = new Day(finalDate);
-    	   FoodManager.get(getActivity()).addDay(currentDay);
-       }
-       
-       //If the food is not in the current day 
-       if(FoodManager.get(getActivity()).getConsumedFood(currentDay.getId(), id) == null){ 
-    	   // Add food to consumedFoods table
-    	   FoodManager.get(getActivity()).addConsumedFood(f, currentDay.getId());
-       }
-       else{
-    	   //If it is already in increase the serving size
-    	   //increment serving of food in the day
-       }
-       }
        
         //Notify user he has added a food to history
         Context context = getActivity();
@@ -161,5 +138,43 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     public void onLoaderReset(Loader<Cursor> loader){
     	//Stop using the cursor (via the adapter)
     	setListAdapter(null);
+    }
+    
+    boolean addFoodToDatabase(Food food, long id){
+    	
+    	boolean wasAdded = false;
+    	
+    	//Add food to Days table
+        //See if today's day is in the database
+       
+        Date date = new Date();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+      
+        if(currentDate != null){
+        	  
+	        Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
+	        //Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
+	        if(currentDay == null){//current day is not in database so we need to add it
+	     	   //add current day to database
+	     	   currentDay = new Day(currentDate);
+	     	   
+	     	   FoodManager.get(getActivity()).addDay(currentDay);
+	     	   Log.e("CURRENT DAY", "Added a currentDay: " + currentDay.getId());
+	        }
+	        
+	        //If the food is not in the current day 
+	        if(FoodManager.get(getActivity()).getConsumedFood(-1, food.getTitle()) == null){ 
+	     	   // Add food to consumedFoods table
+	        	
+	        	FoodManager.get(getActivity()).addConsumedFood(food, currentDay.getId());
+	        }
+	        else{
+	        	Log.e("Food Retrieved", "Food found is: " + FoodManager.get(getActivity()).getConsumedFood(currentDay.getId(), food.getTitle()).getTitle());
+	     	   //If it is already in increase the serving size
+	     	   //increment serving of food in the day
+	        }
+        }
+        
+        return wasAdded;
     }
 }

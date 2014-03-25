@@ -1,9 +1,10 @@
 package edu.harding.android.eatsmart;
 
 import android.content.Context;
+import android.util.Log;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
-import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.DayCursor;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 
 public class FoodManager {
 	private static final String TAG = "FoodManager";
@@ -59,14 +60,19 @@ public class FoodManager {
 		return food;
 	}
 	
-	public Food getConsumedFood(long dayId, long foodId){
+	public Food getConsumedFood(long dayId, String foodName){
 		Food food = null;
-		FoodCursor cursor = mHelper.queryConsumedFood(dayId, foodId);
+		FoodCursor cursor = mHelper.queryConsumedFood(dayId, foodName);
 		cursor.moveToFirst();
-		// If you got a row, get a run
+		// If you got a row, get a food
 		if(!cursor.isAfterLast())
 			food = cursor.getFood();
+		
+
+		//Log.d(TAG, "Content of food: " + cursor.getString(1));
 		cursor.close();
+		//if(food == null)
+			
 		return food;
 	}
 	

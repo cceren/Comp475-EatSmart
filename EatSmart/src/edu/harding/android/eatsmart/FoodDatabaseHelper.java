@@ -92,7 +92,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			cv.put(COLUMN_FOOD_NAME, food.getTitle());
 			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
 			cv.put(COLUMN_FOOD_DAY_ID, dayId);
-			Log.d(TAG, "Adding item to database");
+			Log.d(TAG, "Adding food to consumedFood table");
 			return getWritableDatabase().insert(TABLE_CONSUMED_FOOD, null, cv);
 		}
 		catch(Exception e){
@@ -102,14 +102,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public long insertDay(Day day){
-		Log.d(TAG, "Adding: " + day.getDate().toString() +"  to daysTable");
+		
 		try{
 			ContentValues cv = new ContentValues();
 			
 			cv.put(COLUMN_DATE, day.getDate().toString());
-			
-			Log.d(TAG, "Adding day to daysTable");
-			return getWritableDatabase().insert(TABLE_FOOD, null, cv);
+			Log.d(TAG, "Adding: " + day.getDate().toString() +"  to daysTable");
+			return getWritableDatabase().insert(TABLE_DAYS, null, cv);
 		}
 		catch(Exception e){
 			Log.d(TAG,"insertDay() " + e.toString());
@@ -175,17 +174,20 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return new FoodCursor(wrapped);
 	}
 	
-	public FoodCursor queryConsumedFood(long dayId, long foodId){
+	public FoodCursor queryConsumedFood(long dayId, String foodName){
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
 				null, //All columns
-				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_ID + " = ?", //limit to a particular day 
-				new String []{new String[]{String.valueOf(dayId)} + " " + new String[]{String.valueOf(foodId)}}, // with this value
+				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", //limit to a particular day 
+				new String []{new String[]{String.valueOf(dayId)} + " " + new String[]{foodName}}, // with this value
 				null, // group by
 				null, //having
 				null, //order by
 				"1"); //limit 1 row
 		
+		Log.e(TAG, "FOOD day ID is: " + String.valueOf(dayId));
+		
 		return new FoodCursor(wrapped);
+		
 	}
 	
 	public DayCursor queryDay(String date){
