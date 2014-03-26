@@ -146,4 +146,8 @@ public class FoodManager {
 		return food;
 	}
 	
+	public int DeletePendingFood(String path){
+		return mHelper.DeleteFromPendingFoods(path);
+	}
+	
 }

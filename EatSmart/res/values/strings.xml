@@ -26,5 +26,6 @@
 	<string name="calories">calories</string>
 	<string name="servings">servings</string>
 	<string name="pending_food">Pending Food</string>
+	<string name="food_name">Food Name</string>
 	
 </resources>

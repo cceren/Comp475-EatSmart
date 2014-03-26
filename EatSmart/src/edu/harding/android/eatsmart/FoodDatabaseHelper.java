@@ -277,6 +277,14 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return 0;
 	}
 	
+	public int DeleteFromPendingFoods(String path){
+
+		Log.d(TAG, "Delete from pendingFood");
+		return getReadableDatabase().delete(TABLE_PENDING_FOOD, 
+				COLUMN_PENDING_FOOD_PHOTO_FILENAME + " = ? ", new String []{path}); //limit 1 row
+		
+	}
+	
 	public int queryFoodServing(long dayId, String foodName){
 		int servingSize = 0;
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
@@ -287,14 +295,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 				null, //having
 				null, //order by
 				"1"); //limit 1 row
-		
+
 		if (wrapped.moveToFirst()) // data?
 			servingSize = wrapped.getInt(wrapped.getColumnIndex(COLUMN_FOOD_SERVINGS)); 
-		
+
 		return servingSize;
-		
+
 	}
-	
 	public DayCursor queryDay(String date){
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
 				null, // All columns

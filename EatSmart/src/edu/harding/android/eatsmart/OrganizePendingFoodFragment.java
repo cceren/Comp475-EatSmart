@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 public class OrganizePendingFoodFragment extends Fragment{
@@ -15,6 +16,13 @@ public class OrganizePendingFoodFragment extends Fragment{
 	public static final String EXTRA_IMAGE_PATH =
 	"edu.harding.android.eatsmart.image_path";
 	private ImageView mImageView;
+	private int mCalories;
+	private int mServings;
+	private String mFoodName;
+	private EditText mCaloriesEditText;
+	private EditText mServingsEditText;
+	private EditText mFoodNameEditText;
+	private String mPath;
 	public static OrganizePendingFoodFragment newInstance(String imagePath){
 		Bundle args = new Bundle();
 		args.putSerializable(EXTRA_IMAGE_PATH, imagePath);
@@ -38,16 +46,24 @@ public class OrganizePendingFoodFragment extends Fragment{
 		View v = inflater.inflate(R.layout.fragment_organize_pending_food, parent, false);
 		
 		mImageView = (ImageView)v.findViewById(R.id.pendingFoodImageView);
-		String path = (String)getArguments().getSerializable(EXTRA_IMAGE_PATH);
-		BitmapDrawable image = PictureUtils.getScaledDrawable(getActivity(), path);
+		mPath = (String)getArguments().getSerializable(EXTRA_IMAGE_PATH);
+		BitmapDrawable image = PictureUtils.getScaledDrawable(getActivity(), mPath);
 		
 		mImageView.setImageDrawable(image);
 		
-		Button saveButton = (Button)v.findViewById(R.id.saveButton);
+		 mCaloriesEditText = (EditText)v.findViewById(R.id.caloriesEditText);
+		 mServingsEditText = (EditText)v.findViewById(R.id.servingsEditText);
+		 mFoodNameEditText = (EditText)v.findViewById(R.id.foodNameEditText);
+		 
+		 Button saveButton = (Button)v.findViewById(R.id.saveButton);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				mCalories = Integer.parseInt(mCaloriesEditText.getText().toString());
+				mServings = Integer.parseInt(mServingsEditText.getText().toString());
+				mFoodName = mFoodNameEditText.getText().toString();
+				saveFoodToDatabase();
 				getActivity().setResult(Activity.RESULT_OK);
 				getActivity().finish();
 			}
@@ -55,6 +71,15 @@ public class OrganizePendingFoodFragment extends Fragment{
 		return v;
 	}
 
+	void saveFoodToDatabase(){
+		Food food = new Food();
+		food.setTitle(mFoodName);
+		food.setCalories(mCalories);
+		food.setQuantity(mServings);
+		
+		FoodManager.get(getActivity()).addFood(food);
+		FoodManager.get(getActivity()).DeletePendingFood(mPath);
+	}
 	@Override
 	public void onDestroyView(){
 		super.onDestroy();
