@@ -111,4 +111,8 @@ public class FoodManager {
 		return mHelper.queryPendingFoods();
 	}
 	
+	public Food getPendingFood(long id){
+		return null;
+	}
+	
 }

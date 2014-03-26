@@ -236,6 +236,24 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+
+	public PendingFoodCursor queryPendingFood(long id){
+		Cursor wrapped = getReadableDatabase().query(TABLE_PENDING_FOOD,
+				null, //All columns
+				COLUMN_FOOD_DAY_ID + " = ? ", //limit to a particular day 
+				new String []{String.valueOf(id)}, // with this value
+				null, // group by
+				null, //having
+				null, //order by
+				"1"); //limit 1 row
+		
+		return new PendingFoodCursor(wrapped);
+		
+		
+	}
+	
+	
+	
 	public int queryFoodServing(long dayId, String foodName){
 		int servingSize = 0;
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
@@ -374,6 +392,8 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			
 		}
 	}
+	
+	
 	
 	
 }

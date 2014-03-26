@@ -43,10 +43,10 @@ public final class R {
         public static final int height_editText=0x7f080020;
         public static final int height_textView=0x7f080015;
         public static final int history_button=0x7f080011;
-        public static final int imageView1=0x7f080018;
         public static final int listFood=0x7f080005;
         public static final int nameEditText=0x7f08001e;
         public static final int organize_button=0x7f080012;
+        public static final int pendingFoodImageView=0x7f080018;
         public static final int pendingFood_imageView=0x7f080022;
         public static final int profileName_textView=0x7f080013;
         public static final int progressBar1=0x7f08000e;
@@ -93,6 +93,7 @@ public final class R {
         public static final int name_label=0x7f050004;
         public static final int organize_quickPick_label=0x7f05000e;
         public static final int organize_quick_picks=0x7f050013;
+        public static final int pending_food=0x7f050018;
         public static final int profile=0x7f050014;
         public static final int quick_pick_label=0x7f05000c;
         public static final int save_button=0x7f05000a;

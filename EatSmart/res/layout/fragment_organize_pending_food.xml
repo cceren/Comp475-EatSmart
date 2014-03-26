@@ -6,7 +6,7 @@
     android:padding="6dp" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/pendingFoodImageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/ic_launcher" />

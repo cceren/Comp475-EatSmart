@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PendingFoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>  {
 
@@ -31,6 +33,17 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 	        Log.d(TAG, "Initialized loader");
 	}
 	
+	public void onListItemClick(ListView l, View v, int position, long id) {
+        
+       Food food = FoodManager.get(getActivity()).getPendingFood(id);
+       
+   
+       
+    
+      //Launch OrganizePendingFoodFragment HERE***
+        
+    }
+
 	private class PendingFoodCursorAdapter  extends CursorAdapter {
 		private PendingFoodCursor mPendingFoodCursor;
 		public PendingFoodCursorAdapter(Context context, PendingFoodCursor cursor) {
@@ -112,4 +125,6 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 		    	//Stop using the cursor (via the adapter)
 		    	setListAdapter(null);
 		    }
+		
+		    
 }
