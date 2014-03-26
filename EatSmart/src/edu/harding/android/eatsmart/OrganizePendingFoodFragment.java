@@ -1,5 +1,8 @@
 package edu.harding.android.eatsmart;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -15,6 +18,8 @@ public class OrganizePendingFoodFragment extends Fragment{
 	
 	public static final String EXTRA_IMAGE_PATH =
 	"edu.harding.android.eatsmart.image_path";
+	public static final String EXTRA_ID =
+			"edu.harding.android.eatsmart.id";
 	private ImageView mImageView;
 	private int mCalories;
 	private int mServings;
@@ -23,8 +28,10 @@ public class OrganizePendingFoodFragment extends Fragment{
 	private EditText mServingsEditText;
 	private EditText mFoodNameEditText;
 	private String mPath;
+	private long mId;
 	public static OrganizePendingFoodFragment newInstance(String imagePath){
 		Bundle args = new Bundle();
+		
 		args.putSerializable(EXTRA_IMAGE_PATH, imagePath);
 		
 		OrganizePendingFoodFragment fragment = new OrganizePendingFoodFragment();
@@ -46,8 +53,12 @@ public class OrganizePendingFoodFragment extends Fragment{
 		View v = inflater.inflate(R.layout.fragment_organize_pending_food, parent, false);
 		
 		mImageView = (ImageView)v.findViewById(R.id.pendingFoodImageView);
+		
 		mPath = (String)getArguments().getSerializable(EXTRA_IMAGE_PATH);
-		BitmapDrawable image = PictureUtils.getScaledDrawable(getActivity(), mPath);
+		String path = getActivity()
+	    		   .getFileStreamPath(mPath).getAbsolutePath();
+		
+		BitmapDrawable image = PictureUtils.getScaledDrawable(getActivity(), path);
 		
 		mImageView.setImageDrawable(image);
 		
@@ -77,7 +88,10 @@ public class OrganizePendingFoodFragment extends Fragment{
 		food.setCalories(mCalories);
 		food.setQuantity(mServings);
 		
-		FoodManager.get(getActivity()).addFood(food);
+		Date date = new Date();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		int dayId = FoodManager.get(getActivity()).getDay(currentDate);
+		FoodManager.get(getActivity()).addConsumedFood(food, dayId);
 		FoodManager.get(getActivity()).DeletePendingFood(mPath);
 	}
 	@Override

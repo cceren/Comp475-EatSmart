@@ -1,5 +1,6 @@
 package edu.harding.android.eatsmart;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,12 +37,13 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 	public void onListItemClick(ListView l, View v, int position, long id) {
         
        Food pendingFood = FoodManager.get(getActivity()).getPendingFood(id);
-       String path = getActivity()
-    		   .getFileStreamPath(pendingFood.getPhotoFilename()).getAbsolutePath();
+       String path = pendingFood.getPhotoFilename();
+       
        Intent i = new Intent(getActivity(), OrganizePendingFoodActivity.class);
        Bundle bundle = new Bundle();
        
        bundle.putString("filename", path);
+       bundle.putLong("id", id);
        i.putExtras(bundle);
        startActivityForResult(i, SAVE_PENDING_FOOD);
        
@@ -130,6 +132,19 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 		    	//Stop using the cursor (via the adapter)
 		    	setListAdapter(null);
 		    }
+
+			@Override
+			public void onActivityResult(int requestCode, int resultCode,
+					Intent data) {
+				// TODO Auto-generated method stub
+				super.onActivityResult(requestCode, resultCode, data);
+				if (resultCode != Activity.RESULT_OK) return;
+		        if (requestCode == SAVE_PENDING_FOOD) {
+		        	//Update the listView
+		            getLoaderManager().restartLoader(0, null, this);
+		        }
+			}
 		
+		    
 		    
 }

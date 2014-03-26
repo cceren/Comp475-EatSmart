@@ -147,7 +147,10 @@ public class FoodManager {
 	}
 	
 	public int DeletePendingFood(String path){
-		return mHelper.DeleteFromPendingFoods(path);
+		
+		int result = mHelper.DeleteFromPendingFoods(path);
+		Log.d(TAG, "Deleted " + result );
+		return result;
 	}
 	
 }

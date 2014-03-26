@@ -279,7 +279,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	
 	public int DeleteFromPendingFoods(String path){
 
-		Log.d(TAG, "Delete from pendingFood");
+		
 		return getReadableDatabase().delete(TABLE_PENDING_FOOD, 
 				COLUMN_PENDING_FOOD_PHOTO_FILENAME + " = ? ", new String []{path}); //limit 1 row
 		
