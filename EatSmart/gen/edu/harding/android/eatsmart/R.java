@@ -28,7 +28,6 @@ public final class R {
         public static final int action_settings=0x7f080024;
         public static final int add_food_button=0x7f080011;
         public static final int birthday_textView=0x7f080015;
-        public static final int button1=0x7f08001c;
         public static final int consumed_calories_text_view=0x7f080004;
         public static final int consumed_food_item_name_text_view=0x7f080003;
         public static final int consumed_quantity_text_view=0x7f080002;
@@ -53,6 +52,7 @@ public final class R {
         public static final int progressBar1=0x7f08000f;
         public static final int progressLabel=0x7f08000e;
         public static final int quick_pick_button=0x7f080010;
+        public static final int saveButton=0x7f08001c;
         public static final int separator=0x7f080001;
         public static final int submit=0x7f080006;
         public static final int textView2=0x7f08000c;

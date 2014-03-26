@@ -1,7 +1,7 @@
 package edu.harding.android.eatsmart;
 
-import edu.harding.android.eatsmart.FoodDatabaseHelper.PendingFoodCursor;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+import edu.harding.android.eatsmart.FoodDatabaseHelper.PendingFoodCursor;
 
 public class PendingFoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>  {
 
 	private static final String TAG = "PendingFoodListFragment";
-
+	private static final int SAVE_PENDING_FOOD = 1;
 	
 	@Override public void onCreate(Bundle savedInstanceState){
 		 super.onCreate(savedInstanceState);
@@ -35,11 +35,16 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 	
 	public void onListItemClick(ListView l, View v, int position, long id) {
         
-       Food food = FoodManager.get(getActivity()).getPendingFood(id);
+       Food pendingFood = FoodManager.get(getActivity()).getPendingFood(id);
+       String path = getActivity()
+    		   .getFileStreamPath(pendingFood.getPhotoFilename()).getAbsolutePath();
+       Intent i = new Intent(getActivity(), OrganizePendingFoodActivity.class);
+       Bundle bundle = new Bundle();
        
-   
+       bundle.putString("filename", path);
+       i.putExtras(bundle);
+       startActivityForResult(i, SAVE_PENDING_FOOD);
        
-    
       //Launch OrganizePendingFoodFragment HERE***
         
     }

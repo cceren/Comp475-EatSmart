@@ -1,11 +1,13 @@
 package edu.harding.android.eatsmart;
 
+import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class OrganizePendingFoodFragment extends Fragment{
@@ -41,6 +43,15 @@ public class OrganizePendingFoodFragment extends Fragment{
 		
 		mImageView.setImageDrawable(image);
 		
+		Button saveButton = (Button)v.findViewById(R.id.saveButton);
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getActivity().setResult(Activity.RESULT_OK);
+				getActivity().finish();
+			}
+		});
 		return v;
 	}
 

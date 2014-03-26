@@ -135,7 +135,15 @@ public class FoodManager {
 	}
 	
 	public Food getPendingFood(long id){
-		return null;
+		Food food = null;
+		PendingFoodCursor cursor = mHelper.queryPendingFood(id);
+		cursor.moveToFirst();
+		// If you got a row, get a food
+		if(!cursor.isAfterLast())
+			food = cursor.getFood();
+		
+		cursor.close();
+		return food;
 	}
 	
 }

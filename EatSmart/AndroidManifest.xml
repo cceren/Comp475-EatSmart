@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".PendingFoodListActivity">
         </activity>
+        <activity android:name=".OrganizePendingFoodActivity">
+        </activity>
     </application>
 
 </manifest>
