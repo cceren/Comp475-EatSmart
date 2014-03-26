@@ -18,19 +18,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
 	private static final int REQUEST_PHOTO = 1;
+	private static final int CALORIES_GOAL = 2000;
 	private final String USERINFO = "userInfo";
+	private ProgressBar mProgressBar;
+	private TextView mProgressTextView;
 	
-	
-	
+	private String TAG = "HomeFragment";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActivity().setTitle(R.string.app_name);
+		
 	}
 
 	@Override
@@ -47,15 +51,20 @@ public class HomeFragment extends Fragment {
         String userWeight = sharedPreferences.getString("weight", "");
         String userHeight = sharedPreferences.getString("height", "");
         
+        mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
+        mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
         
         profileNameTextView.setText("User Name: " + userName);
         birthdayTextView.setText("Birthday:"+ birthday);
         heightTextView.setText("Height: " + userHeight);
         weightTextView.setText("Weight: " + userWeight);
+        mProgressBar.setMax(CALORIES_GOAL);
+        
+		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -163,4 +172,16 @@ public class HomeFragment extends Fragment {
 	     String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 	     return currentDate;
 	 }
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
+		mProgressTextView.setText("Consumed: " + totalCalories + "cal                   Goal: " + CALORIES_GOAL + " cal");
+		mProgressBar.setProgress(totalCalories);
+		Log.d(TAG, "Total calories = " + totalCalories);
+	}
+	 
+	 
 }

@@ -1,5 +1,8 @@
 package edu.harding.android.eatsmart;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Context;
 import android.util.Log;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
@@ -34,9 +37,22 @@ public class FoodManager {
 		return food;
 	}
 	
-	public boolean incrementServing(long dayId, String foodName){
-		int servingSize = mHelper.queryFoodServing(dayId, foodName);
-		mHelper.updateConsumedFood(dayId, ++servingSize, foodName);
+	public int getTotalCalories(){
+		Date date = new Date();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        int currentDayId = getDay(currentDate);
+        int totalCalories = mHelper.queryDayTotalCalories(currentDayId);
+        Log.d(TAG, "Total calories = " + totalCalories);
+        return totalCalories ;
+	}
+	
+	public boolean incrementServing(long dayId, Food food){
+		int totalCalories  = mHelper.queryDayTotalCalories(dayId);
+		totalCalories += food.getCalories();
+		
+		int servingSize = mHelper.queryFoodServing(dayId, food.getTitle());
+		mHelper.updateConsumedFood(dayId, ++servingSize, food.getTitle());
+		mHelper.updateDayTotalCalories(dayId, totalCalories);
 		
 		return true;
 	}
@@ -48,8 +64,15 @@ public class FoodManager {
 	}
 	
 	public Food addConsumedFood(Food food, long dayId){
+		
+		int totalCalories  = mHelper.queryDayTotalCalories(dayId);
+		//Log.d(TAG, "Total Calories " + totalCalories);
+		totalCalories += food.getCalories();
+		Log.d(TAG, "Total Calories " + totalCalories);
 		//Insert an entry for a food in the consumedFood table. Last value indicates the serving, if new it is going to be one
 		mHelper.insertConsumedFood(food, dayId, 1);
+		mHelper.updateDayTotalCalories(dayId, totalCalories);
+		
 		return food;
 	}
 	

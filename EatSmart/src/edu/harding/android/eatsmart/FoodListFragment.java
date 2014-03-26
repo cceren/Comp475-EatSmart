@@ -184,7 +184,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 	        	Log.e("Food Retrieved", "Food found is: " + FoodManager.get(getActivity()).getConsumedFood(currentDayId, food.getTitle()).getTitle());
 	     	   //If it is already in increase the serving size
 	     	   //increment serving of food in the day
-	        	FoodManager.get(getActivity()).incrementServing(currentDayId, food.getTitle());
+	        	FoodManager.get(getActivity()).incrementServing(currentDayId, food);
 	        }
         }
         
