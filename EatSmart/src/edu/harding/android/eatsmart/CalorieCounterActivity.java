@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 
 public class CalorieCounterActivity extends FragmentActivity {
 /*Added another comment*/
+//test
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
