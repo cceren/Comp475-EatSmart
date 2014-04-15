@@ -28,28 +28,10 @@ import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cursor>{
 
 	private static final String TAG = "FoodListFragment";
-	private static final String[] Foods = {"Eggs", "Bacon", "Coconut Rice", "Apples", "Glass of Milk", "Yellow Rice", "Chicken",
-											"King cake", "Lane cake", "Peach shortcake", "Pound cake", "Red velvet cake", "Modjeska", 
-											"Moon pie", "Peanut brittle", "Pecan brittle", "Pecan Divinity", "Pralines", 
-											"Blackberry cobbler", "Dewberry cobbler", "Peach cobbler", "Bread pudding", 
-											"Corn pudding", "Lemon pudding", "Trifle", "Chicken and dumplings", "Chicken fried steak", 
-											"Crab cake", "Fried pork chops", "Fried turkey"};
-    
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-        
-        //Check to see if first item is in the database, else add generic foods
-        
-        for(int i = 0; i < 30; i++){
-			Food f = new Food();
-			f.setTitle(Foods[i]);
-			f.setCalories(150 + i);
-			f.setQuantity(0);
-			FoodManager.get(getActivity()).addFood(f);
-		}
-        Log.d(TAG, "Added Generic Foods");
     
         //Initialize the loader to load the list of foods
         Log.d(TAG, "No foods added");

@@ -62,6 +62,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         "date TEXT, " +
         "photoFilename TEXT)";
         
+        final String[] foods = {"Eggs", "Bacon", "Coconut Rice", "Apples", "Glass of Milk", "Yellow Rice", "Chicken",
+			"King cake", "Lane cake", "Peach shortcake", "Pound cake", "Red velvet cake", "Modjeska", 
+			"Moon pie", "Peanut brittle", "Pecan brittle", "Pecan Divinity", "Pralines", 
+			"Blackberry cobbler", "Dewberry cobbler", "Peach cobbler", "Bread pudding", 
+			"Corn pudding", "Lemon pudding", "Trifle", "Chicken and dumplings", "Chicken fried steak", 
+			"Crab cake", "Fried pork chops", "Fried turkey"};
+        
 		try{
 	        // create food table
 	        db.execSQL(CREATE_FOOD_TABLE);
@@ -71,7 +78,19 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	        db.execSQL(CREATE_CONSUMED_FOOD_TABLE);
 			// create pendingFood table
 	        db.execSQL(CREATE_PENDING_FOOD_TABLE);
-	       
+	        
+	        for(int i = 0; i < foods.length; i++){
+				Food f = new Food();
+				f.setTitle(foods[i]);
+				f.setCalories(150 + i);
+				f.setQuantity(0);
+				
+				ContentValues cv = new ContentValues();
+				
+				cv.put(COLUMN_FOOD_NAME, f.getTitle());
+				cv.put(COLUMN_FOOD_CALORIES, f.getCalories());
+				db.insert(TABLE_FOOD, null, cv);
+			}
 	        Log.d(TAG, "Database tables created");
 		}
 		catch(Exception e){

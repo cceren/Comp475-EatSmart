@@ -1,22 +1,26 @@
 package edu.harding.android.eatsmart;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,6 +40,7 @@ public class ProfileFragment extends Fragment {
 	}
 
 	
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
@@ -46,6 +51,20 @@ public class ProfileFragment extends Fragment {
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
 		final EditText height = (EditText)v.findViewById(R.id.height_editText);
 		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
+		final Button saveButton = (Button)v.findViewById(R.id.organize_button);
+		weight.setOnEditorActionListener(new OnEditorActionListener() {
+
+	           @Override
+	           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+	               // TODO Auto-generated method stub
+	               if (actionId == EditorInfo.IME_ACTION_DONE) {
+	                   // do your stuff here
+	            	   
+	                   saveButton.callOnClick();
+	               }
+	               return false;
+	           }
+	       });
 	    datePicker.init(1992, 0, 1, new OnDateChangedListener(){
 	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
 	           ProfileFragment.this.monthOfYear = monthOfYear+1;
@@ -53,11 +72,12 @@ public class ProfileFragment extends Fragment {
 	           ProfileFragment.this.year = year;
 	            }            
 	        });
-		Button saveButton = (Button)v.findViewById(R.id.organize_button);
+		
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//saveProfile(); //Save the profile and go on to the main screen
+				
 				SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
 			    try{    
 			        Editor editor = preference.edit();  
