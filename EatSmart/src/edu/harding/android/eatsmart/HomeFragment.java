@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		getActivity().setTitle(R.string.app_name);
 		
+		
 	}
 
 	@Override
@@ -42,9 +43,6 @@ public class HomeFragment extends Fragment {
 			Bundle savedInstance){
 		
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
-		//Set the welcomeTextView to be the name of the user (saved in profile)
-		//TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
-		//welcomeTextView.setText(mProfile.getName());
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "");
         String birthday = sharedPreferences.getString("birthday", "");
@@ -122,17 +120,16 @@ public class HomeFragment extends Fragment {
 		});
 		
 		
-		//Launches ProfileFragment
+		//Launches UpdateProfileFragment
 		Button updateProfileButton = (Button)v.findViewById(R.id.update_profile_button);
 		updateProfileButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
 				
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ProfileFragment profileFragment = new ProfileFragment();
-                ft.replace(R.id.fragmentContainer, profileFragment).addToBackStack("Back")
-                .commit(); 
+				UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
+                FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
+                ft.replace(R.id.fragmentContainer, updateProfileFragment).commit(); 
 			}
 		});
 		return v;
