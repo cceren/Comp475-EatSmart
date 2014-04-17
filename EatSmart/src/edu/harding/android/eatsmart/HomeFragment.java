@@ -47,7 +47,9 @@ public class HomeFragment extends Fragment {
         String userName = sharedPreferences.getString("name", "");
         String birthday = sharedPreferences.getString("birthday", "");
         String userWeight = sharedPreferences.getString("weight", "");
-        String userHeight = sharedPreferences.getString("height", "");
+        String heightFt = sharedPreferences.getString("heightFt", "");
+        String heightIn = sharedPreferences.getString("heightIn", "");
+        String userHeight = heightFt + " ft. " + heightIn + " in.";
         
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);

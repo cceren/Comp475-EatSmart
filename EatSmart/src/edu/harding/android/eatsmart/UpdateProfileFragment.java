@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.TextView.OnEditorActionListener;
@@ -44,10 +46,20 @@ public class UpdateProfileFragment extends Fragment {
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 		
+		final Spinner footSpinner = (Spinner) v.findViewById(R.id.ft_spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.foot_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		footSpinner.setAdapter(adapter);
+		
+		final Spinner inchesSpinner = (Spinner) v.findViewById(R.id.in_spinner);
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.inches_array, android.R.layout.simple_spinner_item);
+		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		inchesSpinner.setAdapter(adapter2);
 		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
-		final EditText height = (EditText)v.findViewById(R.id.height_editText);
 		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
 		final Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		
@@ -55,7 +67,9 @@ public class UpdateProfileFragment extends Fragment {
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
 		nameEditText.setText(sharedPreferences.getString("name", ""));
         weight.setText(sharedPreferences.getString("weight", ""));
-        height.setText(sharedPreferences.getString("height", ""));
+        footSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("heightFt", "")));
+        inchesSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("heightIn", "")));
+
         
 		weight.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -93,7 +107,8 @@ public class UpdateProfileFragment extends Fragment {
 			        Editor editor = preference.edit();  
 			        editor.putString("name", nameEditText.getText().toString());
 			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
-			        editor.putString("height", height.getText().toString());  
+			        editor.putString("heightFt", footSpinner.getSelectedItem().toString()); 
+			        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
 			        editor.putString("weight", weight.getText().toString());  
 			        editor.commit(); 
 			        preference.contains("name");

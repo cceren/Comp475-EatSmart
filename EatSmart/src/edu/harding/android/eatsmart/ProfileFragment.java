@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -46,11 +48,21 @@ public class ProfileFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
+		final Spinner footSpinner = (Spinner) v.findViewById(R.id.ft_spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.foot_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		footSpinner.setAdapter(adapter);
+		
+		final Spinner inchesSpinner = (Spinner) v.findViewById(R.id.in_spinner);
+		adapter = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.inches_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		inchesSpinner.setAdapter(adapter);
 		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
-		final EditText height = (EditText)v.findViewById(R.id.height_editText);
 		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
 		final Button saveButton = (Button)v.findViewById(R.id.organize_button);
 		weight.setOnEditorActionListener(new OnEditorActionListener() {
@@ -91,7 +103,8 @@ public class ProfileFragment extends Fragment {
 			        editor.putString("name", nameEditText.getText().toString());  
 			        
 			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
-			        editor.putString("height", height.getText().toString());  
+			        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
+			        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
 			        editor.putString("weight", weight.getText().toString());  
 			        editor.commit(); 
 			        preference.contains("name");

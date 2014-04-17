@@ -10,7 +10,9 @@
 	<string name="age_label">Age: </string>
 	<string name="birthday">Birthday: </string>
 	<string name="weight_label">Weight (lb): </string>
-	<string name="height_label">Height (cm): </string>
+	<string name="height_label">Height: </string>
+	<string name="foot_label">ft.: </string>
+	<string name="inches_label">in.: </string>
 	<string name="save_button">Save</string>
 	<string name="foods_title">Foods</string>
 	<string name="quick_pick_label">Quick Pick!</string>
@@ -27,5 +29,25 @@
 	<string name="servings">servings</string>
 	<string name="pending_food">Pending Food</string>
 	<string name="food_name">Food Name</string>
+	<string-array name="foot_array">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+	<string-array name="inches_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 	
 </resources>
