@@ -69,7 +69,7 @@ private static final String TAG = "ConsumedFoodListFragment";
             
             TextView foodCaloriesTextView =
                 (TextView)view.findViewById(R.id.consumed_calories_text_view);
-            foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " Cals");
+            foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " calories");
         }
         
         

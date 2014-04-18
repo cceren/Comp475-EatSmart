@@ -50,7 +50,8 @@ public class HomeFragment extends Fragment {
         String heightFt = sharedPreferences.getString("heightFt", "");
         String heightIn = sharedPreferences.getString("heightIn", "");
         String userHeight = heightFt + " ft. " + heightIn + " in.";
-        
+        TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
+        welcomeTextView.setText("Welcome " + userName);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
@@ -58,10 +59,10 @@ public class HomeFragment extends Fragment {
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
         mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
         
-        profileNameTextView.setText("User Name: " + userName);
-        birthdayTextView.setText("Birthday:"+ birthday);
-        heightTextView.setText("Height: " + userHeight);
-        weightTextView.setText("Weight: " + userWeight);
+        
+        //birthdayTextView.setText("Birthday:"+ birthday);
+        //heightTextView.setText("Height: " + userHeight);
+        //weightTextView.setText("Weight: " + userWeight);
         mProgressBar.setMax(CALORIES_GOAL);
         
 		
@@ -177,7 +178,7 @@ public class HomeFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
-		mProgressTextView.setText("Consumed: " + totalCalories + "cal                   Goal: " + CALORIES_GOAL + " cal");
+		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
 		mProgressBar.setProgress(totalCalories);
 		Log.d(TAG, "Total calories = " + totalCalories);
 	}

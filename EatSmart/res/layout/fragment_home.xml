@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
-            android:text="@string/welcome_label"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
@@ -86,8 +85,7 @@
             android:id="@+id/profileName_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/profile" />
+            android:padding="5dp" />
         
         <TextView
             android:id="@+id/birthday_textView"
