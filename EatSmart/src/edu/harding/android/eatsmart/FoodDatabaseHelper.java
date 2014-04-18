@@ -143,19 +143,20 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public long updateConsumedFood(long dayId, int servingSize, String foodName){
+		int rowsAffected = 0;
 		try{
 			ContentValues cv = new ContentValues();
 			
 			cv.put(COLUMN_FOOD_SERVINGS, servingSize);
 			Log.d(TAG, "Updating food from consumedFood table");
-			return getWritableDatabase().update(TABLE_CONSUMED_FOOD, cv, 
+			rowsAffected = getWritableDatabase().update(TABLE_CONSUMED_FOOD, cv, 
 					COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", new String []{String.valueOf(dayId), foodName});
-			
+			 return rowsAffected;
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());
 		}
-		return 0;
+		return rowsAffected;
 	}
 	
 	public long insertPendingFood(Food food){

@@ -57,6 +57,8 @@ private static final String TAG = "ConsumedFoodListFragment";
         	 // configure the view for this Food Item
             Food f = mConsumedFoodCursor.getFood();
 
+            Log.d(TAG, String.valueOf(f.getQuantity()));
+            
             TextView foodNameTextView =
                 (TextView)view.findViewById(R.id.consumed_food_item_name_text_view);
             foodNameTextView.setText(f.getTitle().toString());

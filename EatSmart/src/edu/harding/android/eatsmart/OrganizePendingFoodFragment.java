@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ public class OrganizePendingFoodFragment extends Fragment{
 	"edu.harding.android.eatsmart.image_path";
 	public static final String EXTRA_ID =
 			"edu.harding.android.eatsmart.id";
+	public static final String TAG =
+			"OrganizePendingFoodFragment";
 	private ImageView mImageView;
 	private int mCalories;
 	private int mServings;
@@ -88,9 +91,12 @@ public class OrganizePendingFoodFragment extends Fragment{
 		food.setCalories(mCalories);
 		food.setQuantity(mServings);
 		
+		Log.d(TAG, String.valueOf(food.getQuantity()));
+		
 		Date date = new Date();
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 		int dayId = FoodManager.get(getActivity()).getDay(currentDate);
+		
 		FoodManager.get(getActivity()).addConsumedFood(food, dayId);
 		FoodManager.get(getActivity()).DeletePendingFood(mPath);
 	}

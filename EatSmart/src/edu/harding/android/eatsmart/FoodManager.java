@@ -69,8 +69,15 @@ public class FoodManager {
 		//Log.d(TAG, "Total Calories " + totalCalories);
 		totalCalories += food.getCalories();
 		Log.d(TAG, "Total Calories " + totalCalories);
-		//Insert an entry for a food in the consumedFood table. Last value indicates the serving, if new it is going to be one
-		mHelper.insertConsumedFood(food, dayId, 1);
+
+		//Attempt to update the food
+		//if it didn't update anything that means that food didn't exist
+		//therefore, we need to insert a new entry
+		if(mHelper.updateConsumedFood(dayId, food.getQuantity(), food.getTitle())
+			<= 0){
+			mHelper.insertConsumedFood(food, dayId, food.getQuantity());
+		}
+		
 		mHelper.updateDayTotalCalories(dayId, totalCalories);
 		
 		return food;
