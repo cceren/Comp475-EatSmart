@@ -25,10 +25,12 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int custom_progress_bar_horizontal=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int cameraicon=0x7f020000;
+        public static final int custom_progress_bar_horizontal=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
+        public static final int RelativeLayout1=0x7f090005;
         public static final int action_settings=0x7f090025;
         public static final int add_food_button=0x7f09000f;
         public static final int birthday_textView=0x7f090013;
@@ -39,7 +41,6 @@ public final class R {
         public static final int datePicker=0x7f09001f;
         public static final int date_textView=0x7f09001d;
         public static final int foodNameEditText=0x7f090019;
-        public static final int food_camera_preview=0x7f090005;
         public static final int food_camera_progressContainer=0x7f090008;
         public static final int food_camera_surfaceView=0x7f090006;
         public static final int food_camera_takePictureButton=0x7f090007;
