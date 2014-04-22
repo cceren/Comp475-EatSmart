@@ -28,14 +28,12 @@ public class HomeFragment extends Fragment {
 	private final String USERINFO = "userInfo";
 	private ProgressBar mProgressBar;
 	private TextView mProgressTextView;
-	
 	private String TAG = "HomeFragment";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActivity().setTitle(R.string.app_name);
-		
-		
 	}
 
 	@Override
@@ -64,7 +62,10 @@ public class HomeFragment extends Fragment {
         //heightTextView.setText("Height: " + userHeight);
         //weightTextView.setText("Weight: " + userWeight);
         mProgressBar.setMax(CALORIES_GOAL);
-        
+        int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
+		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
+		mProgressBar.setProgress(totalCalories);
+		Log.d(TAG, "Total calories = " + totalCalories);
 		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
 		addFoodButton.setOnClickListener(new View.OnClickListener() {	

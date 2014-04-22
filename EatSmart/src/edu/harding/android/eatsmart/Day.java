@@ -1,5 +1,8 @@
 package edu.harding.android.eatsmart;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Day {
 
@@ -9,7 +12,7 @@ public class Day {
 	
 	public Day(){
 		mId = -1;
-		mDate = null;
+		mDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		mTotalCalories = 0;
 	}
 	

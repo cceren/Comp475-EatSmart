@@ -90,14 +90,8 @@ public class OrganizePendingFoodFragment extends Fragment{
 		food.setTitle(mFoodName);
 		food.setCalories(mCalories);
 		food.setQuantity(mServings);
-		
-		Log.d(TAG, String.valueOf(food.getQuantity()));
-		
-		Date date = new Date();
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-		int dayId = FoodManager.get(getActivity()).getDay(currentDate);
-		
-		FoodManager.get(getActivity()).addConsumedFood(food, dayId);
+
+		FoodManager.get(getActivity()).addOrganizedPendingFood(food);
 		FoodManager.get(getActivity()).DeletePendingFood(mPath);
 	}
 	@Override

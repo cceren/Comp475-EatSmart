@@ -160,4 +160,20 @@ public class FoodManager {
 		return result;
 	}
 	
+	public Food addOrganizedPendingFood(Food food){
+		
+		String consumedDate = new SimpleDateFormat("yyyy-MM-dd").format(food.getDate());
+		long dayId = getDay(consumedDate);
+		
+		//Add day to db if it's not currenty in the db
+		if(dayId == -1){
+			Day day = new Day();
+			Day newDay = addDay(day);
+			dayId = newDay.getId();
+		}
+		addConsumedFood(food, dayId);
+		
+		return food;
+	}
+	
 }
