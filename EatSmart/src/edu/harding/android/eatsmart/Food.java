@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.text.format.DateFormat;
+
 public class Food {
 	
 	private static final String JSON_ID = "id";
@@ -24,8 +26,17 @@ public class Food {
 	private int mQuantity;
     private int mCalories;
     private Photo mPhoto;
+    private String mTime;
     
-    public String getPhotoFilename() {
+    public String getTime() {
+		return mTime;
+	}
+
+	public void setTime(String time) {
+		mTime = time;
+	}
+
+	public String getPhotoFilename() {
 		return mPhotoFilename;
 	}
 
@@ -43,6 +54,7 @@ public class Food {
     public Food() {
         //mId = UUID.randomUUID();
         mDate = new Date();
+        mTime = DateFormat.format("h:mm a", mDate).toString();
     }
     
     public Food(JSONObject json) throws JSONException {

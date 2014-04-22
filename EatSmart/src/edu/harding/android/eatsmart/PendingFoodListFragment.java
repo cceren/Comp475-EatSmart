@@ -1,5 +1,9 @@
 package edu.harding.android.eatsmart;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -78,15 +82,23 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 	            Food f = mPendingFoodCursor.getFood();
 
 	            //define formats in order to display the timestamp more clearly
-	            CharSequence dateFormat = DateFormat.format("EEEE, MMM dd, yyyy", f.getDate());
-	    		CharSequence timeFormat = DateFormat.format("h:mm a", f.getDate());
+	            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd,HH:mm");
+	            Date date = null;
+	            try {
+					 date = format.parse(f.getPhotoDate() +",00:00");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            CharSequence dateFormat = DateFormat.format("EEEE, MMM dd, yyyy", date);
+	    		//CharSequence timeFormat = DateFormat.format("h:mm a", date);
 	    		
 	            TextView dateTextView =
 	                (TextView)view.findViewById(R.id.date_textView);
 	            dateTextView.setText( "Date: " + dateFormat.toString());
 	            TextView timeTextView =
 	                    (TextView)view.findViewById(R.id.time_textView);
-	            timeTextView.setText( "Time: " + timeFormat.toString());
+	            timeTextView.setText( "Time: " + f.getTime());
 	            
 	            ImageView foodView = (ImageView)view.findViewById(R.id.pendingFood_imageView);
 	            Photo p = f.getPhoto();

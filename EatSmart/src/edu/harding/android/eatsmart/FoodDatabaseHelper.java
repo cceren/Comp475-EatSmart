@@ -55,11 +55,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "name TEXT, " +
                 "servings INTEGER, " +
                 "calories INTEGER, " +
+                "time TEXT, " +
                 "day_id INTEGER references days(_id))";
         
         String CREATE_PENDING_FOOD_TABLE = "CREATE TABLE pendingFood ( " +
         "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         "date TEXT, " +
+        "time TEXT, " +
         "photoFilename TEXT)";
         
         final String[] foods = {"Eggs", "Bacon", "Coconut Rice", "Apples", "Glass of Milk", "Yellow Rice", "Chicken",
@@ -165,6 +167,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			
 			cv.put(COLUMN_DATE, food.getPhotoDate());
 			cv.put(COLUMN_PENDING_FOOD_PHOTO_FILENAME, food.getPhotoFilename());
+			cv.put("time", food.getTime());
 			Log.d(TAG, "Adding: pending food to pendingFood table");
 			return getWritableDatabase().insert(TABLE_PENDING_FOOD, null, cv);
 		}
@@ -455,7 +458,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			String photoFilename = getString(getColumnIndex(COLUMN_PENDING_FOOD_PHOTO_FILENAME));
 			String photoDate = getString(getColumnIndex(COLUMN_DATE));
 			
-			
+			food.setTime(getString(getColumnIndex("time")));
 			food.setPhotoFilename(photoFilename);
 			food.setPhotoDate(photoDate);
 			Photo photo = new Photo(photoFilename);

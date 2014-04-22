@@ -154,6 +154,7 @@ public class HomeFragment extends Fragment {
 		        	pendingFood.setTitle("Pending");
 		        	pendingFood.setCalories(0);
 		        	pendingFood.setQuantity(1);
+		        	pendingFood.setDate(new Date());
 		        	pendingFood.setPhotoDate(CurrentDate());
 		        	pendingFood.setPhotoFilename(filename);
 		        	
