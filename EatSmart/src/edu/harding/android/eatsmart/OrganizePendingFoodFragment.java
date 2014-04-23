@@ -75,18 +75,18 @@ public class OrganizePendingFoodFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				String cals = mCaloriesEditText.getText().toString();
-				String servings = mCaloriesEditText.getText().toString();
-				String name = mCaloriesEditText.getText().toString();
-				if(cals.equals(""))
-					mCalories = 0;
-				mCalories = Integer.parseInt(cals);
-				if(servings.equals(""))
-					mServings = 0;
-				mServings = Integer.parseInt(servings);
-				if(name.equals(""))
-					mFoodName = "NULL";
-				mFoodName = mFoodNameEditText.getText().toString();
-//				Log.e("name cals servings", mFoodName+mCalories+mServings);
+            	String servings = mServingsEditText.getText().toString();
+            	String name = mFoodNameEditText.getText().toString();
+            	if(!cals.equals(""))
+            		mCalories = Integer.parseInt(cals);
+            	mCalories = 0;
+            	if(!servings.equals(""))
+            		mServings = Integer.parseInt(servings);
+            	mServings = 0;
+				if(!name.equals(""))
+					mFoodName = mFoodNameEditText.getText().toString();
+				mFoodName = "NULL";
+				Log.e("name cal servings", mFoodName+mCalories+mServings);
 				saveFoodToDatabase();
 				getActivity().setResult(Activity.RESULT_OK);
 				getActivity().finish();
