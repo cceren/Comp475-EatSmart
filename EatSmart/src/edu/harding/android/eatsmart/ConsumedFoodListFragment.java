@@ -2,6 +2,9 @@ package edu.harding.android.eatsmart;
 /***This fragment displays the foods the user has consumed
  * 
  */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.harding.android.eatsmart.FoodDatabaseHelper.ConsumedFoodCursor;
 import edu.harding.android.eatsmart.FoodDatabaseHelper.FoodCursor;
 import android.content.Context;
@@ -48,7 +51,7 @@ private static final String TAG = "ConsumedFoodListFragment";
         	LayoutInflater inflater = (LayoutInflater)context
         			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         	return inflater
-        			.inflate(R.layout.food_item_list, parent, false);
+        			.inflate(R.layout.consumed_food_item_list, parent, false);
         }
         
         @Override
@@ -60,15 +63,15 @@ private static final String TAG = "ConsumedFoodListFragment";
             Log.d(TAG, String.valueOf(f.getQuantity()));
             
             TextView foodNameTextView =
-                (TextView)view.findViewById(R.id.consumed_food_item_name_text_view);
+                (TextView)view.findViewById(R.id.food_name_textView);
             foodNameTextView.setText(f.getTitle().toString());
             
             TextView foodQuantity =
-                (TextView)view.findViewById(R.id.consumed_quantity_text_view);
+                (TextView)view.findViewById(R.id.servingsAmount_textView);
             foodQuantity.setText((Integer.toString(f.getQuantity())) + " Servings");
             
             TextView foodCaloriesTextView =
-                (TextView)view.findViewById(R.id.consumed_calories_text_view);
+                (TextView)view.findViewById(R.id.consumed_food_calories_textView);
             foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " calories");
         }
         
@@ -83,8 +86,10 @@ private static final String TAG = "ConsumedFoodListFragment";
     	
     	@Override
     	protected Cursor loadCursor(){
-    		//Query the list of consumed Foods
-    		return FoodManager.get(getContext()).queryConsumedFoods();
+    		//Query the list of consumed Foods for the current day
+    		  Date date = new Date();
+    	      String currentDay = new SimpleDateFormat("yyyy-MM-dd").format(date);
+    		return FoodManager.get(getContext()).queryConsumedFoods(currentDay);
     		
     	}
     }

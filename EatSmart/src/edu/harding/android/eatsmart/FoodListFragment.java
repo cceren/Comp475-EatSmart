@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,17 +43,8 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter
-       Food f = FoodManager.get(getActivity()).getFood(id);
-       boolean foodAdded = addFoodToDatabase(f, id);
-       
-       
-        //Notify user he has added a food to history
-        Context context = getActivity();
-        CharSequence text = "Added  " + f.getTitle() + " to history";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+      // Food f = FoodManager.get(getActivity()).getFood(id);
+      // boolean foodAdded = addFoodToDatabase(f, id);
         
     }
 
@@ -81,19 +73,45 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
         public void bindView(View view, Context context, Cursor cursor){
         	//Get the food for the current row
         	 // configure the view for this Food Item
-            Food f = mFoodCursor.getFood();
+            final Food f = mFoodCursor.getFood();
+            Date date = new Date();
+            String day = new SimpleDateFormat("yyyy-MM-dd").format(date);
+            f.setDay(day);
+            
+            TextView nameTextView =
+                (TextView)view.findViewById(R.id.food_name_textView1);
+            nameTextView.setText(f.getTitle().toString());
+            
+            TextView servingSizeTextView =
+                (TextView)view.findViewById(R.id.serving_size_textView);
+            servingSizeTextView.setText((Integer.toString(f.getQuantity())) + " cups");
+            
+            TextView servingsTextView =
+                    (TextView)view.findViewById(R.id.servings_textView);
+            servingsTextView.setText((Integer.toString(f.getQuantity())) + " Servings");
+                
+            TextView caloriesTextView =
+                (TextView)view.findViewById(R.id.consumed_food_calories_textView);
+            caloriesTextView.setText((Integer.toString(f.getCalories())) + " calories");
+            
+            ImageButton plusImageButton = 
+            		(ImageButton)view.findViewById(R.id.plus_imageButton);
+            
+            plusImageButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					FoodManager.get(getActivity()).AddFoodToDatabase(f);
+					// Show Notification to user
+					 Context context = getActivity();
+				        CharSequence text = "Added  " + f.getTitle() + " to history";
+				        int duration = Toast.LENGTH_SHORT;
 
-            TextView foodNameTextView =
-                (TextView)view.findViewById(R.id.consumed_food_item_name_text_view);
-            foodNameTextView.setText(f.getTitle().toString());
-            
-            TextView foodQuantity =
-                (TextView)view.findViewById(R.id.consumed_quantity_text_view);
-            foodQuantity.setText((Integer.toString(f.getQuantity())) + " Servings");
-            
-            TextView foodCaloriesTextView =
-                (TextView)view.findViewById(R.id.consumed_calories_text_view);
-            foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " Cals");
+				        Toast toast = Toast.makeText(context, text, duration);
+				        toast.show();
+				}
+			});
         }
         
         
@@ -133,43 +151,5 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     	setListAdapter(null);
     }
     
-    boolean addFoodToDatabase(Food food, long id){
-    	
-    	boolean wasAdded = false;
-    	
-    	//Add food to Days table
-        //See if today's day is in the database
-       
-        Date date = new Date();
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-      
-        if(currentDate != null){
-        	  
-	        //Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
-        	int currentDayId = FoodManager.get(getActivity()).getDay(currentDate);
-	        Log.e("CURRENT DAY", "Current day is: " + currentDayId);
-	        if(currentDayId == -1){//current day is not in database so we need to add it
-	     	   //add current day to database
-	     	   Day currentDay = new Day(currentDate);
-	     	   
-	     	   FoodManager.get(getActivity()).addDay(currentDay);
-	     	   currentDayId = FoodManager.get(getActivity()).getDay(currentDate);
-	     	   Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
-	     	   
-	        }
-	        //If the food is not in the current day 
-	        if(FoodManager.get(getActivity()).getConsumedFood(currentDayId, food.getTitle()) == null){ 
-	     	   // Add food to consumedFoods table 	
-	        	FoodManager.get(getActivity()).addConsumedFood(food, currentDayId);
-	        }
-	        else{
-	        	Log.e("Food Retrieved", "Food found is: " + FoodManager.get(getActivity()).getConsumedFood(currentDayId, food.getTitle()).getTitle());
-	     	   //If it is already in increase the serving size
-	     	   //increment serving of food in the day
-	        	FoodManager.get(getActivity()).incrementServing(currentDayId, food);
-	        }
-        }
-        
-        return wasAdded;
-    }
+  
 }

@@ -75,7 +75,7 @@ public class FoodManager {
 		//therefore, we need to insert a new entry
 		if(mHelper.updateConsumedFood(dayId, food.getQuantity(), food.getTitle())
 			<= 0){
-			mHelper.insertConsumedFood(food, dayId, food.getQuantity());
+			mHelper.insertConsumedFood(food, dayId, food.getQuantity(), food.getDay());
 		}
 		
 		mHelper.updateDayTotalCalories(dayId, totalCalories);
@@ -133,8 +133,8 @@ public class FoodManager {
 		return dayId;
 	}
 	
-	public ConsumedFoodCursor queryConsumedFoods(){
-		return mHelper.queryConsumedFoods();
+	public ConsumedFoodCursor queryConsumedFoods(String day){
+		return mHelper.queryConsumedFoods(day);
 	}
 	
 	public PendingFoodCursor queryPendingFoods(){
@@ -176,4 +176,48 @@ public class FoodManager {
 		return food;
 	}
 	
+	  boolean AddFoodToDatabase(Food food){
+	    	
+	    	boolean wasAdded = false;
+	    	
+	    	//Add food to Days table
+	        //See if today's day is in the database
+	       
+	        Date date = new Date();
+	        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+	      
+	        if(currentDate != null){
+	        	  
+		        //Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
+	        	int currentDayId = getDay(currentDate);
+		        Log.e("CURRENT DAY", "Current day is: " + currentDayId);
+		        if(currentDayId == -1){//current day is not in database so we need to add it
+		     	   //add current day to database
+		     	   Day currentDay = new Day(currentDate);
+		     	   
+		     	   addDay(currentDay);
+		     	   currentDayId = getDay(currentDate);
+		     	   Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
+		     	   
+		        }
+		        //If the food is not in the current day 
+		        if(getConsumedFood(currentDayId, food.getTitle()) == null){ 
+		     	   // Add food to consumedFoods table 	
+		        	addConsumedFood(food, currentDayId);
+		        }
+		        else{
+		        	Log.e("Food Retrieved", "Food found is: " + getConsumedFood(currentDayId, food.getTitle()).getTitle());
+		     	   //If it is already in increase the serving size
+		     	   //increment serving of food in the day
+		        	incrementServing(currentDayId, food);
+		        }
+	        }
+	        
+	        return wasAdded;
+	    }
+	  
+	public boolean deleteConsumedFood(Food food){
+		
+		return true;
+	}
 }

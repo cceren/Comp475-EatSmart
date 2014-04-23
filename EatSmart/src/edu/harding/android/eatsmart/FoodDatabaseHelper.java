@@ -56,6 +56,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "servings INTEGER, " +
                 "calories INTEGER, " +
                 "time TEXT, " +
+                "day TEXT, " +
                 "day_id INTEGER references days(_id))";
         
         String CREATE_PENDING_FOOD_TABLE = "CREATE TABLE pendingFood ( " +
@@ -124,7 +125,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	
 	
 	
-	public long insertConsumedFood(Food food, long dayId, int servingSize){
+	public long insertConsumedFood(Food food, long dayId, int servingSize, String day){
 		try{
 			ContentValues cv = new ContentValues();
 			
@@ -132,7 +133,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			cv.put(COLUMN_FOOD_CALORIES, food.getCalories());
 			cv.put(COLUMN_FOOD_DAY_ID, dayId);
 			cv.put(COLUMN_FOOD_SERVINGS, servingSize);
-			
+			cv.put("day", day);
 			Log.d(TAG, "Adding food to consumedFood table");
 			
 			return getWritableDatabase().insert(TABLE_CONSUMED_FOOD, null, cv);
@@ -356,12 +357,17 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 	
-	public ConsumedFoodCursor queryConsumedFoods(){
-		//Equivalent to "select * from food order by name asc"
+	public ConsumedFoodCursor queryConsumedFoods(String day){
+		//Equivalent to "select * from where day
 		try{
 			Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
-					null, null, null, null, null, null);
-			Log.d(TAG, "queryConsumedFoods");
+					null, 
+					"day = ?", 
+					new String[]{day}, 
+					null, 
+					null, 
+					null);
+			Log.d(TAG, "queryConsumedFoods according to current day");
 			return new ConsumedFoodCursor(wrapped);
 
 		}
@@ -431,7 +437,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
 			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
 			int foodQuantity = getInt(getColumnIndex(COLUMN_FOOD_SERVINGS));
+			String day = getString(getColumnIndex("day"));
 			
+			food.setDay(day);
 			food.setCalories(foodCalories);
 			food.setTitle(foodName);
 			food.setQuantity(foodQuantity);

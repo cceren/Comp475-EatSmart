@@ -1,5 +1,6 @@
 package edu.harding.android.eatsmart;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,8 +28,17 @@ public class Food {
     private int mCalories;
     private Photo mPhoto;
     private String mTime;
+    private String mDay;
     
-    public String getTime() {
+    public String getDay() {
+		return mDay;
+	}
+
+	public void setDay(String day) {
+		mDay = day;
+	}
+
+	public String getTime() {
 		return mTime;
 	}
 
@@ -54,6 +64,7 @@ public class Food {
     public Food() {
         //mId = UUID.randomUUID();
         mDate = new Date();
+        mDay = new SimpleDateFormat("yyyy-MM-dd").format(mDate);
         mTime = DateFormat.format("h:mm a", mDate).toString();
     }
     

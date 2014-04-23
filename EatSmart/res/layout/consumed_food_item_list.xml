@@ -14,28 +14,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="8dp" >
 
-        <TextView
-            android:id="@+id/consumed_quantity_text_view"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_weight="1" >
 
-        <TextView
-            android:id="@+id/consumed_food_item_name_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/consumed_calories_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="right" />
+                <TextView
+                    android:id="@+id/food_name_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="Rice" />
+
+                <TextView
+                    android:id="@+id/servingsAmount_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2 servings"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/consumed_food_calories_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="240 calories" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:src="@drawable/btn_minus_default" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
