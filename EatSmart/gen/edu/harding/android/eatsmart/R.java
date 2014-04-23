@@ -25,15 +25,16 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int btn_minus_default=0x7f020000;
-        public static final int btn_plus_default=0x7f020001;
-        public static final int cameraicon=0x7f020002;
-        public static final int custom_progress_bar_horizontal=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
+        public static final int back=0x7f020000;
+        public static final int btn_minus_default=0x7f020001;
+        public static final int btn_plus_default=0x7f020002;
+        public static final int cameraicon=0x7f020003;
+        public static final int custom_progress_bar_horizontal=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f09000a;
-        public static final int action_settings=0x7f090029;
+        public static final int action_settings=0x7f09002b;
         public static final int add_food_button=0x7f090014;
         public static final int birthday_textView=0x7f090018;
         public static final int caloriesEditText=0x7f09001e;
@@ -70,6 +71,8 @@ public final class R {
         public static final int textView2=0x7f09000f;
         public static final int textView3=0x7f090010;
         public static final int time_textView=0x7f090028;
+        public static final int topButton=0x7f090029;
+        public static final int topText=0x7f09002a;
         public static final int update_profile_button=0x7f09001b;
         public static final int weight_editText=0x7f090026;
         public static final int weight_textView=0x7f09001a;
@@ -84,6 +87,7 @@ public final class R {
         public static final int fragment_organize_pending_food=0x7f030005;
         public static final int fragment_profile=0x7f030006;
         public static final int pending_food_item=0x7f030007;
+        public static final int titlebtn=0x7f030008;
     }
     public static final class menu {
         public static final int eat_smart=0x7f080000;
@@ -114,6 +118,7 @@ public final class R {
         public static final int save_button=0x7f05000c;
         public static final int servings=0x7f050019;
         public static final int take=0x7f050011;
+        public static final int title=0x7f05001c;
         public static final int update_profile=0x7f050017;
         public static final int weight_label=0x7f050008;
         public static final int welcome_label=0x7f05000f;

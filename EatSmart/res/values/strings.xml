@@ -29,6 +29,7 @@
 	<string name="servings">servings</string>
 	<string name="pending_food">Pending Food</string>
 	<string name="food_name">Food Name</string>
+	<string name="title">Eat Smart</string>
 	<string-array name="foot_array">
         <item>4</item>
         <item>5</item>
