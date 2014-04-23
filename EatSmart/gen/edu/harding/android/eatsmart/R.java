@@ -50,8 +50,8 @@ public final class R {
         public static final int ft_spinner=0x7f090024;
         public static final int height_textView=0x7f090019;
         public static final int history_button=0x7f090015;
-        public static final int imageButton1=0x7f090005;
         public static final int in_spinner=0x7f090025;
+        public static final int minus_imageButton=0x7f090005;
         public static final int nameEditText=0x7f090022;
         public static final int organize_button=0x7f090016;
         public static final int pendingFoodImageView=0x7f09001c;

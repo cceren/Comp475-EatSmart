@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ConsumedFoodListFragment extends ListFragment implements LoaderCallbacks<Cursor> {
@@ -58,7 +60,7 @@ private static final String TAG = "ConsumedFoodListFragment";
         public void bindView(View view, Context context, Cursor cursor){
         	//Get the food for the current row
         	 // configure the view for this Food Item
-            Food f = mConsumedFoodCursor.getFood();
+        	final  Food f = mConsumedFoodCursor.getFood();
 
             Log.d(TAG, String.valueOf(f.getQuantity()));
             
@@ -73,6 +75,26 @@ private static final String TAG = "ConsumedFoodListFragment";
             TextView foodCaloriesTextView =
                 (TextView)view.findViewById(R.id.consumed_food_calories_textView);
             foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " calories");
+            
+            ImageButton minusImageButton = 
+            		(ImageButton)view.findViewById(R.id.minus_imageButton);
+            
+            minusImageButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					FoodManager.get(getActivity()).decreaseConsumedFoodServing(f);
+					// Show Notification to user
+					 Context context = getActivity();
+				        CharSequence text = "Decreased serving of  " + f.getTitle();
+				        int duration = Toast.LENGTH_SHORT;
+				        Toast toast = Toast.makeText(context, text, duration);
+				        toast.show();
+				    //refresh loaders
+				        mConsumedFoodCursor.requery();
+				}
+			});
         }
         
         
