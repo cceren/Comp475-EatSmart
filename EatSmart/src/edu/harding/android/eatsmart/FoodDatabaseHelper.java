@@ -162,6 +162,23 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return rowsAffected;
 	}
 	
+	public long updateConsumedFood(Food food){
+		int rowsAffected = 0;
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put(COLUMN_FOOD_SERVINGS, food.getQuantity());
+			Log.d(TAG, "Updating food from consumedFood table");
+			rowsAffected = getWritableDatabase().update(TABLE_CONSUMED_FOOD, cv, 
+					"day = ? AND " + COLUMN_FOOD_NAME + " = ?", new String []{food.getDay(), food.getTitle()});
+			 return rowsAffected;
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return rowsAffected;
+	}
+	
 	public long insertPendingFood(Food food){
 		try{
 			ContentValues cv = new ContentValues();
@@ -267,6 +284,21 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		
 		
 	}
+	/*
+	public FoodCursor queryConsumedFood(Food food){
+		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
+				null, //All columns
+				"day = ? AND name +  = ?", //limit to a particular day 
+				new String []{food.getDay(), food.getTitle()}, // with this value
+				null, // group by
+				null, //having
+				null, //order by
+				"1"); //limit 1 row
+		
+		return new FoodCursor(wrapped);
+		
+		
+	}*/
 
 	
 	
@@ -309,6 +341,28 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	//Des: decrease the serving of a consumed food, otherwise
+	//it deletets it from the database
+	public int decreaseConsumedFoodServing(Food food){
+		int servings = food.getQuantity();
+		if( servings > 0){
+			food.setQuantity(servings - 1);
+			updateConsumedFood(food);
+		}else{
+			deleteConsumedFood(food);
+		}
+		return 0;
+	}
+	//Des: Deletes a row from the consumedFood table
+	public int deleteConsumedFood(Food food){
+
+		
+		
+		return getReadableDatabase().delete(TABLE_CONSUMED_FOOD, 
+				"name = ? AND day = ?", new String []{food.getTitle(), food.getDay()}); //limit 1 row
+		
+	}
+	
 	public int queryFoodServing(long dayId, String foodName){
 		int servingSize = 0;
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
@@ -326,6 +380,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return servingSize;
 
 	}
+	
 	public DayCursor queryDay(String date){
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS, 
 				null, // All columns

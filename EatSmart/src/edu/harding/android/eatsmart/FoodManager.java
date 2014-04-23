@@ -216,8 +216,7 @@ public class FoodManager {
 	        return wasAdded;
 	    }
 	  
-	public boolean deleteConsumedFood(Food food){
-		
-		return true;
+	public int decreaseConsumedFoodServing(Food food){
+		 return mHelper.decreaseConsumedFoodServing(food);
 	}
 }
