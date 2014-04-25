@@ -91,13 +91,19 @@ private static final String TAG = "ConsumedFoodListFragment";
 				        int duration = Toast.LENGTH_SHORT;
 				        Toast toast = Toast.makeText(context, text, duration);
 				        toast.show();
-				    //refresh loaders
-				        mConsumedFoodCursor.requery();
+				    //refresh loader
+				        refreshLoader();
+				        
 				}
 			});
         }
         
         
+    }
+    
+    private boolean refreshLoader(){
+    	getLoaderManager().restartLoader(0, null, this);
+    	return true;
     }
     
     //This class is implemented in order to query the database Asynchronously
