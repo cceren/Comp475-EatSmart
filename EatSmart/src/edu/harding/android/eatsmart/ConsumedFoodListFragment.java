@@ -84,15 +84,12 @@ private static final String TAG = "ConsumedFoodListFragment";
 				@Override
 				public void onClick(View v) {
 					
+					//Decrease by one the selected food consumed
 					FoodManager.get(getActivity()).decreaseConsumedFoodServing(f);
 					// Show Notification to user
-					 Context context = getActivity();
-				        CharSequence text = "Decreased serving of  " + f.getTitle();
-				        int duration = Toast.LENGTH_SHORT;
-				        Toast toast = Toast.makeText(context, text, duration);
-				        toast.show();
+					notifyUser(f);
 				    //refresh loader
-				        refreshLoader();
+				    refreshLoader();
 				        
 				}
 			});
@@ -103,6 +100,15 @@ private static final String TAG = "ConsumedFoodListFragment";
     
     private boolean refreshLoader(){
     	getLoaderManager().restartLoader(0, null, this);
+    	return true;
+    }
+    
+    private boolean notifyUser(Food f){
+    	 Context context = getActivity();
+	        CharSequence text = "Decreased serving of  " + f.getTitle();
+	        int duration = Toast.LENGTH_SHORT;
+	        Toast toast = Toast.makeText(context, text, duration);
+	        toast.show();
     	return true;
     }
     

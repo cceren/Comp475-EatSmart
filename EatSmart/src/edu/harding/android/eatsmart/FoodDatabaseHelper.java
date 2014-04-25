@@ -1,6 +1,7 @@
 package edu.harding.android.eatsmart;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -161,7 +162,21 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		}
 		return rowsAffected;
 	}
-	
+	public long updateDay(Day day){
+		int rowsAffected = 0;
+		try{
+			ContentValues cv = new ContentValues();
+			
+			cv.put("calories", day.getTotalCalories());
+			rowsAffected = getWritableDatabase().update("days", cv, 
+					"date = ? " , new String []{day.getDate()});
+			 return rowsAffected;
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return rowsAffected;
+	}
 	public long updateConsumedFood(Food food){
 		int rowsAffected = 0;
 		try{
@@ -320,12 +335,42 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	public int queryDayTotalCalories(String day){
+		int totalCalories = 0;
+		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS,
+				null, // All columns
+				"date = ? ", //limit to a particular day 
+				new String []{day}, // with this value
+				null,
+				null, //having
+				null, //order by
+				"1"); //limit 1 row
+		
+		if (wrapped.moveToFirst()) // data?
+			totalCalories = wrapped.getInt(wrapped.getColumnIndex(COLUMN_FOOD_CALORIES)); 
+		
+		return totalCalories;
+		
+	}
+	
 	public long updateDayTotalCalories(long dayId, int totalCalories){
 		try{
 			ContentValues cv = new ContentValues();
 			cv.put(COLUMN_FOOD_CALORIES, totalCalories);
 			return getWritableDatabase().update(TABLE_DAYS, cv, 
 					"_id" + " = ?", new String []{String.valueOf(dayId)});	
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+		return 0;
+	}
+	public long updateDayTotalCalories(String date, int totalCalories){
+		try{
+			ContentValues cv = new ContentValues();
+			cv.put(COLUMN_FOOD_CALORIES, totalCalories);
+			return getWritableDatabase().update(TABLE_DAYS, cv, 
+					"date = ?", new String []{date});	
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());
@@ -341,18 +386,45 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
-	//Des: decrease the serving of a consumed food, otherwise
-	//it deletets it from the database
+	/***
+	 * Des: decrease the serving of a consumed food, otherwise
+	 * it deletes it from the database
+	 * @param food
+	 * @return
+	 */
 	public int decreaseConsumedFoodServing(Food food){
 		int servings = food.getQuantity();
+
 		if( servings > 0){
 			food.setQuantity(servings - 1);
 			updateConsumedFood(food);
 		}else{
 			deleteConsumedFood(food);
 		}
+		try{
+			Day day = null;
+			DayCursor cursor = queryDay(food.getDay());
+			cursor.moveToFirst();
+			//If you got a row, get a day
+			if(!cursor.isAfterLast())
+				day = cursor.getDay();
+			cursor.close();
+			
+			
+			int totalCalories = day.getTotalCalories() - food.getCalories();
+			day.setTotalCalories(totalCalories);
+			
+			updateDay(day);
+		}
+		catch(Exception e){
+			Log.d(TAG, e.toString());
+		}
+			
+		
 		return 0;
 	}
+	
+	
 	//Des: Deletes a row from the consumedFood table
 	public int deleteConsumedFood(Food food){
 

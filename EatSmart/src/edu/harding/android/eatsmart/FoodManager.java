@@ -219,4 +219,10 @@ public class FoodManager {
 	public int decreaseConsumedFoodServing(Food food){
 		 return mHelper.decreaseConsumedFoodServing(food);
 	}
+	
+	public String getCurrentDate(){
+		Date date = new Date();
+	    String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+	    return currentDate;
+	}
 }
