@@ -35,7 +35,6 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
         getActivity().setTitle(R.string.foods_title);
     
         //Initialize the loader to load the list of foods
-        Log.d(TAG, "No foods added");
         getLoaderManager().initLoader(0, null, this);
         
         
@@ -99,14 +98,9 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 				@Override
 				public void onClick(View v) {
 					
-					FoodManager.get(getActivity()).AddFoodToDatabase(f);
+					FoodManager.get(getActivity()).addFoodToDatabase(f);
 					// Show Notification to user
-					 Context context = getActivity();
-				        CharSequence text = "Added  " + f.getTitle() + " to history";
-				        int duration = Toast.LENGTH_SHORT;
-
-				        Toast toast = Toast.makeText(context, text, duration);
-				        toast.show();
+					notifyUser(f);
 				}
 			});
         }
@@ -148,5 +142,13 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     	setListAdapter(null);
     }
     
+    private boolean notifyUser(Food f){
+   	 Context context = getActivity();
+	        CharSequence text = "Decreased serving of  " + f.getTitle();
+	        int duration = Toast.LENGTH_SHORT;
+	        Toast toast = Toast.makeText(context, text, duration);
+	        toast.show();
+   	return true;
+   }
   
 }

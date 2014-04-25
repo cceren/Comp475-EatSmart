@@ -176,8 +176,8 @@ public class FoodManager {
 		return food;
 	}
 	
-	  boolean AddFoodToDatabase(Food food){
-	    	
+	  boolean addFoodToDatabase(Food food){
+	    	food.setQuantity(1);
 	    	boolean wasAdded = false;
 	    	
 	    	//Add food to Days table

@@ -147,5 +147,12 @@ private static final String TAG = "ConsumedFoodListFragment";
     	//Stop using the cursor (via the adapter)
     	setListAdapter(null);
     }
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		refreshLoader();
+	}
    
 }
