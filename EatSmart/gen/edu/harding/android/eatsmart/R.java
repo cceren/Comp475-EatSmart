@@ -25,16 +25,47 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int app_banner=0x7f020000;
-        public static final int back=0x7f020001;
-        public static final int btn_minus_default=0x7f020002;
-        public static final int btn_plus_default=0x7f020003;
-        public static final int cameraicon=0x7f020004;
-        public static final int custom_progress_bar_exceeded=0x7f020005;
-        public static final int custom_progress_bar_horizontal=0x7f020006;
-        public static final int eat_icon=0x7f020007;
-        public static final int ic_garbage=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
+        public static final int ab_background_textured_eatsmartstyle=0x7f020000;
+        public static final int ab_bottom_solid_eatsmartstyle=0x7f020001;
+        public static final int ab_solid_eatsmartstyle=0x7f020002;
+        public static final int ab_stacked_solid_eatsmartstyle=0x7f020003;
+        public static final int ab_texture_tile_eatsmartstyle=0x7f020004;
+        public static final int ab_transparent_eatsmartstyle=0x7f020005;
+        public static final int app_banner=0x7f020006;
+        public static final int back=0x7f020007;
+        public static final int btn_cab_done_default_eatsmartstyle=0x7f020008;
+        public static final int btn_cab_done_eatsmartstyle=0x7f020009;
+        public static final int btn_cab_done_focused_eatsmartstyle=0x7f02000a;
+        public static final int btn_cab_done_pressed_eatsmartstyle=0x7f02000b;
+        public static final int btn_minus_default=0x7f02000c;
+        public static final int btn_plus_default=0x7f02000d;
+        public static final int cab_background_bottom_eatsmartstyle=0x7f02000e;
+        public static final int cab_background_top_eatsmartstyle=0x7f02000f;
+        public static final int cameraicon=0x7f020010;
+        public static final int custom_progress_bar_exceeded=0x7f020011;
+        public static final int custom_progress_bar_horizontal=0x7f020012;
+        public static final int eat_icon=0x7f020013;
+        public static final int ic_garbage=0x7f020014;
+        public static final int ic_launcher=0x7f020015;
+        public static final int list_focused_eatsmartstyle=0x7f020016;
+        public static final int list_pressed_eatsmartstyle=0x7f020017;
+        public static final int menu_dropdown_panel_eatsmartstyle=0x7f020018;
+        public static final int progress_bg_eatsmartstyle=0x7f020019;
+        public static final int progress_horizontal_eatsmartstyle=0x7f02001a;
+        public static final int progress_primary_eatsmartstyle=0x7f02001b;
+        public static final int progress_secondary_eatsmartstyle=0x7f02001c;
+        public static final int selectable_background_eatsmartstyle=0x7f02001d;
+        public static final int spinner_ab_default_eatsmartstyle=0x7f02001e;
+        public static final int spinner_ab_disabled_eatsmartstyle=0x7f02001f;
+        public static final int spinner_ab_focused_eatsmartstyle=0x7f020020;
+        public static final int spinner_ab_pressed_eatsmartstyle=0x7f020021;
+        public static final int spinner_background_ab_eatsmartstyle=0x7f020022;
+        public static final int tab_selected_eatsmartstyle=0x7f020023;
+        public static final int tab_selected_focused_eatsmartstyle=0x7f020024;
+        public static final int tab_selected_pressed_eatsmartstyle=0x7f020025;
+        public static final int tab_unselected_eatsmartstyle=0x7f020026;
+        public static final int tab_unselected_focused_eatsmartstyle=0x7f020027;
+        public static final int tab_unselected_pressed_eatsmartstyle=0x7f020028;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f09000c;
@@ -135,6 +166,9 @@ public final class R {
         public static final int welcome_label=0x7f05000f;
     }
     public static final class style {
+        public static final int ActionBar_Solid_Eatsmartstyle=0x7f070005;
+        public static final int ActionBar_Transparent_Eatsmartstyle=0x7f070006;
+        public static final int ActionButton_CloseMode_Eatsmartstyle=0x7f07000b;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -163,5 +197,13 @@ public final class R {
         public static final int AppTheme=0x7f070003;
         public static final int CustomProgressBar=0x7f070001;
         public static final int CustomProgressBarExceeded=0x7f070002;
+        public static final int DropDownListView_Eatsmartstyle=0x7f070008;
+        public static final int DropDownNav_Eatsmartstyle=0x7f070009;
+        public static final int PopupMenu_Eatsmartstyle=0x7f070007;
+        public static final int ProgressBar_Eatsmartstyle=0x7f07000a;
+        public static final int Theme_Eatsmartstyle=0x7f070004;
+        /**  this style is only referenced in a Light.DarkActionBar based theme 
+         */
+        public static final int Theme_Eatsmartstyle_Widget=0x7f07000c;
     }
 }
