@@ -5,6 +5,8 @@ import java.util.Date;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -112,25 +114,24 @@ public class OrganizePendingFoodFragment extends Fragment{
             	
             	if(cals.toString().length() >= 1){
             		mCalories = Integer.parseInt(cals);
-            	}else{
-            		mCalories = 0;
             	}
-            	
             	if(servings.toString().length() >= 1){
             		mServings = Integer.parseInt(servings);
             	}else{
-            		mServings = 0;
+            		mServings = 1;
             	}
 				if(name.toString().length() >= 1){
 					mFoodName = mFoodNameEditText.getText().toString();
-				}else{
-					mFoodName = "Unknown";
 				}
-				
+				if(mCalories > 0 && mFoodName != null && mServings > 0){
 				Log.d(TAG, mFoodName+mCalories+mServings);
 				saveFoodToDatabase();
 				getActivity().setResult(Activity.RESULT_OK);
 				getActivity().finish();
+				}
+				else{
+					showAlert();
+				}
 			}
 		});
 		return v;
@@ -153,5 +154,21 @@ public class OrganizePendingFoodFragment extends Fragment{
 		super.onDestroy();
 		PictureUtils.cleanImageView(mImageView);
 	}
+	
+	private void showAlert(){
+		new AlertDialog.Builder(getActivity())
+	    .setTitle("Incomplete Form")
+	    .setMessage("All fields are required.")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })
+	    
+	     
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+	}
+	
 	
 }

@@ -40,10 +40,14 @@
 
     <ImageButton
         android:id="@+id/plus_imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.004"        
-        android:src="@drawable/eat_icon"
-         />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="0"
+        android:background="@drawable/eatsmart_btn_round"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/eat_icon" />
 
 </LinearLayout>
