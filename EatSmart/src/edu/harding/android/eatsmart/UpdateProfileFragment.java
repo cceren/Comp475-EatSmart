@@ -201,9 +201,7 @@ public class UpdateProfileFragment extends Fragment {
 			            Log.e("user information", "failed");
 			        }
 						FragmentManager fm = getActivity().getSupportFragmentManager();
-						FragmentTransaction ft = fm.beginTransaction();
-						HomeFragment homeFragment = new HomeFragment();
-						ft.replace(R.id.fragmentContainer, homeFragment).commit();
+						fm.popBackStack();
 						//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
 				}else
 				{
