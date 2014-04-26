@@ -127,7 +127,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
 				@Override
 				public void onClick(View v) {
 					
-					FoodManager.get(getActivity()).addFoodToDatabase(f);
+					FoodManager.get(getActivity()).addConsumedFoodToDatabase(f);
 					// Show Notification to user
 					notifyUser(f);
 				}

@@ -9,7 +9,9 @@ public class OrganizePendingFoodActivity extends SingleFragmentActivity {
 	protected Fragment createFragment() {
 		Bundle b = getIntent().getExtras();
 		String path = b.getString("filename");
-		return  OrganizePendingFoodFragment.newInstance(path);
+		String date = b.getString("date");
+		String time = b.getString("time");
+		return  OrganizePendingFoodFragment.newInstance(path, date, time);
 	}
 
 }

@@ -25,6 +25,10 @@ public class OrganizePendingFoodFragment extends Fragment{
 	"edu.harding.android.eatsmart.image_path";
 	public static final String EXTRA_ID =
 			"edu.harding.android.eatsmart.id";
+	public static final String EXTRA_DATE =
+	"edu.harding.android.eatsmart.date";
+	public static final String EXTRA_TIME =
+	"edu.harding.android.eatsmart.time";
 	public static final String TAG =
 			"OrganizePendingFoodFragment";
 	private ImageView mImageView;
@@ -36,10 +40,15 @@ public class OrganizePendingFoodFragment extends Fragment{
 	private EditText mFoodNameEditText;
 	private String mPath;
 	private long mId;
-	public static OrganizePendingFoodFragment newInstance(String imagePath){
+	private String mDate;
+	private String mTime;
+	
+	public static OrganizePendingFoodFragment newInstance(String imagePath, String date, String time){
 		Bundle args = new Bundle();
 		
 		args.putSerializable(EXTRA_IMAGE_PATH, imagePath);
+		args.putSerializable(EXTRA_DATE, date);
+		args.putSerializable(EXTRA_TIME, time);
 		
 		OrganizePendingFoodFragment fragment = new OrganizePendingFoodFragment();
 		fragment.setArguments(args);
@@ -79,6 +88,8 @@ public class OrganizePendingFoodFragment extends Fragment{
 		mImageView = (ImageView)v.findViewById(R.id.pendingFoodImageView);
 		
 		mPath = (String)getArguments().getSerializable(EXTRA_IMAGE_PATH);
+		mDate = (String)getArguments().getSerializable(EXTRA_DATE);
+		mTime = (String)getArguments().getSerializable(EXTRA_TIME);
 		String path = getActivity()
 	    		   .getFileStreamPath(mPath).getAbsolutePath();
 		
@@ -98,16 +109,25 @@ public class OrganizePendingFoodFragment extends Fragment{
 				String cals = mCaloriesEditText.getText().toString();
             	String servings = mServingsEditText.getText().toString();
             	String name = mFoodNameEditText.getText().toString();
-            	if(!cals.equals(""))
+            	
+            	if(cals.toString().length() >= 1){
             		mCalories = Integer.parseInt(cals);
-            	mCalories = 0;
-            	if(!servings.equals(""))
+            	}else{
+            		mCalories = 0;
+            	}
+            	
+            	if(servings.toString().length() >= 1){
             		mServings = Integer.parseInt(servings);
-            	mServings = 0;
-				if(!name.equals(""))
+            	}else{
+            		mServings = 0;
+            	}
+				if(name.toString().length() >= 1){
 					mFoodName = mFoodNameEditText.getText().toString();
-				mFoodName = "NULL";
-				Log.e("name cal servings", mFoodName+mCalories+mServings);
+				}else{
+					mFoodName = "Unknown";
+				}
+				
+				Log.d(TAG, mFoodName+mCalories+mServings);
 				saveFoodToDatabase();
 				getActivity().setResult(Activity.RESULT_OK);
 				getActivity().finish();
@@ -118,11 +138,14 @@ public class OrganizePendingFoodFragment extends Fragment{
 
 	void saveFoodToDatabase(){
 		Food food = new Food();
+		food.setDay(mDate);
+		food.setTime(mTime);
 		food.setTitle(mFoodName);
 		food.setCalories(mCalories);
 		food.setQuantity(mServings);
-
-		FoodManager.get(getActivity()).addOrganizedPendingFood(food);
+		
+		Log.d(TAG, food.getDay());
+		FoodManager.get(getActivity()).addConsumedFoodToDatabase(food);
 		FoodManager.get(getActivity()).DeletePendingFood(mPath);
 	}
 	@Override

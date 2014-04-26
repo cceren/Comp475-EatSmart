@@ -73,12 +73,17 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
         
        Food pendingFood = FoodManager.get(getActivity()).getPendingFood(id);
        String path = pendingFood.getPhotoFilename();
+       String date = pendingFood.getDay();
+       String time = pendingFood.getTime();
        
        Intent i = new Intent(getActivity(), OrganizePendingFoodActivity.class);
        Bundle bundle = new Bundle();
        
        bundle.putString("filename", path);
        bundle.putLong("id", id);
+       bundle.putString("date", date);
+       bundle.putString("time", time);
+       
        i.putExtras(bundle);
        startActivityForResult(i, SAVE_PENDING_FOOD);
        
@@ -187,7 +192,8 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 				// TODO Auto-generated method stub
 				super.onActivityResult(requestCode, resultCode, data);
 				if (resultCode != Activity.RESULT_OK) return;
-		        if (requestCode == SAVE_PENDING_FOOD) {
+		        
+				if (requestCode == SAVE_PENDING_FOOD) {
 		        	//Update the listView
 		            getLoaderManager().restartLoader(0, null, this);
 		        }

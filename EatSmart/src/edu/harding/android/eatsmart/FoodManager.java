@@ -160,24 +160,32 @@ public class FoodManager {
 		return result;
 	}
 	
-	public Food addOrganizedPendingFood(Food food){
+	/*public Food addOrganizedPendingFood(Food food){
 		
-		String consumedDate = new SimpleDateFormat("yyyy-MM-dd").format(food.getDate());
-		long dayId = getDay(consumedDate);
+		//Attempt to get a day
+			Day day = null;
+			DayCursor cursor = mHelper.queryDay(food.getDay());
+			cursor.moveToFirst();
+			//If you got a row, get a day
+			if(!cursor.isAfterLast())
+				day = cursor.getDay();
+			cursor.close();
 		
-		//Add day to db if it's not currenty in the db
-		if(dayId == -1){
-			Day day = new Day();
-			Day newDay = addDay(day);
-			dayId = newDay.getId();
-		}
+		//Add day to database if it's not currenty in the db
+			if(day == null){
+				day = new Day();
+				addDay(day);
+			}
 		addConsumedFood(food, dayId);
 		
 		return food;
 	}
+	*/
 	
-	  boolean addFoodToDatabase(Food food){
-	    	food.setQuantity(1);
+	  boolean addConsumedFoodToDatabase(Food food){
+	    	if(food.getQuantity() == 0)
+	    		food.setQuantity(1);
+	    	
 	    	boolean wasAdded = false;
 	    	
 	    	//Add food to Days table
