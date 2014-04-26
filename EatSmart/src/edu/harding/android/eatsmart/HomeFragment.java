@@ -17,6 +17,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,9 +40,31 @@ public class HomeFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-}
+	}
 
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.item_updateProfile:
+			FragmentManager fm = getActivity().getSupportFragmentManager();
+			UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
+            FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
+            ft.replace(R.id.fragmentContainer, updateProfileFragment).commit();
+            return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.eat_smart, menu);
+	}
+
+
 	@TargetApi(11)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
@@ -66,10 +91,6 @@ public class HomeFragment extends Fragment {
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
         mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
         
-        
-        //birthdayTextView.setText("Birthday:"+ birthday);
-        //heightTextView.setText("Height: " + userHeight);
-        //weightTextView.setText("Weight: " + userWeight);
         mProgressBar.setMax(CALORIES_GOAL);
         int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
 		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
@@ -138,19 +159,6 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		
-		//Launches UpdateProfileFragment
-		Button updateProfileButton = (Button)v.findViewById(R.id.update_profile_button);
-		updateProfileButton.setOnClickListener(new View.OnClickListener() {	
-			@Override
-			public void onClick(View v) {
-				
-				FragmentManager fm = getActivity().getSupportFragmentManager();
-				UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
-                FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
-                ft.replace(R.id.fragmentContainer, updateProfileFragment).commit(); 
-			}
-		});
 		return v;
 	}
 	

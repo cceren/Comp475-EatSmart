@@ -25,6 +25,7 @@
 	<string name="organize_quick_picks">Organize QuickPicks</string>
 	<string name="profile">Profile</string>
 	<string name="update_profile">Update Profile</string>
+	<string name="edit_profile">Edit Profile</string>
 	<string name="calories">calories</string>
 	<string name="servings">servings</string>
 	<string name="pending_food">Pending Food</string>

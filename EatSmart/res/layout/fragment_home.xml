@@ -112,13 +112,6 @@
             android:layout_height="wrap_content"
             android:padding="5dp" />
 
-        <Button
-            android:id="@+id/update_profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="@string/update_profile" />
-
     </LinearLayout>
 
 </RelativeLayout>
