@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -35,16 +37,33 @@ public class UpdateProfileFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+        setHasOptionsMenu(true);
+
 	}
 	
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case android.R.id.home:
+			if(getFragmentManager().getBackStackEntryCount() > 0){
+				getFragmentManager().popBackStack();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 	
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
+		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		}
 		
 		final Spinner footSpinner = (Spinner) v.findViewById(R.id.ft_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.getContext(),
@@ -68,7 +87,7 @@ public class UpdateProfileFragment extends Fragment {
 		nameEditText.setText(sharedPreferences.getString("name", ""));
         weight.setText(sharedPreferences.getString("weight", ""));
         footSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("heightFt", "")));
-        inchesSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("heightIn", "")));
+        inchesSpinner.setSelection(adapter2.getPosition(sharedPreferences.getString("heightIn", "")));
 
         
 		weight.setOnEditorActionListener(new OnEditorActionListener() {

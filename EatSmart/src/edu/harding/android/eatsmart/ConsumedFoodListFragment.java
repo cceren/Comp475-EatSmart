@@ -48,7 +48,7 @@ private static final String TAG = "ConsumedFoodListFragment";
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 		case android.R.id.home:
-			if(NavUtils.getParentActivityName(getActivity()) != null){
+			if(getFragmentManager().getBackStackEntryCount() > 0){
 				getFragmentManager().popBackStack();
 			}
 			return true;
