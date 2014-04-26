@@ -51,7 +51,9 @@
                     android:id="@+id/datePicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:calendarViewShown="false" />
+                    android:calendarViewShown="false" 
+                    android:maxDate = "01/01/2004"
+                    android:minDate = "01/01/1900"/>
 
             </LinearLayout>
         </LinearLayout>
