@@ -35,6 +35,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class UpdateProfileFragment extends Fragment {
 	private final String USERINFO = "userInfo"; 
+	private String TAG = "UpdateProfileFragment";
 	private int mMonth;
 	private int mDay;
 	private int mYear;
@@ -128,9 +129,10 @@ public class UpdateProfileFragment extends Fragment {
 	               return false;
 	           }
 	       });
+        Log.d(TAG, mYear + " " + mMonth + " " + mDay);
 	    datePicker.init(mYear, mMonth, mDay, new OnDateChangedListener(){
 	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-	           mMonth = monthOfYear+1;
+	           mMonth = monthOfYear;
 	           mDay = dayOfMonth;
 	           mYear = year;
 	            }            
@@ -186,6 +188,9 @@ public class UpdateProfileFragment extends Fragment {
 				        editor.putString("name", nameEditText.getText().toString());  
 				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
 				        editor.putString("activityLevel", mActivityLevel);
+				        editor.putString("year", Integer.toString(mYear));
+				        editor.putString("month", Integer.toString(mMonth));
+				        editor.putString("day", Integer.toString(mDay));
 				        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
 				        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
 				        editor.putString("weight", weightEditText.getText().toString());  

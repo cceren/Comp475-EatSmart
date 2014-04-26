@@ -119,6 +119,7 @@ public class ProfileFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				mGender = "male";
+				
 			}
 		});
 	    
@@ -162,8 +163,8 @@ public class ProfileFragment extends Fragment {
 				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
 				        editor.putString("activityLevel", mActivityLevel);
 				        editor.putString("year", Integer.toString(mYear));
-				        editor.putString("month", Integer.toString(mYear));
-				        editor.putString("day", Integer.toString(mYear));
+				        editor.putString("month", Integer.toString(mMonth));
+				        editor.putString("day", Integer.toString(mDay));
 				        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
 				        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
 				        editor.putString("weight", weightEditText.getText().toString());  
