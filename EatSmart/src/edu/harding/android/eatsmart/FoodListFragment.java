@@ -7,16 +7,20 @@ package edu.harding.android.eatsmart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -33,12 +37,37 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.foods_title);
-    
+        setHasOptionsMenu(true);
         //Initialize the loader to load the list of foods
         getLoaderManager().initLoader(0, null, this);
         
         
     }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case android.R.id.home:
+			if(NavUtils.getParentActivityName(getActivity()) != null){
+				getFragmentManager().popBackStack();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@TargetApi(11)
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+			
+		}
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
         // get the foodItem from the adapter

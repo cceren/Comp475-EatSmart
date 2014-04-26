@@ -3,12 +3,16 @@ package edu.harding.android.eatsmart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,16 +49,33 @@ public class OrganizePendingFoodFragment extends Fragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 		getActivity().setTitle(R.string.pending_food);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case android.R.id.home:
+			if(NavUtils.getParentActivityName(getActivity()) != null){
+				NavUtils.navigateUpFromSameTask(getActivity());
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
-
+	
+	@TargetApi(11)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
 		View v = inflater.inflate(R.layout.fragment_organize_pending_food, parent, false);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		}
 		mImageView = (ImageView)v.findViewById(R.id.pendingFoodImageView);
 		
 		mPath = (String)getArguments().getSerializable(EXTRA_IMAGE_PATH);

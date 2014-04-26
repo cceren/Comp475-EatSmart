@@ -19,16 +19,8 @@ public class HomeActivity extends SingleFragmentActivity {
 	
 	   @Override
 	    public void onCreate(Bundle savedInstanceState) {
-	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-	        setContentView(R.layout.activity_fragment);
-			getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebtn);
-	        super.onCreate(savedInstanceState);
-	        ImageButton back = (ImageButton)findViewById(R.id.topButton); 
-	        back.setOnClickListener(new OnClickListener() {  
-	            public void onClick(View v) {   
-	            	onBackPressed();
-	            }  
-	        }); 
+	        
+		   super.onCreate(savedInstanceState);
 	    }
 	
 	@Override
