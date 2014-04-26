@@ -112,7 +112,9 @@
             android:id="@+id/suggested_calories_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textColor="#57a592"
+            android:textSize="14sp" />
         
         <TextView
             android:id="@+id/birthday_textView"

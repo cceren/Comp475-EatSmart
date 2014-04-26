@@ -180,7 +180,15 @@ public class ProfileFragment extends Fragment {
 						//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
 				}else
 				{
-					showAlert();
+					if(weightEditText.getText().toString().length() < 1 &&
+						nameEditText.getText().toString().length() < 1){
+						showAlert("Please enter your name and weight (lb)");
+					}else if(weightEditText.getText().toString().length() < 1){
+						showAlert("Please enter your weight (lb)");
+					}else if(nameEditText.getText().toString().length() < 1){
+						showAlert("Please enter your name");
+					}
+					
 				}
 			}
 		});
@@ -234,10 +242,10 @@ public class ProfileFragment extends Fragment {
 		return bmr;
 	}
 	
-	private void showAlert(){
+	private void showAlert(String message){
 		new AlertDialog.Builder(getActivity())
 	    .setTitle("Incomplete Form")
-	    .setMessage("Please enter your weight (lb)")
+	    .setMessage(message)
 	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) { 
 	            // continue with delete

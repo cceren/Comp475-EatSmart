@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         mDummyProgressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
         TextView suggestedCaloriesTextView = (TextView)v.findViewById(R.id.suggested_calories_textView);
-        suggestedCaloriesTextView.setText(sharedPreferences.getString("suggestedCalories", ""));
+        suggestedCaloriesTextView.setText("Suggested calorie intake: " + sharedPreferences.getString("suggestedCalories", ""));
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
