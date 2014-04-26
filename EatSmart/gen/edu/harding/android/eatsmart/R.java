@@ -38,7 +38,6 @@ public final class R {
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f09000c;
-        public static final int action_settings=0x7f09002e;
         public static final int add_food_button=0x7f090017;
         public static final int birthday_textView=0x7f09001b;
         public static final int caloriesEditText=0x7f090021;
@@ -58,7 +57,8 @@ public final class R {
         public static final int history_button=0x7f090018;
         public static final int imageView1=0x7f090000;
         public static final int in_spinner=0x7f090028;
-        public static final int item_updateProfile=0x7f09002f;
+        public static final int item_showAbout=0x7f09002f;
+        public static final int item_updateProfile=0x7f09002e;
         public static final int minus_imageButton=0x7f090008;
         public static final int nameEditText=0x7f090025;
         public static final int organize_button=0x7f090019;
@@ -102,6 +102,7 @@ public final class R {
         public static final int eat_smart=0x7f080000;
     }
     public static final class string {
+        public static final int about=0x7f05001e;
         public static final int action_settings=0x7f050001;
         public static final int age_label=0x7f050006;
         public static final int app_name=0x7f050000;

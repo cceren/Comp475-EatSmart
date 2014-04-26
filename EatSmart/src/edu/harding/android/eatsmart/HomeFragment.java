@@ -52,6 +52,10 @@ public class HomeFragment extends Fragment {
             FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
             ft.replace(R.id.fragmentContainer, updateProfileFragment).commit();
             return true;
+		case R.id.item_showAbout:
+			Intent i = new Intent(getActivity(), AboutActivity.class);
+			startActivity(i);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
