@@ -85,6 +85,10 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
       //Launch OrganizePendingFoodFragment HERE***
         
     }
+	
+	void setEmptyView(){
+    	this.setEmptyText("All foods have been logged!");
+    }
 
 	private class PendingFoodCursorAdapter  extends CursorAdapter {
 		private PendingFoodCursor mPendingFoodCursor;
@@ -168,6 +172,7 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 		    	PendingFoodCursorAdapter adapter = 
 		    			new PendingFoodCursorAdapter(getActivity(), (PendingFoodCursor)cursor);
 		    	setListAdapter(adapter);
+		    	setEmptyView();
 		    }
 		    
 		    @Override
@@ -187,7 +192,8 @@ public class PendingFoodListFragment extends ListFragment implements LoaderCallb
 		            getLoaderManager().restartLoader(0, null, this);
 		        }
 			}
-		
+
+			
 		    
 		    
 }

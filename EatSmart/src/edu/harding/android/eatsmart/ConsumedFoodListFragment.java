@@ -75,6 +75,7 @@ private static final String TAG = "ConsumedFoodListFragment";
         public ConsumedFoodCursorAdapter(Context context, ConsumedFoodCursor cursor) {
             super(context, cursor, 0);
             mConsumedFoodCursor = cursor;
+            
         }
         
         @Override
@@ -158,6 +159,9 @@ private static final String TAG = "ConsumedFoodListFragment";
     	}
     }
 
+     void setEmptyView(){
+    	this.setEmptyText("No foods have been consumed today");
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
     	//You only ever load the foods, so assume this is the case
@@ -170,6 +174,7 @@ private static final String TAG = "ConsumedFoodListFragment";
     	ConsumedFoodCursorAdapter adapter = 
     			new ConsumedFoodCursorAdapter(getActivity(), (ConsumedFoodCursor)cursor);
     	setListAdapter(adapter);
+    	setEmptyView();
     }
     
     @Override
@@ -184,5 +189,5 @@ private static final String TAG = "ConsumedFoodListFragment";
 		super.onResume();
 		refreshLoader();
 	}
-   
+	
 }
