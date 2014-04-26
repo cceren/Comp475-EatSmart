@@ -112,7 +112,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
             
             TextView servingSizeTextView =
                 (TextView)view.findViewById(R.id.serving_size_textView);
-            servingSizeTextView.setText((Integer.toString(f.getQuantity())) + " cups");
+            servingSizeTextView.setText((f.getServingSize()));
             
                 
             TextView caloriesTextView =

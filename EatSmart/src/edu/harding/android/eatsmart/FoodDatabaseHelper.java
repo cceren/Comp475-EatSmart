@@ -42,7 +42,8 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_FOOD_TABLE = "CREATE TABLE food ( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
                 "name TEXT, "+
-                "calories INTEGER )";
+                "calories INTEGER, " +
+                "servingSize TEXT )";
         
         String CREATE_DAYS_TABLE = "CREATE TABLE days ( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
@@ -66,12 +67,15 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         "time TEXT, " +
         "photoFilename TEXT)";
         
-        final String[] foods = {"Eggs", "Bacon", "Coconut Rice", "Apples", "Glass of Milk", "Yellow Rice", "Chicken",
-			"King cake", "Lane cake", "Peach shortcake", "Pound cake", "Red velvet cake", "Modjeska", 
-			"Moon pie", "Peanut brittle", "Pecan brittle", "Pecan Divinity", "Pralines", 
-			"Blackberry cobbler", "Dewberry cobbler", "Peach cobbler", "Bread pudding", 
-			"Corn pudding", "Lemon pudding", "Trifle", "Chicken and dumplings", "Chicken fried steak", 
-			"Crab cake", "Fried pork chops", "Fried turkey"};
+        final String[] foods = {"CRUNCHY CORN DOGS", "HOT DOG", "FRENCH FRIES", "STEAMED GREENPEAS", "STEAKHOUSE POTATOES",
+        		"VEGETABLE BEAN CHILI", "SWEET & SOUR PORK", "BASMATI RICE WITH PEAS", "BRAISED APPLE PORK CHOP", "CARROTS"};
+        
+        final Integer[] calories = {273, 289, 295, 61, 120, 109, 147, 177, 181, 26};
+        
+        final String[] servingSize = {"1 each", "1 each", "3.25 ounces", "1/2 cup", "1/2 cup", "8 fl oz", "1/2 cup", "1/2 cup",
+        	"1 each ", "1/2 cup"};
+        
+        
         
 		try{
 	        // create food table
@@ -86,13 +90,15 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	        for(int i = 0; i < foods.length; i++){
 				Food f = new Food();
 				f.setTitle(foods[i]);
-				f.setCalories(150 + i);
-				f.setQuantity(0);
+				f.setCalories(calories[i]);
+				f.setServingSize(servingSize[i]);
 				
 				ContentValues cv = new ContentValues();
-				
+				 Log.d(TAG, f.getTitle());
 				cv.put(COLUMN_FOOD_NAME, f.getTitle());
 				cv.put(COLUMN_FOOD_CALORIES, f.getCalories());
+				cv.put("servingSize", f.getServingSize());
+				
 				db.insert(TABLE_FOOD, null, cv);
 			}
 	        Log.d(TAG, "Database tables created");
@@ -258,14 +264,17 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		public Food getFood(){
 			if(isBeforeFirst() || isAfterLast())
 				return null;
+			
 			Food food = new Food();
 			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
 			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
 			int foodId = getInt(getColumnIndex(COLUMN_FOOD_ID));
+			String servingSize = getString(getColumnIndex("servingSize"));
 			
 			food.setCalories(foodCalories);
 			food.setTitle(foodName);
 			food.setFoodId(foodId);
+			food.setServingSize(servingSize);
 			
 			return food;
 			

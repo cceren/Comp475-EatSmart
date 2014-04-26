@@ -29,8 +29,17 @@ public class Food {
     private Photo mPhoto;
     private String mTime;
     private String mDay;
+    private String mServingSize;
     
-    public String getDay() {
+    public String getServingSize() {
+		return mServingSize;
+	}
+
+	public void setServingSize(String servingSize) {
+		mServingSize = servingSize;
+	}
+
+	public String getDay() {
 		return mDay;
 	}
 
@@ -66,6 +75,7 @@ public class Food {
         mDate = new Date();
         mDay = new SimpleDateFormat("yyyy-MM-dd").format(mDate);
         mTime = DateFormat.format("h:mm a", mDate).toString();
+        mServingSize = "1 each";
     }
     
     public Food(JSONObject json) throws JSONException {
