@@ -28,6 +28,19 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_eatsmartstyle</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_eatsmartstyle</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Eatsmartstyle</item>
+        <item name="android:editTextStyle">@style/EditTextEatSmartTheme</item>
+
+	    <item name="android:textColorHighlight">#998ccfbf</item>
+	
+	    <item name="android:radioButtonStyle">@style/RadioButtonEatSmartTheme</item>
+	
+	    <item name="android:buttonStyle">@style/ButtonEatSmartTheme</item>
+	
+	    <item name="android:imageButtonStyle">@style/ImageButtonEatSmartTheme</item>
+	
+	    <item name="android:spinnerStyle">@style/SpinnerEatSmartTheme</item>
+	
+	    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemEatSmartTheme</item>
         
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Eatsmartstyle.Widget</item>

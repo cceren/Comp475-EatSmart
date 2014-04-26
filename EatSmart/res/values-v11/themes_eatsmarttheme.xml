@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="EatSmartTheme" parent="@style/_EatSmartTheme"/>
+
+  <style name="_EatSmartTheme" parent="android:Theme.Holo.Light">
+
+    <item name="android:editTextBackground">@drawable/eatsmarttheme_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#996abaa7</item>
+    <item name="android:textSelectHandleLeft">@drawable/eatsmarttheme_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/eatsmarttheme_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/eatsmarttheme_text_select_handle_middle</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/eatsmarttheme_btn_radio_holo_light</item>
+
+    <item name="android:buttonStyle">@style/ButtonEatSmartTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonEatSmartTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerEatSmartTheme</item>
+
+  </style>
+
+</resources>

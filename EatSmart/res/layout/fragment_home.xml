@@ -68,25 +68,31 @@
             android:id="@+id/quick_pick_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/quick_pick_label" />
+            android:shadowColor="#bbbbbb"
+            android:text="@string/quick_pick_label"
+            android:textColor="#ffffff"
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/add_food_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/food_button_title" />
+            android:text="@string/food_button_title"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/history_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/food_history_title" />
+            android:text="@string/food_history_title"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/organize_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/organize_quickPick_label" />
+            android:text="@string/organize_quickPick_label"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/suggested_calories_textView"
