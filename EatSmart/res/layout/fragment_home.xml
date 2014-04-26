@@ -51,6 +51,13 @@
             android:text="progress" />
 
         <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="wrap_content"
+            style="@style/CustomProgressBarExceeded"
+            android:layout_height="0dp"
+            android:visibility="invisible" />
+
+        <ProgressBar
 		    android:id="@+id/progressBar1"
 			android:layout_width="fill_parent"
 			android:layout_height="18dp" 

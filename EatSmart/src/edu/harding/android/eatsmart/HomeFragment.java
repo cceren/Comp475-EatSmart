@@ -4,14 +4,13 @@ package edu.harding.android.eatsmart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +29,7 @@ public class HomeFragment extends Fragment {
 	private static final int CALORIES_GOAL = 2000;
 	private final String USERINFO = "userInfo";
 	private ProgressBar mProgressBar;
+	private ProgressBar mDummyProgressBar;
 	private TextView mProgressTextView;
 	private String TAG = "HomeFragment";
 	
@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
         TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
         welcomeTextView.setText("Welcome " + userName);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
+        mDummyProgressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
@@ -73,6 +74,11 @@ public class HomeFragment extends Fragment {
         int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
 		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
 		mProgressBar.setProgress(totalCalories);
+		
+		if(totalCalories >= CALORIES_GOAL)
+			mProgressBar.setProgressDrawable(mDummyProgressBar.getProgressDrawable());
+			
+		
 		Log.d(TAG, "Total calories = " + totalCalories);
 		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
