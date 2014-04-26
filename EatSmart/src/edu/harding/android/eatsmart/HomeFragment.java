@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment {
 		
 
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
+		
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "");
         String birthday = sharedPreferences.getString("birthday", "");
@@ -89,7 +90,8 @@ public class HomeFragment extends Fragment {
         welcomeTextView.setText("Welcome " + userName);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         mDummyProgressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
-        TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
+        TextView suggestedCaloriesTextView = (TextView)v.findViewById(R.id.suggested_calories_textView);
+        suggestedCaloriesTextView.setText(sharedPreferences.getString("suggestedCalories", ""));
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
