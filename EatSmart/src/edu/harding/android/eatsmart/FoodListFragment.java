@@ -173,7 +173,7 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
     
     private boolean notifyUser(Food f){
    	 Context context = getActivity();
-	        CharSequence text = "Decreased serving of  " + f.getTitle();
+	        CharSequence text = "Added serving of  " + f.getTitle();
 	        int duration = Toast.LENGTH_SHORT;
 	        Toast toast = Toast.makeText(context, text, duration);
 	        toast.show();

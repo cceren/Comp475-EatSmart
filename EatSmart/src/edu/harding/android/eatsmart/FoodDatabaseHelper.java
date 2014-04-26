@@ -395,7 +395,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 	public int decreaseConsumedFoodServing(Food food){
 		int servings = food.getQuantity();
 
-		if( servings > 0){
+		if( servings > 1){
 			food.setQuantity(servings - 1);
 			updateConsumedFood(food);
 		}else{
