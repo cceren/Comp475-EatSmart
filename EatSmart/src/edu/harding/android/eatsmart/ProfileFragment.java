@@ -1,7 +1,11 @@
 package edu.harding.android.eatsmart;
 
+import java.util.Calendar;
+
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
@@ -21,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -31,11 +36,17 @@ public class ProfileFragment extends Fragment {
 	private int monthOfYear=1;
 	private int dayOfMonth=1 ;
 	private int year=1992;
+	private String mGender;
+	private int mAge;
+	private int mHeightInFeet;
+	private int mHeightInInches;
+	private int mWeight;
+	private String mActivityLevel;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+		mGender = "male";
 	}
 	
 	public boolean saveProfile(){
@@ -47,25 +58,40 @@ public class ProfileFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
-		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
+		final View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 		final Spinner footSpinner = (Spinner) v.findViewById(R.id.ft_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.getContext(),
 		        R.array.foot_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		footSpinner.setAdapter(adapter);
+		footSpinner.setSelection(1);
 		
 		final Spinner inchesSpinner = (Spinner) v.findViewById(R.id.in_spinner);
 		adapter = ArrayAdapter.createFromResource(v.getContext(),
 		        R.array.inches_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		inchesSpinner.setAdapter(adapter);
+		inchesSpinner.setSelection(6);
+		
+
+	    final Spinner activityLevelSpinner = (Spinner) v.findViewById(R.id.activity_level_spinner);
+		 // Create an ArrayAdapter using the string array and a default spinner layout
+		 //ArrayAdapter<CharSequence> activityLevelsAdapter = ArrayAdapter.createFromResource(v.getContext(),
+		        // R.array.activity_levels_array, android.R.layout.simple_spinner_item);
+	    adapter = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.activity_levels_array, android.R.layout.simple_spinner_item);
+	    
+		 // Specify the layout to use when the list of choices appears
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		 // Apply the adapter to the spinner
+		 activityLevelSpinner.setAdapter(adapter);
 		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
-		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
+		final EditText weightEditText = (EditText)v.findViewById(R.id.weight_editText);
 		final Button saveButton = (Button)v.findViewById(R.id.organize_button);
-		weight.setOnEditorActionListener(new OnEditorActionListener() {
+		weightEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
 	           @Override
 	           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -85,40 +111,141 @@ public class ProfileFragment extends Fragment {
 	           ProfileFragment.this.year = year;
 	            }            
 	        });
+	    
+	    RadioButton maleRadioButton = (RadioButton)v.findViewById(R.id.male_radio);
+	    maleRadioButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mGender = "male";
+			}
+		});
+	    
+	    RadioButton femaleRadioButton = (RadioButton)v.findViewById(R.id.female_radio);
+	    femaleRadioButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mGender = "female";
+			}
+		});
 		
+	    /***Select the activity level of User
+	     * 
+	     */
+	   
+		 
+		 /***
+		  * Save information of User
+		  */
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//saveProfile(); //Save the profile and go on to the main screen
 				
-				InputMethodManager inputManager = (InputMethodManager)
-         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
-
-         	   inputManager.hideSoftInputFromWindow(weight.getWindowToken(),
-                           InputMethodManager.HIDE_NOT_ALWAYS);
-				
-				SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
-			    try{    
-			        Editor editor = preference.edit();  
-			        editor.putString("name", nameEditText.getText().toString());  
-			        
-			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
-			        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
-			        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
-			        editor.putString("weight", weight.getText().toString());  
-			        editor.commit(); 
-			        preference.contains("name");
-		        }catch(Exception e){  
-		            Log.e("user information", "failed");
-		        }
-					FragmentManager fm = getActivity().getSupportFragmentManager();
-					FragmentTransaction ft = fm.beginTransaction();
-					HomeFragment homeFragment = new HomeFragment();
-					ft.replace(R.id.fragmentContainer, homeFragment).commit();
-					//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+				if(weightEditText.getText().toString().length() > 1){
+					//saveProfile(); //Save the profile and go on to the main screen
+					mHeightInFeet = (Integer) Integer.parseInt(footSpinner.getSelectedItem().toString());
+					mHeightInInches = (Integer)Integer.parseInt(inchesSpinner.getSelectedItem().toString());
+					
+					Calendar calendar = Calendar.getInstance();
+					mAge = year - calendar.get(Calendar.YEAR);
+					mWeight = Integer.parseInt(weightEditText.getText().toString());
+					mActivityLevel = activityLevelSpinner.getSelectedItem().toString();
+					
+					
+					InputMethodManager inputManager = (InputMethodManager)
+	         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+	
+	         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+	                           InputMethodManager.HIDE_NOT_ALWAYS);
+					
+					SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
+				    try{    
+				        Editor editor = preference.edit();  
+				        editor.putString("name", nameEditText.getText().toString());  
+				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
+				        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
+				        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
+				        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
+				        editor.putString("weight", weightEditText.getText().toString());  
+				        editor.commit(); 
+				        preference.contains("name");
+			        }catch(Exception e){  
+			            Log.e("user information", "failed");
+			        }
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						FragmentTransaction ft = fm.beginTransaction();
+						HomeFragment homeFragment = new HomeFragment();
+						ft.replace(R.id.fragmentContainer, homeFragment).commit();
+						//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+				}else
+				{
+					showAlert();
+				}
 			}
 		});
+		
 		return v;
+	
 	}
 	
+
+	
+	private int suggestedCalorieIntake(){
+		double calorieIntake = 0;
+		double bmr;
+		if(mGender.equals("male")){
+			bmr = maleBMR();
+		}
+		else{
+			bmr = femaleBMR();
+		}
+		
+		if(mActivityLevel.equals("I exercise little")){
+			calorieIntake = bmr * 1.2;
+		}else if(mActivityLevel.equals("I do light exercise")){
+			calorieIntake = bmr * 1.375;
+		}else if(mActivityLevel.equals("I exercise moderately")){
+			calorieIntake = bmr * 1.55;
+		}else if(mActivityLevel.equals("I exercise very often")){
+			calorieIntake = bmr * 1.725;
+		}else if(mActivityLevel.equals("I exercise hard core!")){
+			calorieIntake = bmr * 1.9;
+		}
+		
+		return (int) calorieIntake;
+	}
+	
+	private double maleBMR(){
+		double bmr = (12.7 * (mHeightInFeet*12 + mHeightInInches))
+				+ (6.23 * mWeight) - (6.8 * mAge);
+				
+				bmr += 66;
+		
+		return bmr;
+	}
+	
+	private double femaleBMR(){
+		double bmr = (4.7 * (mHeightInFeet*12 + mHeightInInches))
+				+ (4.35 * mWeight) - (4.7 * mAge);
+				
+				bmr += 656;
+		
+		return bmr;
+	}
+	
+	private void showAlert(){
+		new AlertDialog.Builder(getActivity())
+	    .setTitle("Incomplete Form")
+	    .setMessage("Please enter your weight (lb)")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })
+	    
+	     
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+	}
 }
