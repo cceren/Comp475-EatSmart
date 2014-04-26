@@ -50,8 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:calendarViewShown="false" 
-                    android:maxDate = "01/01/2004"
-                    android:minDate = "01/01/1900"/>
+                    android:maxDate = "12/31/2004"
+                    android:minDate = "01/01/1910"/>
 
             </LinearLayout>
         </LinearLayout>
