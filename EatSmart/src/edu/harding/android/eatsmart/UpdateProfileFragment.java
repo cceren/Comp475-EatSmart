@@ -1,7 +1,11 @@
 package edu.harding.android.eatsmart;
+import java.util.Calendar;
+
 import edu.harding.android.eatsmart.R;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
@@ -22,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.DatePicker.OnDateChangedListener;
@@ -30,10 +35,15 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class UpdateProfileFragment extends Fragment {
 	private final String USERINFO = "userInfo"; 
-	private int monthOfYear=1;
-	private int dayOfMonth=1 ;
-	private int year=1992;
-	
+	private int mMonth;
+	private int mDay;
+	private int mYear;
+	private String mGender;
+	private int mAge;
+	private int mHeightInFeet;
+	private int mHeightInInches;
+	private int mWeight;
+	private String mActivityLevel;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -77,20 +87,35 @@ public class UpdateProfileFragment extends Fragment {
 		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		inchesSpinner.setAdapter(adapter2);
 		
+		final Spinner activityLevelSpinner = (Spinner) v.findViewById(R.id.activity_level_spinner);
+		ArrayAdapter<CharSequence> activityLevelAdapter = ArrayAdapter.createFromResource(v.getContext(),
+		        R.array.activity_levels_array, android.R.layout.simple_spinner_item);
+		 // Specify the layout to use when the list of choices appears
+		activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		 // Apply the adapter to the spinner
+		 activityLevelSpinner.setAdapter(activityLevelAdapter);
+		
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
-		final EditText weight = (EditText)v.findViewById(R.id.weight_editText);
+		
+		final EditText weightEditText = (EditText)v.findViewById(R.id.weight_editText);
 		final Button saveButton = (Button)v.findViewById(R.id.organize_button);
+		
 		
 		//Check to see if there are saved values, if the user did not save anything, the fields will appear blank
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
 		nameEditText.setText(sharedPreferences.getString("name", ""));
-        weight.setText(sharedPreferences.getString("weight", ""));
+		weightEditText.setText(sharedPreferences.getString("weight", ""));
         footSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("heightFt", "")));
         inchesSpinner.setSelection(adapter2.getPosition(sharedPreferences.getString("heightIn", "")));
-
-        
-		weight.setOnEditorActionListener(new OnEditorActionListener() {
+        activityLevelSpinner.setSelection(activityLevelAdapter.getPosition(sharedPreferences.getString("activityLevel", "")));
+        mGender = sharedPreferences.getString("gender", "");
+        mMonth = Integer.parseInt(sharedPreferences.getString("month", ""));
+        mYear = Integer.parseInt(sharedPreferences.getString("year", ""));
+        mDay = Integer.parseInt(sharedPreferences.getString("day", ""));
+      
+        datePicker.updateDate(mYear, mMonth, mDay);
+        weightEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
 	           @Override
 	           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -103,44 +128,146 @@ public class UpdateProfileFragment extends Fragment {
 	               return false;
 	           }
 	       });
-	    datePicker.init(1992, 0, 1, new OnDateChangedListener(){
+	    datePicker.init(mYear, mMonth, mDay, new OnDateChangedListener(){
 	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-	           UpdateProfileFragment.this.monthOfYear = monthOfYear+1;
-	           UpdateProfileFragment.this.dayOfMonth = dayOfMonth;
-	           UpdateProfileFragment.this.year = year;
+	           mMonth = monthOfYear+1;
+	           mDay = dayOfMonth;
+	           mYear = year;
 	            }            
 	        });
+	    
+	    RadioButton maleRadioButton = (RadioButton)v.findViewById(R.id.male_radio);
+	    maleRadioButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mGender = "male";
+			}
+		});
+	    
+	    RadioButton femaleRadioButton = (RadioButton)v.findViewById(R.id.female_radio);
+	    femaleRadioButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mGender = "female";
+			}
+		});
+		
+	    if(mGender.equals("male")){
+        	maleRadioButton.setChecked(true);
+        }else{
+        	femaleRadioButton.setChecked(true);
+        }
 		
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				InputMethodManager inputManager = (InputMethodManager)
-         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
-
-         	   inputManager.hideSoftInputFromWindow(weight.getWindowToken(),
-                           InputMethodManager.HIDE_NOT_ALWAYS);
-				
-				SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
-			    try{    
-			        Editor editor = preference.edit();  
-			        editor.putString("name", nameEditText.getText().toString());
-			        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
-			        editor.putString("heightFt", footSpinner.getSelectedItem().toString()); 
-			        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
-			        editor.putString("weight", weight.getText().toString());  
-			        editor.commit(); 
-			        preference.contains("name");
-		        }catch(Exception e){  
-		            Log.e("user information", "failed");
-		        }
-					FragmentManager fm = getActivity().getSupportFragmentManager();
-					HomeFragment homeFragment = new HomeFragment();
-					fm.popBackStack();
-					FragmentTransaction ft = fm.beginTransaction();
-					ft.replace(R.id.fragmentContainer, homeFragment).commit();
+				if(weightEditText.getText().toString().length() > 1){
+					//saveProfile(); //Save the profile and go on to the main screen
+					mHeightInFeet = (Integer) Integer.parseInt(footSpinner.getSelectedItem().toString());
+					mHeightInInches = (Integer)Integer.parseInt(inchesSpinner.getSelectedItem().toString());
+					
+					Calendar calendar = Calendar.getInstance();
+					mAge = mYear - calendar.get(Calendar.YEAR);
+					mWeight = Integer.parseInt(weightEditText.getText().toString());
+					mActivityLevel = activityLevelSpinner.getSelectedItem().toString();
+					
+					
+					InputMethodManager inputManager = (InputMethodManager)
+	         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+	
+	         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+	                           InputMethodManager.HIDE_NOT_ALWAYS);
+					
+					SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
+				    try{    
+				        Editor editor = preference.edit();  
+				        editor.putString("name", nameEditText.getText().toString());  
+				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
+				        editor.putString("activityLevel", mActivityLevel);
+				        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
+				        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
+				        editor.putString("weight", weightEditText.getText().toString());  
+				        editor.putString("gender", mGender);
+				        editor.commit(); 
+				        preference.contains("name");
+			        }catch(Exception e){  
+			            Log.e("user information", "failed");
+			        }
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						FragmentTransaction ft = fm.beginTransaction();
+						HomeFragment homeFragment = new HomeFragment();
+						ft.replace(R.id.fragmentContainer, homeFragment).commit();
+						//Toast.makeText(mAppContext, R.string.errorSaving_toast, Toast.LENGTH_SHORT).show();
+				}else
+				{
+					showAlert();
+				}
 			}
 		});
+		
 		return v;
+	
+	}
+	
+
+	
+	private int suggestedCalorieIntake(){
+		double calorieIntake = 0;
+		double bmr;
+		if(mGender.equals("male")){
+			bmr = maleBMR();
+		}
+		else{
+			bmr = femaleBMR();
+		}
+		
+		if(mActivityLevel.equals("I exercise little")){
+			calorieIntake = bmr * 1.2;
+		}else if(mActivityLevel.equals("I do light exercise")){
+			calorieIntake = bmr * 1.375;
+		}else if(mActivityLevel.equals("I exercise moderately")){
+			calorieIntake = bmr * 1.55;
+		}else if(mActivityLevel.equals("I exercise very often")){
+			calorieIntake = bmr * 1.725;
+		}else if(mActivityLevel.equals("I exercise hard core!")){
+			calorieIntake = bmr * 1.9;
+		}
+		
+		return (int) calorieIntake;
+	}
+	
+	private double maleBMR(){
+		double bmr = (12.7 * (mHeightInFeet*12 + mHeightInInches))
+				+ (6.23 * mWeight) - (6.8 * mAge);
+				
+				bmr += 66;
+		
+		return bmr;
+	}
+	
+	private double femaleBMR(){
+		double bmr = (4.7 * (mHeightInFeet*12 + mHeightInInches))
+				+ (4.35 * mWeight) - (4.7 * mAge);
+				
+				bmr += 656;
+		
+		return bmr;
+	}
+	
+	private void showAlert(){
+		new AlertDialog.Builder(getActivity())
+	    .setTitle("Incomplete Form")
+	    .setMessage("Please enter your weight (lb)")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })
+	    
+	     
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
 	}
 }

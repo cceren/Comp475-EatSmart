@@ -89,7 +89,7 @@
             android:text="@string/organize_quickPick_label" />
 
         <TextView
-            android:id="@+id/profileName_textView"
+            android:id="@+id/suggested_calories_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />

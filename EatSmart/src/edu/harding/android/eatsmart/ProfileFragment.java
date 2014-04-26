@@ -33,9 +33,9 @@ import android.widget.TextView.OnEditorActionListener;
 public class ProfileFragment extends Fragment {
 
 	private final String USERINFO = "userInfo"; 
-	private int monthOfYear=1;
-	private int dayOfMonth=1 ;
-	private int year=1992;
+	private int mMonth = 1;
+	private int mDay = 1 ;
+	private int mYear = 1992;
 	private String mGender;
 	private int mAge;
 	private int mHeightInFeet;
@@ -85,7 +85,8 @@ public class ProfileFragment extends Fragment {
 	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		 // Apply the adapter to the spinner
 		 activityLevelSpinner.setAdapter(adapter);
-		
+		 activityLevelSpinner.setSelection(2);
+		 
 		final EditText nameEditText = (EditText)v.findViewById(R.id.nameEditText);
 		
 		final DatePicker datePicker=(DatePicker)v.findViewById(R.id.datePicker);
@@ -106,9 +107,9 @@ public class ProfileFragment extends Fragment {
 	       });
 	    datePicker.init(1992, 0, 1, new OnDateChangedListener(){
 	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-	           ProfileFragment.this.monthOfYear = monthOfYear+1;
-	           ProfileFragment.this.dayOfMonth = dayOfMonth;
-	           ProfileFragment.this.year = year;
+	           mMonth = monthOfYear+1;
+	           mDay = dayOfMonth;
+	           mYear = year;
 	            }            
 	        });
 	    
@@ -130,14 +131,9 @@ public class ProfileFragment extends Fragment {
 			}
 		});
 		
-	    /***Select the activity level of User
-	     * 
-	     */
+	  
 	   
-		 
-		 /***
-		  * Save information of User
-		  */
+		//Save information of User
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -148,7 +144,7 @@ public class ProfileFragment extends Fragment {
 					mHeightInInches = (Integer)Integer.parseInt(inchesSpinner.getSelectedItem().toString());
 					
 					Calendar calendar = Calendar.getInstance();
-					mAge = year - calendar.get(Calendar.YEAR);
+					mAge = mYear - calendar.get(Calendar.YEAR);
 					mWeight = Integer.parseInt(weightEditText.getText().toString());
 					mActivityLevel = activityLevelSpinner.getSelectedItem().toString();
 					
@@ -164,7 +160,10 @@ public class ProfileFragment extends Fragment {
 				        Editor editor = preference.edit();  
 				        editor.putString("name", nameEditText.getText().toString());  
 				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
-				        editor.putString("birthday", ""+monthOfYear+"/"+dayOfMonth+"/"+year);
+				        editor.putString("activityLevel", mActivityLevel);
+				        editor.putString("year", Integer.toString(mYear));
+				        editor.putString("month", Integer.toString(mYear));
+				        editor.putString("day", Integer.toString(mYear));
 				        editor.putString("heightFt", footSpinner.getSelectedItem().toString());
 				        editor.putString("heightIn", inchesSpinner.getSelectedItem().toString());  
 				        editor.putString("weight", weightEditText.getText().toString());  
