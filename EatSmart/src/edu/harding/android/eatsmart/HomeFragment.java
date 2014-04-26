@@ -33,13 +33,13 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActivity().setTitle(R.string.app_name);
+		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstance){
-		
+		getActivity().setTitle(R.string.app_name);
 		View v = inflater.inflate(R.layout.fragment_home, parent, false);
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "");
