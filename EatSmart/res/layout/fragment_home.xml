@@ -51,6 +51,13 @@
             android:text="progress" />
 
         <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="wrap_content"
+            style="@style/CustomProgressBarExceeded"
+            android:layout_height="0dp"
+            android:visibility="invisible" />
+
+        <ProgressBar
 		    android:id="@+id/progressBar1"
 			android:layout_width="fill_parent"
 			android:layout_height="18dp" 
@@ -104,13 +111,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />
-
-        <Button
-            android:id="@+id/update_profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="@string/update_profile" />
 
     </LinearLayout>
 

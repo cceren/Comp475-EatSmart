@@ -4,20 +4,22 @@ package edu.harding.android.eatsmart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +32,7 @@ public class HomeFragment extends Fragment {
 	private static final int CALORIES_GOAL = 2000;
 	private final String USERINFO = "userInfo";
 	private ProgressBar mProgressBar;
+	private ProgressBar mDummyProgressBar;
 	private TextView mProgressTextView;
 	private String TAG = "HomeFragment";
 	
@@ -37,9 +40,35 @@ public class HomeFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-}
+	}
 
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.item_updateProfile:
+			FragmentManager fm = getActivity().getSupportFragmentManager();
+			UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
+            FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
+            ft.replace(R.id.fragmentContainer, updateProfileFragment).commit();
+            return true;
+		case R.id.item_showAbout:
+			Intent i = new Intent(getActivity(), AboutActivity.class);
+			startActivity(i);
+            return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.eat_smart, menu);
+	}
+
+
 	@TargetApi(11)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
@@ -59,20 +88,22 @@ public class HomeFragment extends Fragment {
         TextView welcomeTextView = (TextView)v.findViewById(R.id.welcome_textView);
         welcomeTextView.setText("Welcome " + userName);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
+        mDummyProgressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
         TextView profileNameTextView = (TextView)v.findViewById(R.id.profileName_textView);
         TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
         TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
         TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
         mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
         
-        
-        //birthdayTextView.setText("Birthday:"+ birthday);
-        //heightTextView.setText("Height: " + userHeight);
-        //weightTextView.setText("Weight: " + userWeight);
         mProgressBar.setMax(CALORIES_GOAL);
         int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
 		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
 		mProgressBar.setProgress(totalCalories);
+		
+		if(totalCalories >= CALORIES_GOAL)
+			mProgressBar.setProgressDrawable(mDummyProgressBar.getProgressDrawable());
+			
+		
 		Log.d(TAG, "Total calories = " + totalCalories);
 		
 		Button addFoodButton = (Button)v.findViewById(R.id.add_food_button);
@@ -132,19 +163,6 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		
-		//Launches UpdateProfileFragment
-		Button updateProfileButton = (Button)v.findViewById(R.id.update_profile_button);
-		updateProfileButton.setOnClickListener(new View.OnClickListener() {	
-			@Override
-			public void onClick(View v) {
-				
-				FragmentManager fm = getActivity().getSupportFragmentManager();
-				UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
-                FragmentTransaction ft = fm.beginTransaction().addToBackStack(null);
-                ft.replace(R.id.fragmentContainer, updateProfileFragment).commit(); 
-			}
-		});
 		return v;
 	}
 	
