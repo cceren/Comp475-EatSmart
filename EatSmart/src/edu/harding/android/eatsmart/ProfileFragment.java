@@ -133,7 +133,7 @@ public class ProfileFragment extends Fragment {
 	            }            
 	        });
 	    
-	    RadioButton maleRadioButton = (RadioButton)v.findViewById(R.id.male_radio);
+	    final RadioButton maleRadioButton = (RadioButton)v.findViewById(R.id.male_radio);
 	    maleRadioButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -143,7 +143,7 @@ public class ProfileFragment extends Fragment {
 			}
 		});
 	    
-	    RadioButton femaleRadioButton = (RadioButton)v.findViewById(R.id.female_radio);
+	    final RadioButton femaleRadioButton = (RadioButton)v.findViewById(R.id.female_radio);
 	    femaleRadioButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -177,11 +177,17 @@ public class ProfileFragment extends Fragment {
 	                           InputMethodManager.HIDE_NOT_ALWAYS);
 					
 					SharedPreferences preference = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);  
+					if(maleRadioButton.isChecked())
+						mGender = "male";
+					else if(femaleRadioButton.isChecked())
+						mGender = "female";
+					
 				    try{    
 				        Editor editor = preference.edit();  
 				        editor.putString("name", nameEditText.getText().toString());  
 				        editor.putString("suggestedCalories", Integer.toString(suggestedCalorieIntake()));
 				        editor.putString("activityLevel", mActivityLevel);
+				        editor.putString("gender", mGender);
 				        editor.putString("year", Integer.toString(mYear));
 				        editor.putString("month", Integer.toString(mMonth));
 				        editor.putString("day", Integer.toString(mDay));
