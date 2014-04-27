@@ -59,6 +59,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "calories INTEGER, " +
                 "time TEXT, " +
                 "day TEXT, " +
+                "servingSize TEXT," +
                 "day_id INTEGER references days(_id))";
         
         String CREATE_PENDING_FOOD_TABLE = "CREATE TABLE pendingFood ( " +
@@ -293,38 +294,21 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 		return new FoodCursor(wrapped);
 	}
 	
-	public FoodCursor queryConsumedFood(long dayId, String foodName){
+	public ConsumedFoodCursor queryConsumedFood(String day, String foodName){
 		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
 				null, //All columns
-				COLUMN_FOOD_DAY_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?", //limit to a particular day 
-				new String []{String.valueOf(dayId), foodName}, // with this value
+				"day = ? AND " + COLUMN_FOOD_NAME + " = ?", //limit to a particular day 
+				new String []{day, foodName}, // with this value
 				null, // group by
 				null, //having
 				null, //order by
 				"1"); //limit 1 row
 		
-		return new FoodCursor(wrapped);
+		return new ConsumedFoodCursor(wrapped);
 		
 		
 	}
-	/*
-	public FoodCursor queryConsumedFood(Food food){
-		Cursor wrapped = getReadableDatabase().query(TABLE_CONSUMED_FOOD,
-				null, //All columns
-				"day = ? AND name +  = ?", //limit to a particular day 
-				new String []{food.getDay(), food.getTitle()}, // with this value
-				null, // group by
-				null, //having
-				null, //order by
-				"1"); //limit 1 row
-		
-		return new FoodCursor(wrapped);
-		
-		
-	}*/
 
-	
-	
 	public int queryDayTotalCalories(long dayId){
 		int totalCalories = 0;
 		Cursor wrapped = getReadableDatabase().query(TABLE_DAYS,
@@ -572,8 +556,10 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 			String foodName = getString(getColumnIndex(COLUMN_FOOD_NAME));
 			int foodCalories = getInt(getColumnIndex(COLUMN_FOOD_CALORIES));
 			int foodQuantity = getInt(getColumnIndex(COLUMN_FOOD_SERVINGS));
+			String servingSize = getString(getColumnIndex("servingSize"));
 			String day = getString(getColumnIndex("day"));
 			
+			food.setServingSize(servingSize);
 			food.setDay(day);
 			food.setCalories(foodCalories);
 			food.setTitle(foodName);
