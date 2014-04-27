@@ -101,8 +101,11 @@ private static final String TAG = "ConsumedFoodListFragment";
             
             TextView foodQuantity =
                 (TextView)view.findViewById(R.id.servingsAmount_textView);
-            foodQuantity.setText((Integer.toString(f.getQuantity())) + " Servings");
-            
+            if(f.getQuantity() > 1){
+            	foodQuantity.setText((Integer.toString(f.getQuantity())) + " servings");
+            }else{
+            	foodQuantity.setText((Integer.toString(f.getQuantity())) + " serving");
+            }
             TextView foodCaloriesTextView =
                 (TextView)view.findViewById(R.id.consumed_food_calories_textView);
             foodCaloriesTextView.setText((Integer.toString(f.getCalories())) + " calories");
