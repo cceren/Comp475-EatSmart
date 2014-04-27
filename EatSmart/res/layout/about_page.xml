@@ -28,7 +28,7 @@
             android:text="Developed by: Cristian Ceren, Isacar Racine &amp; Ken Gan"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/background_light"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:typeface="normal" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:text="We help you eat healthy. We help you eat smart"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/background_light"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:typeface="normal" />
 
     </LinearLayout>

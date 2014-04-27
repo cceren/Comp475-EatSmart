@@ -29,11 +29,11 @@ import android.widget.TextView;
 public class HomeFragment extends Fragment {
 
 	private static final int REQUEST_PHOTO = 1;
-	private static final int CALORIES_GOAL = 2000;
 	private final String USERINFO = "userInfo";
 	private ProgressBar mProgressBar;
 	private ProgressBar mDummyProgressBar;
 	private TextView mProgressTextView;
+	private String mCalorieIntakeGoal;
 	private String TAG = "HomeFragment";
 	
 	@Override
@@ -81,8 +81,6 @@ public class HomeFragment extends Fragment {
 		
 		SharedPreferences sharedPreferences = getActivity().getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "");
-        String birthday = sharedPreferences.getString("birthday", "");
-        String userWeight = sharedPreferences.getString("weight", "");
         String heightFt = sharedPreferences.getString("heightFt", "");
         String heightIn = sharedPreferences.getString("heightIn", "");
         String userHeight = heightFt + " ft. " + heightIn + " in.";
@@ -93,13 +91,14 @@ public class HomeFragment extends Fragment {
         //TextView suggestedCaloriesTextView = (TextView)v.findViewById(R.id.suggested_calories_textView);
         //suggestedCaloriesTextView.setText("Suggested calorie intake: " + sharedPreferences.getString("suggestedCalories", ""));
         mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
+        mCalorieIntakeGoal = sharedPreferences.getString("calorieIntakeGoal", "2000");
         
-        mProgressBar.setMax(CALORIES_GOAL);
+        mProgressBar.setMax(Integer.parseInt(mCalorieIntakeGoal));
         int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
-		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
+		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + mCalorieIntakeGoal + " calories");
 		mProgressBar.setProgress(totalCalories);
 		
-		if(totalCalories >= CALORIES_GOAL)
+		if(totalCalories >= Integer.parseInt(mCalorieIntakeGoal))
 			mProgressBar.setProgressDrawable(mDummyProgressBar.getProgressDrawable());
 			
 		
@@ -211,12 +210,13 @@ public class HomeFragment extends Fragment {
 	     return currentDate;
 	 }
 
+
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		int totalCalories = FoodManager.get(getActivity()).getTotalCalories();
-		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + CALORIES_GOAL + " calories");
+		mProgressTextView.setText("Consumed: " + totalCalories + " calories                   Goal: " + mCalorieIntakeGoal + " calories");
 		mProgressBar.setProgress(totalCalories);
 		Log.d(TAG, "Total calories = " + totalCalories);
 	}

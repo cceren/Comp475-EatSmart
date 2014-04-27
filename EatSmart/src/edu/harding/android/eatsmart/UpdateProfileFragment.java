@@ -88,7 +88,7 @@ public class UpdateProfileFragment extends Fragment {
 		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		inchesSpinner.setAdapter(adapter2);
 		
-		final Spinner activityLevelSpinner = (Spinner) v.findViewById(R.id.activity_level_spinner);
+		final Spinner activityLevelSpinner = (Spinner)v.findViewById(R.id.activity_level_spinner);
 		ArrayAdapter<CharSequence> activityLevelAdapter = ArrayAdapter.createFromResource(v.getContext(),
 		        R.array.activity_levels_array, android.R.layout.simple_spinner_item);
 		 // Specify the layout to use when the list of choices appears
@@ -123,13 +123,33 @@ public class UpdateProfileFragment extends Fragment {
 	               // TODO Auto-generated method stub
 	               if (actionId == EditorInfo.IME_ACTION_DONE) {
 	                   // do your stuff here
-	            	   
-	                   saveButton.callOnClick();
+	            	   InputMethodManager inputManager = (InputMethodManager)
+		         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+		
+		         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+		                           InputMethodManager.HIDE_NOT_ALWAYS);
 	               }
 	               return false;
 	           }
 	       });
-        Log.d(TAG, mYear + " " + mMonth + " " + mDay);
+        
+        nameEditText.setOnEditorActionListener(new OnEditorActionListener() {
+
+	           @Override
+	           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+	               // TODO Auto-generated method stub
+	               if (actionId == EditorInfo.IME_ACTION_NEXT) {
+	                   // do your stuff here
+	            	   InputMethodManager inputManager = (InputMethodManager)
+		         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+		
+		         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+		                           InputMethodManager.HIDE_NOT_ALWAYS);
+	               }
+	               return false;
+	           }
+	       });
+        
 	    datePicker.init(mYear, mMonth, mDay, new OnDateChangedListener(){
 	    public void onDateChanged(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
 	           mMonth = monthOfYear;

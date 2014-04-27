@@ -99,8 +99,28 @@ public class ProfileFragment extends Fragment {
 	               // TODO Auto-generated method stub
 	               if (actionId == EditorInfo.IME_ACTION_DONE) {
 	                   // do your stuff here
-	            	   
-	                   saveButton.callOnClick();
+	            	   InputMethodManager inputManager = (InputMethodManager)
+		         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+		
+		         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+		                           InputMethodManager.HIDE_NOT_ALWAYS);
+	               }
+	               return false;
+	           }
+	       });
+     
+     nameEditText.setOnEditorActionListener(new OnEditorActionListener() {
+
+	           @Override
+	           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+	               // TODO Auto-generated method stub
+	               if (actionId == EditorInfo.IME_ACTION_NEXT) {
+	                   // do your stuff here
+	            	   InputMethodManager inputManager = (InputMethodManager)
+		         			   v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+		
+		         	   inputManager.hideSoftInputFromWindow(weightEditText.getWindowToken(),
+		                           InputMethodManager.HIDE_NOT_ALWAYS);
 	               }
 	               return false;
 	           }
