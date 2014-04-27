@@ -245,10 +245,12 @@ public class ProfileFragment extends Fragment {
 	}
 	
 	private double maleBMR(){
-		double bmr = (12.7 * (mHeightInFeet*12 + mHeightInInches))
+		double bmr = (12.7 * (mHeightInFeet*(12) + mHeightInInches))
 				+ (6.23 * mWeight) - (6.8 * mAge);
 				
 				bmr += 66;
+		//BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in inches ) 
+		//		- ( 6.8 x age in year )
 		
 		return bmr;
 	}
@@ -257,8 +259,9 @@ public class ProfileFragment extends Fragment {
 		double bmr = (4.7 * (mHeightInFeet*12 + mHeightInInches))
 				+ (4.35 * mWeight) - (4.7 * mAge);
 				
-				bmr += 656;
-		
+				bmr += 655;
+		//Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in inches )
+				// - ( 4.7 x age in years )
 		return bmr;
 	}
 	
