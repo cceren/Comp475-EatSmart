@@ -29,7 +29,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/calorieAmountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,31 +108,15 @@
             android:textColor="#ffffff"
             android:textStyle="normal|bold" />
 
-        <TextView
-            android:id="@+id/suggested_calories_textView"
+        <Button
+            android:id="@+id/suggestedCalorie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textColor="#57a592"
-            android:textSize="14sp" />
-        
-        <TextView
-            android:id="@+id/birthday_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/height_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/weight_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:layout_margin="3dp"
+            android:background="@drawable/eatsmart_btn_round"
+            android:text="@string/suggested_calorie_intake"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

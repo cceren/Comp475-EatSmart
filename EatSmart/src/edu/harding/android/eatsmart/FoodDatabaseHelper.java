@@ -238,7 +238,6 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 					null, null, null, null, null, null);
 			Log.d(TAG, "queryFoods");
 			return new FoodCursor(wrapped);
-
 		}
 		catch(Exception e){
 			Log.d(TAG, e.toString());

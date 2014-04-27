@@ -90,11 +90,8 @@ public class HomeFragment extends Fragment {
         welcomeTextView.setText("Welcome " + userName);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar1);
         mDummyProgressBar = (ProgressBar)v.findViewById(R.id.progressBar2);
-        TextView suggestedCaloriesTextView = (TextView)v.findViewById(R.id.suggested_calories_textView);
-        suggestedCaloriesTextView.setText("Suggested calorie intake: " + sharedPreferences.getString("suggestedCalories", ""));
-        TextView birthdayTextView = (TextView)v.findViewById(R.id.birthday_textView);
-        TextView heightTextView = (TextView)v.findViewById(R.id.height_textView);
-        TextView weightTextView = (TextView)v.findViewById(R.id.weight_textView);
+        //TextView suggestedCaloriesTextView = (TextView)v.findViewById(R.id.suggested_calories_textView);
+        //suggestedCaloriesTextView.setText("Suggested calorie intake: " + sharedPreferences.getString("suggestedCalories", ""));
         mProgressTextView = (TextView)v.findViewById(R.id.progressLabel);
         
         mProgressBar.setMax(CALORIES_GOAL);
@@ -142,6 +139,16 @@ public class HomeFragment extends Fragment {
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(), FoodCameraActivity.class);
                 startActivityForResult(i, REQUEST_PHOTO);
+				
+			}
+		});
+		
+		Button suggestionsButton = (Button)v.findViewById(R.id.suggestedCalorie);
+		suggestionsButton.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), StayHealthy.class);
+                startActivity(i);
 				
 			}
 		});

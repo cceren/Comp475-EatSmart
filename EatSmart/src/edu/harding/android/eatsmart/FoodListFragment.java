@@ -13,12 +13,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -175,8 +174,10 @@ public class FoodListFragment extends ListFragment implements LoaderCallbacks<Cu
    	 Context context = getActivity();
 	        CharSequence text = "Added serving of  " + f.getTitle();
 	        int duration = Toast.LENGTH_SHORT;
-	        Toast toast = Toast.makeText(context, text, duration);
+	        final Toast toast = Toast.makeText(context, text, duration);
 	        toast.show();
+	        
+	        
    	return true;
    }
   
