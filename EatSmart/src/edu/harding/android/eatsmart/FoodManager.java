@@ -104,17 +104,20 @@ public class FoodManager {
 		return food;
 	}
 	
-	public Food getConsumedFood(long dayId, String foodName){
+	public Food getConsumedFood(String day, String foodName){
 		Food food = null;
-		FoodCursor cursor = mHelper.queryConsumedFood(dayId, foodName);
-		cursor.moveToFirst();
-		// If you got a row, get a food
-		if(!cursor.isAfterLast())
-			food = cursor.getFood();
+		ConsumedFoodCursor cursor = mHelper.queryConsumedFood(day, foodName);
 		
-		//Log.d(TAG, "Content of food: " + cursor.getString(1));
-		cursor.close();
-		//if(food == null)
+		if(cursor != null){
+			cursor.moveToFirst();
+			// If you got a row, get a food
+			if(!cursor.isAfterLast())
+				food = cursor.getFood();
+			
+			//Log.d(TAG, "Content of food: " + cursor.getString(1));
+			cursor.close();
+			//if(food == null)
+		}
 			
 		return food;
 	}
@@ -183,46 +186,54 @@ public class FoodManager {
 	*/
 	
 	  boolean addConsumedFoodToDatabase(Food food){
-	    	if(food.getQuantity() == 0)
-	    		food.setQuantity(1);
 	    	
-	    	boolean wasAdded = false;
-	    	
-	    	//Add food to Days table
-	        //See if today's day is in the database
-	       
-	        Date date = new Date();
-	        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-	      
-	        if(currentDate != null){
-	        	  
-		        //Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
-	        	int currentDayId = getDay(currentDate);
-		        Log.e("CURRENT DAY", "Current day is: " + currentDayId);
-		        if(currentDayId == -1){//current day is not in database so we need to add it
-		     	   //add current day to database
-		     	   Day currentDay = new Day(currentDate);
-		     	   
-		     	   addDay(currentDay);
-		     	   currentDayId = getDay(currentDate);
-		     	   Log.e("CURRENT DAY", "Current day is: " + currentDay.getId());
-		     	   
-		        }
-		        //If the food is not in the current day 
-		        if(getConsumedFood(currentDayId, food.getTitle()) == null){ 
-		     	   // Add food to consumedFoods table 	
-		        	addConsumedFood(food, currentDayId);
-		        }
-		        else{
-		        	Log.e("Food Retrieved", "Food found is: " + getConsumedFood(currentDayId, food.getTitle()).getTitle());
-		     	   //If it is already in increase the serving size
-		     	   //increment serving of food in the day
-		        	incrementServing(currentDayId, food);
-		        }
-	        }
-	        
-	        return wasAdded;
-	    }
+		 // try{
+			  
+		  
+			  if(food.getQuantity() == 0)
+		    		food.setQuantity(1);
+		    	
+		   
+		    	
+		    	//Add food to Days table
+		        //See if today's day is in the database
+		       
+		        Date date = new Date();
+		        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		      
+			    //Day currentDay = FoodManager.get(getActivity()).getDay(currentDate);
+		        	int currentDayId = getDay(currentDate);
+			        Log.e("TAG", "Current day is: " + currentDayId);
+			        if(currentDayId == -1){//current day is not in database so we need to add it
+			     	   //add current day to database
+			     	   Day currentDay = new Day(currentDate);
+			     	   
+			     	   addDay(currentDay);
+			     	   currentDayId = getDay(currentDate);
+			     	   Log.e(TAG, "Current day is: " + currentDay.getId());
+			     	   
+			        }
+			        //If the food is not in the current day 
+			        try{
+			        if(getConsumedFood(currentDate, food.getTitle()) == null){ 
+			     	   // Add food to consumedFoods table 	
+			        	addConsumedFood(food, currentDayId);
+			        }
+			        else{
+			        	Log.e(TAG, "Food found is: " + getConsumedFood(currentDate, food.getTitle()).getTitle());
+			     	   //If it is already in increase the serving size
+			     	   //increment serving of food in the day
+			        	incrementServing(currentDayId, food);
+			        }
+			        }catch(Exception e){
+			        	Log.d(TAG, e.toString());
+			        }
+		        
+		 // }catch(Exception e){
+			//  Log.d(TAG, e.toString());
+		 // }
+		        return true;
+	   }
 	  
 	public int decreaseConsumedFoodServing(Food food){
 		 return mHelper.decreaseConsumedFoodServing(food);
