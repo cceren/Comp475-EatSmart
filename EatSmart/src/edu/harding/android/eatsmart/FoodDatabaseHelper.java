@@ -68,13 +68,18 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         "time TEXT, " +
         "photoFilename TEXT)";
         
-        final String[] foods = {"CRUNCHY CORN DOGS", "HOT DOG", "FRENCH FRIES", "STEAMED GREENPEAS", "STEAKHOUSE POTATOES",
-        		"VEGETABLE BEAN CHILI", "SWEET & SOUR PORK", "BASMATI RICE WITH PEAS", "BRAISED APPLE PORK CHOP", "CARROTS"};
+        final String[] foods = {"PIZZA","CRUNCHY CORN DOGS", "HOT DOG", "FRENCH FRIES", "STEAMED GREENPEAS", "STEAKHOUSE POTATOES",
+        		"VEGETABLE BEAN CHILI", "SWEET & SOUR PORK", "BASMATI RICE WITH PEAS", "BRAISED APPLE PORK CHOP", "CARROTS", "GARLIC" +
+        				" ROSTED BROCCOLI", "VEGETABLE STIR-FRY", "CARNE ASADA", "HERBED CHICKEN", "BAKED POTATO", "CORN ON THE COB", "CAULIFLOWER",  
+        				"WHITE BREAD", "WHOLE WHEAT BREAD", "TURKEY BREAST", "HAM", "ICEBERG LETTUCE", "CHOCOLATE BROWNIE", "CHOCOLATE CHIP COOKIE",
+        				"MUFFIN", "SCRAMBLED EGGS", "BBQ GRILLED TURKEY"};
         
-        final Integer[] calories = {273, 289, 295, 61, 120, 109, 147, 177, 181, 26};
+        final Integer[] calories = {285,273, 289, 295, 61, 120, 109, 147, 177, 181, 26, 52, 294, 118, 145, 200, 115, 15, 138, 141, 58,
+        		60, 63, 185, 124, 236, 159, 103};
         
-        final String[] servingSize = {"1 each", "1 each", "3.25 ounces", "1/2 cup", "1/2 cup", "8 fl oz", "1/2 cup", "1/2 cup",
-        	"1 each ", "1/2 cup"};
+        final String[] servingSize = {"1 slice","1 each", "1 each", "3.25 ounces", "1/2 cup", "1/2 cup", "8 fl oz", "1/2 cup", "1/2 cup",
+        	"1 each ", "1/2 cup", "1/2 cup", "1 each", "3 ounces", "1 each", "1 each", "1 each", "1/2 cup", "2 slices", "2 slices",
+        	"2 ounces", "2 ounces", "1 pound", "1/64 cut", "1 each", "1 each", "1/2 cup", "3 ounces"};
         
         
         
